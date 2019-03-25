@@ -1,0 +1,52 @@
+@import './type.css';
+@custom-media --viewport-medium (width <= 50rem);
+
+:root {
+  font-size: 10px;
+
+  /* colors */
+  --col-text: #404555;
+  --col-light-grey: #ebebec;
+  --col-orange: #fc8b00;
+
+  /* fonts */
+  --oswald: 'Oswald', sans-serif;
+  --merriweather: 'Merriweather', serif;
+  --opensans: 'Open Sans', sans-serif;
+
+  color: var(--col-text);
+  background: var(--col-light-grey);
+  font-family: var(--opensans);
+}
+
+/* Placeholder settings  */
+.placeholder {
+  background-color: var(--col-text);
+}
+
+.settings {
+  padding: 5%;
+  text-align: right;
+  width: 100%;
+}
+
+/* Buttons */
+button {
+  border: 0;
+  cursor: pointer;
+}
+button:focus {
+  outline: 0;
+}
+button:disabled:hover {
+  text-decoration: none;
+}
+button:hover {
+  text-decoration: underline;
+}
+
+/* Forms */
+
+label {
+  margin-right: 1em;
+}

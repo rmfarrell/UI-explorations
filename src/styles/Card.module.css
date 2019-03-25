@@ -1,0 +1,23 @@
+.root {
+  width: 31%;
+  margin: 0 2% 3em 0;
+  background: white;
+  padding: 1em 0;
+}
+
+.root > * {
+  padding: 0 3%;
+}
+
+.root:nth-child(3n + 3) {
+  margin-right: 0;
+}
+
+.root h3 {
+  font-family: var(--oswald);
+}
+
+.root .imgContainer {
+  padding: 0;
+  margin: 0 0 1em;
+}
