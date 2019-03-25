@@ -38,9 +38,6 @@ ul.itemList li:last-child {
   align-items: stretch;
 }
 
-.root > * {
-}
-
 /* Carousel */
 .listContainer {
   width: 33%;
