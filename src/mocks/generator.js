@@ -2,15 +2,17 @@ import { LoremIpsum } from 'lorem-ipsum';
 import uuid from 'uuid/v4';
 
 const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4
-  },
-  wordsPerSentence: {
-    max: 20,
-    min: 4
-  }
-});
+    sentencesPerParagraph: {
+      max: 8,
+      min: 4
+    },
+    wordsPerSentence: {
+      max: 20,
+      min: 4
+    }
+  }),
+  TOPICS = ['Trade', 'Government', 'Regulation', 'Environment', 'Crime'],
+  TYPES = ['Opinion', 'White paper', 'Analysis', 'Media', 'Social'];
 
 function teaser() {
   return {
@@ -20,7 +22,7 @@ function teaser() {
     author: capitalize(lorem.generateWords(2)),
     date: 'December 31, 2019',
     country: capitalize(lorem.generateWords(2)),
-    issues: issues(4),
+    issues: issues(),
     summary: lorem.generateSentences(3),
     image: {
       color: randomColor(),
@@ -50,8 +52,15 @@ function capitalize(str = '') {
     .join(' ');
 }
 
-function issues(max = 5) {
-  return lorem.generateWords(randomInt(1, max)).split(' ');
+function issues() {
+  const times = randomInt(1, 2),
+    out = [];
+  for (let x = 0; x < times; x++) {
+    let topics = TOPICS.filter(t => !out.includes(t));
+    out.push(topics[randomInt(0, topics.length)]);
+    TOPICS.slice();
+  }
+  return out;
 }
 
 function randomInt(min = 0, max = 100) {
@@ -59,8 +68,7 @@ function randomInt(min = 0, max = 100) {
 }
 
 function type() {
-  const types = ['opinion', 'white paper', 'analysis', 'media'];
-  return types[randomInt(0, types.length)];
+  return TYPES[randomInt(0, TYPES.length)];
 }
 
 function randomColor() {
@@ -69,4 +77,4 @@ function randomColor() {
   ${randomInt(0, 150)})`;
 }
 
-export { teaser, summary, randomColor };
+export { teaser, summary, randomColor, TYPES, TOPICS };
