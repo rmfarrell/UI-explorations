@@ -3,23 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "http2": "^3.3.7",
+    "lorem-ipsum": "^2.0.0",
+    "normalize.css": "^8.0.1",
+    "postcss-custom-media": "^7.0.7",
+    "postcss-custom-selectors": "^5.1.2",
+    "postcss-import": "^12.0.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-masonry-component": "^6.2.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "spdy-transport": "^3.0.0",
+    "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build:css": "postcss src/styles/main.css -o src/index.css",
+    "watch:css": "postcss src/styles/main.css -o src/index.css -w",
+    "start": "npm-run-all -p watch:css start-js",
+    "start-js": "react-scripts start",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build:css build-js",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%",
+    "last 2 versions",
+    "> 1%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "autoprefixer": "^9.5.0",
+    "lost": "^8.3.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^6.1.2",
+    "postcss-nested": "^4.1.2",
+    "postcss-svg": "^3.0.0"
+  }
 }
