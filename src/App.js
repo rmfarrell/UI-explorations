@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Collection from './components/Collection';
+import InfiniteCollection from './components/InfiniteCollection';
 import List from './components/List';
 
 function AppRouter() {
@@ -17,7 +17,7 @@ function AppRouter() {
             </li>
           </ul>
         </nav>
-        <Route path="/collection" exact component={Collection} />
+        <Route path="/collection" exact component={InfiniteCollection} />
         <Route path="/list" exact component={List} />
       </div>
     </Router>
