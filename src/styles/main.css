@@ -25,6 +25,10 @@ ul {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Placeholder settings  */
 .placeholder {
   background-color: var(--col-text);

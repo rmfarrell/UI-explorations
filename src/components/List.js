@@ -38,7 +38,7 @@ class Collection extends Component {
       <div className={styles.root}>
         <div
           className="placeholder"
-          style={{ width: '100%', minHeight: '22em', margin: '0 0 2em' }}
+          style={{ width: '100%', minHeight: '22em', margin: '2em 0 2em' }}
         />
         <div className={styles.listContainer}>
           <div

@@ -1,0 +1,38 @@
+nav.main {
+  background: var(--col-text);
+  color: var(--col-grey);
+}
+
+nav.main h2 {
+  font-size: 1.4em;
+}
+
+nav.main p {
+  font-size: 1.2em;
+}
+
+nav.main a {
+  color: inherit;
+  display: block;
+  padding: 1em 5%;
+  transition: all 0.3s;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+nav.main a.active {
+  background: white;
+  color: var(--col-text);
+}
+
+nav.main ul {
+  display: flex;
+  margin: 0 auto;
+  padding: 0 2%;
+  align-items: stretch;
+}
+
+nav.main li {
+  flex: 32em 0;
+  margin: 0;
+}
