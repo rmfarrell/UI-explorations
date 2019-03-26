@@ -41,7 +41,15 @@ function AppRouter() {
                 <h2>Expanding link lists</h2>
                 <p>
                   Lists containing simple carousel that also expand and contract
-                  when `read more` is clicked.
+                  when <em>Read More</em> is clicked.
+                </p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/modal-list" activeClassName={styles.active}>
+                <h2>Modal list</h2>
+                <p>
+                  <em>Read More</em> launches a modal with the full list.
                 </p>
               </NavLink>
             </li>
