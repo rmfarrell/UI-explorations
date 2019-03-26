@@ -36,7 +36,7 @@ class Collection extends Component {
         </Carousel>
         {this.props.showReadMore && (
           <button onClick={this.props.expand} className={styles.readmore}>
-            Read more
+            Read more ({this.total})
           </button>
         )}
       </aside>
