@@ -1,13 +1,60 @@
-.list {
-  width: 31%;
-  margin: 0 auto 10em;
-  background-color: white;
-  overflow: hidden;
-}
-
 .root {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: stretch;
+}
+
+.list {
+  width: 31%;
+  margin: 0 auto 10em;
+  background-color: white;
+  overflow: hidden;
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.list h2 {
+  font-size: 3em;
+  margin: 0.5em 0;
+}
+
+.accordionHandle {
+  width: 3rem;
+  text-align: left;
+  white-space: nowrap;
+  background: transparent;
+  height: 100%;
+}
+
+.accordionHandle:hover {
+  text-decoration: none;
+}
+
+.list.expanded {
+  width: calc(100% - 12em);
+}
+
+/* -- Modifiers */
+.list.collapsed {
+  width: 4rem;
+  background-color: var(--col-text);
+}
+
+.list.collapsed > * {
+  display: none;
+}
+
+.list.collapsed > header {
+  display: block;
+  height: 100%;
+}
+
+.list.collapsed h2 {
+  font-family: var(--oswald);
+  font-size: 2rem;
+  transition: all 0.3s;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin: 0;
+  color: white;
 }

@@ -15,10 +15,11 @@ class Collection extends Component {
   }
   render() {
     return (
-      <div className={[styles.root, this.props.className].join(' ')}>
+      <aside className={[styles.root, this.props.className].join(' ')}>
+        {this.props.children && <header>{this.props.children}</header>}
         <Carousel
           variant={this.props.variant}
-          groupSize={1}
+          groupSize={this.props.groupSize}
           showControls={this.props.showControls}
         >
           {this.slides.map((collection, idx) => {
@@ -41,7 +42,7 @@ class Collection extends Component {
             Read more
           </button>
         )}
-      </div>
+      </aside>
     );
   }
   get slides() {

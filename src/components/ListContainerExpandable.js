@@ -6,7 +6,17 @@ class ListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: [false, false, false]
+      lists: [
+        {
+          state: 'initial'
+        },
+        {
+          state: 'initial'
+        },
+        {
+          state: 'initial'
+        }
+      ]
     };
   }
   render() {
@@ -16,28 +26,35 @@ class ListContainer extends Component {
           className="placeholder"
           style={{ width: '100%', minHeight: '22em', margin: '2em 0 2em' }}
         />
-        <List
-          className={styles.list}
-          showControls={this.state.expanded[0]}
-          expand={() => this.expand(0)}
-        />
-        <List
-          className={styles.list}
-          showControls={this.state.expanded[1]}
-          expand={() => this.expand(1)}
-        />
-        <List
-          className={styles.list}
-          showControls={this.state.expanded[2]}
-          expand={() => this.expand(2)}
-        />
+        {this.state.lists.map((l, i) => {
+          return (
+            <List
+              key={i}
+              className={[styles.list, styles[l.state]].join(' ')}
+              showControls={l.state === 'expanded'}
+              expand={() => this.expand(i)}
+              groupSize={l.state === 'expanded' ? 2 : 1}
+            >
+              <button
+                className={styles.accordionHandle}
+                disabled={l.state !== 'collapsed'}
+                onClick={() => this.expand(i)}
+              >
+                <h2>{`Content Group ${i + 1}`}</h2>
+              </button>
+            </List>
+          );
+        })}
       </article>
     );
   }
-  expand(n = 0) {
-    let expanded = [false, false, false];
-    expanded[n] = true;
-    this.setState({ expanded });
-  }
+  expand = (n = 0) => {
+    console.log('test');
+    this.setState({
+      lists: this.state.lists.map(({}, idx) => {
+        return idx === n ? { state: 'expanded' } : { state: 'collapsed' };
+      })
+    });
+  };
 }
 export default ListContainer;
