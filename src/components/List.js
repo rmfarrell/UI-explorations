@@ -16,7 +16,11 @@ class Collection extends Component {
   render() {
     return (
       <div className={[styles.root, this.props.className].join(' ')}>
-        <Carousel variant="progress" groupSize={1}>
+        <Carousel
+          variant={this.props.variant}
+          groupSize={1}
+          showControls={this.props.showControls}
+        >
           {this.slides.map((collection, idx) => {
             return (
               <ul key={idx} className={styles.itemList}>

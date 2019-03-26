@@ -6,7 +6,8 @@ function CarouselControls({
   size = 0,
   current = 0,
   setOffset = () => {},
-  variant = 'normal'
+  variant = 'normal',
+  showControls = true
 }) {
   const previous =
     variant === 'normal' ? (
@@ -32,23 +33,25 @@ function CarouselControls({
       ''
     );
   return (
-    <ul className={[styles.controls, styles[variant]].join(' ')}>
-      {previous}
-      {getPages().map(page => {
-        const isCurrent = page === current;
-        return (
-          <li key={page}>
-            <button
-              className={isCurrent ? styles.active : ''}
-              onClick={() => setOffset(page)}
-            >
-              {page}
-            </button>
-          </li>
-        );
-      })}
-      {next}
-    </ul>
+    showControls && (
+      <ul className={[styles.controls, styles[variant]].join(' ')}>
+        {previous}
+        {getPages().map(page => {
+          const isCurrent = page === current;
+          return (
+            <li key={page}>
+              <button
+                className={isCurrent ? styles.active : ''}
+                onClick={() => setOffset(page)}
+              >
+                {page}
+              </button>
+            </li>
+          );
+        })}
+        {next}
+      </ul>
+    )
   );
 
   function getPages() {

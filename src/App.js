@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import InfiniteCollection from './components/InfiniteCollection';
 import ListContainer from './components/ListContainer';
+import ListContainerExpandable from './components/ListContainerExpandable';
 import styles from './styles/Nav.module.css';
 
 function AppRouter() {
@@ -34,10 +35,24 @@ function AppRouter() {
                 </p>
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/expandable-list" activeClassName={styles.active}>
+                <h2>Expanding link lists</h2>
+                <p>
+                  Lists containing simple carousel that also expand and contract
+                  when `read more` is clicked.
+                </p>
+              </NavLink>
+            </li>
           </ul>
         </nav>
         <Route path="/collection" exact component={InfiniteCollection} />
         <Route path="/list" exact component={ListContainer} />
+        <Route
+          path="/expandable-list"
+          exact
+          component={ListContainerExpandable}
+        />
       </div>
     </Router>
   );

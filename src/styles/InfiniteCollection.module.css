@@ -1,9 +1,6 @@
 .root {
 }
 
-.filters {
-}
-
 .active {
   background: var(--col-text);
   color: white;
@@ -11,10 +8,6 @@
 
 .root button:hover {
   text-decoration: none;
-}
-
-.filterMenu {
-  margin: 3em 0;
 }
 
 .root ul {
@@ -34,6 +27,15 @@
   font-family: var(--oswald);
   text-transform: uppercase;
   color: var(--col-grey);
+}
+
+.filterMenu {
+  margin: 1em 0;
+  padding: 1em 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--col-light-grey);
 }
 
 .filterMenu h3 {

@@ -26,12 +26,8 @@ class Carousel extends Component {
           size={this.childLength}
           current={this.state.current}
           setOffset={this.setOffset}
-        />
-        <CarouselControls
-          size={this.childLength}
-          current={this.state.current}
-          setOffset={this.setOffset}
           variant={this.props.variant}
+          showControls={this.props.showControls}
         />
       </div>
     );
