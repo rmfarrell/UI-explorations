@@ -3,15 +3,15 @@ nav.main {
   color: var(--col-grey);
 }
 
-nav.main h2 {
+.main h2 {
   font-size: 1.4em;
 }
 
-nav.main p {
+.main p {
   font-size: 1.2em;
 }
 
-nav.main a {
+.main a {
   color: inherit;
   display: block;
   padding: 1em 5%;
@@ -20,19 +20,25 @@ nav.main a {
   box-sizing: border-box;
 }
 
-nav.main a.active {
+.main a.active {
   background: white;
   color: var(--col-text);
 }
 
-nav.main ul {
+.main ul {
   display: flex;
   margin: 0 auto;
   padding: 0 2%;
   align-items: stretch;
 }
 
-nav.main li {
+.main li {
   flex: 32em 0;
   margin: 0;
+}
+
+.main em {
+  font-family: monospace;
+  font-style: normal;
+  color: var(--col-orange);
 }
