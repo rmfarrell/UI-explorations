@@ -1,6 +1,6 @@
 .list {
   width: 33%;
-  margin: 0 2%;
+  margin: 0 1%;
   background-color: white;
   overflow: hidden;
 }
@@ -8,6 +8,6 @@
 .root {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: stretch;
 }

@@ -15,7 +15,8 @@ class ListContainer extends Component {
           style={{ width: '100%', minHeight: '22em', margin: '2em 0 2em' }}
         />
         <List className={styles.list} variant="progress" />
-        <div className="placeholder" style={{ width: '62%' }} />
+        <List className={styles.list} />
+        <div className="placeholder" style={{ flex: 1 }} />
       </article>
     );
   }
