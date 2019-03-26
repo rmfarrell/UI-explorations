@@ -3,9 +3,6 @@ import { summary, teaser } from '../mocks/generator';
 import styles from '../styles/List.module.css';
 import Carousel from './Carousel';
 
-const total = 35,
-  perpage = 5;
-
 class Collection extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +34,7 @@ class Collection extends Component {
             );
           })}
         </Carousel>
-        {this.props.showControls || (
+        {this.props.showReadMore && (
           <button onClick={this.props.expand} className={styles.readmore}>
             Read more
           </button>
@@ -45,9 +42,13 @@ class Collection extends Component {
       </aside>
     );
   }
+  get total() {
+    return this.props.total || 35;
+  }
   get slides() {
-    let out = [];
-    let slidesCounts = Math.ceil(this.state.teasers.length / perpage);
+    const perpage = this.props.perpage || 5;
+    const out = [],
+      slidesCounts = Math.ceil(this.state.teasers.length / perpage);
     for (let x = 0; x < slidesCounts; x++) {
       out.push(this.state.teasers.slice(x, perpage + x));
     }
@@ -55,7 +56,7 @@ class Collection extends Component {
   }
   componentDidMount() {
     const teasers = [];
-    for (let x = 0; x < total; x++) {
+    for (let x = 0; x < this.total; x++) {
       teasers.push(teaser());
     }
     this.setState({ teasers });

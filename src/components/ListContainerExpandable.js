@@ -32,6 +32,7 @@ class ListContainer extends Component {
               key={i}
               className={[styles.list, styles[l.state]].join(' ')}
               showControls={l.state === 'expanded'}
+              showReadMore={l.state === 'initial'}
               expand={() => this.expand(i)}
               groupSize={l.state === 'expanded' ? 2 : 1}
             >

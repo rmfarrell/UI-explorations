@@ -1,0 +1,43 @@
+.root {
+  border: 1px solid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 60em;
+  height: 70em;
+  max-height: 90vh;
+  overflow: hidden;
+  position: absolute;
+}
+
+.body {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.top {
+  font-size: 4rem;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.1em;
+}
+
+.closeBtn {
+  transition: color 0.25s;
+}
+
+.closeBtn:hover {
+  text-decoration: none;
+  color: var(--col-grey);
+}

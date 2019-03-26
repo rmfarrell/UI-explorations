@@ -69,3 +69,22 @@ label {
   max-width: 1200px;
   padding: 0 2%;
 }
+
+/* Animations */
+.modal-enter {
+  opacity: 0.01;
+}
+
+.modal-enter.modal-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.modal-leave {
+  opacity: 1;
+}
+
+.modal-leave.modal-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

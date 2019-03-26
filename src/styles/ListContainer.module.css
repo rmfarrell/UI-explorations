@@ -58,3 +58,7 @@
   margin: 0;
   color: white;
 }
+
+.list.fullwidth {
+  width: 100%;
+}
