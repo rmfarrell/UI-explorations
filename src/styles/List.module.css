@@ -30,17 +30,3 @@ ul.itemList li {
 ul.itemList li:last-child {
   border-bottom: 0;
 }
-
-.root {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: stretch;
-}
-
-.listContainer {
-  width: 33%;
-  margin: 0 2%;
-  background-color: white;
-  overflow: hidden;
-}

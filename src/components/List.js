@@ -15,40 +15,23 @@ class Collection extends Component {
   }
   render() {
     return (
-      <div className={styles.root}>
-        <div
-          className="placeholder"
-          style={{ width: '100%', minHeight: '22em', margin: '2em 0 2em' }}
-        />
-        <div className={styles.listContainer}>
-          <Carousel variant="progress">
-            {this.slides.map((collection, idx) => {
-              return (
-                <ul key={idx} className={styles.itemList}>
-                  {collection.map(item => {
-                    return (
-                      <li key={item.id}>
-                        <h4>{item.date}</h4>
-                        <h3>{item.title}</h3>
-                      </li>
-                    );
-                  })}
-                </ul>
-              );
-            })}
-          </Carousel>
-        </div>
-        <div className="placeholder" style={{ width: '62%' }} />
-        {/* <form className="settings">
-          <label for="results">Change list length</label>
-          <input
-            type="number"
-            onChange={this.setTotal}
-            placeholder="Set Results"
-            value={this.state.teassers}
-            name="results"
-          />
-        </form> */}
+      <div className={[styles.root, this.props.className].join(' ')}>
+        <Carousel variant="progress">
+          {this.slides.map((collection, idx) => {
+            return (
+              <ul key={idx} className={styles.itemList}>
+                {collection.map(item => {
+                  return (
+                    <li key={item.id}>
+                      <h4>{item.date}</h4>
+                      <h3>{item.title}</h3>
+                    </li>
+                  );
+                })}
+              </ul>
+            );
+          })}
+        </Carousel>
       </div>
     );
   }

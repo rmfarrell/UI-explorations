@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import InfiniteCollection from './components/InfiniteCollection';
-import List from './components/List';
+import ListContainer from './components/ListContainer';
 import styles from './styles/Nav.module.css';
 
 function AppRouter() {
@@ -37,7 +37,7 @@ function AppRouter() {
           </ul>
         </nav>
         <Route path="/collection" exact component={InfiniteCollection} />
-        <Route path="/list" exact component={List} />
+        <Route path="/list" exact component={ListContainer} />
       </div>
     </Router>
   );

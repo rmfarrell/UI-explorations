@@ -1,0 +1,13 @@
+.list {
+  width: 33%;
+  margin: 0 2%;
+  background-color: white;
+  overflow: hidden;
+}
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
