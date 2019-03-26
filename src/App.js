@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import InfiniteCollection from './components/InfiniteCollection';
 import ListContainer from './components/ListContainer';
 import ListContainerExpandable from './components/ListContainerExpandable';
+import ListContainerModal from './components/ListContainerModal';
 import styles from './styles/Nav.module.css';
 
 function AppRouter() {
@@ -53,6 +54,7 @@ function AppRouter() {
           exact
           component={ListContainerExpandable}
         />
+        <Route path="/modal-list" exact component={ListContainerModal} />
       </div>
     </Router>
   );

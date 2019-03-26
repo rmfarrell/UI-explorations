@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from '../styles/Carousel.module.css';
 
-// TODO: contain the contents in a slot
 function CarouselControls({
   size = 0,
   current = 0,
