@@ -38,20 +38,9 @@ ul.itemList li:last-child {
   align-items: stretch;
 }
 
-/* Carousel */
 .listContainer {
   width: 33%;
   margin: 0 2%;
   background-color: white;
   overflow: hidden;
-}
-
-.carousel {
-  width: 100%;
-  display: flex;
-  transition: transform 0.3s;
-}
-
-.carousel > * {
-  flex: 1;
 }

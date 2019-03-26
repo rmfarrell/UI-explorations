@@ -3,10 +3,8 @@ import styles from '../styles/Carousel.module.css';
 
 // TODO: contain the contents in a slot
 function CarouselControls({
-  total = 0,
-  limit = 0,
+  size = 0,
   current = 0,
-  groupSize = 10,
   setOffset = () => {},
   variant = 'normal'
 }) {
@@ -24,7 +22,7 @@ function CarouselControls({
     variant === 'normal' ? (
       <li>
         <button
-          disabled={current >= getPagesSize() - 1}
+          disabled={current >= size - 1}
           onClick={() => setOffset(++current)}
         >
           Next &gt;{' '}
@@ -34,7 +32,7 @@ function CarouselControls({
       ''
     );
   return (
-    <ul className={[styles.root, styles[variant]].join(' ')}>
+    <ul className={[styles.controls, styles[variant]].join(' ')}>
       {previous}
       {getPages().map(page => {
         const isCurrent = page === current;
@@ -55,14 +53,10 @@ function CarouselControls({
 
   function getPages() {
     const out = [];
-    for (let x = 0; x < getPagesSize(); x++) {
+    for (let x = 0; x < size; x++) {
       out.push(x);
     }
     return out;
-  }
-
-  function getPagesSize() {
-    return Math.ceil(total / limit);
   }
 }
 

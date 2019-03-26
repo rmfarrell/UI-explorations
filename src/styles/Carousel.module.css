@@ -1,4 +1,14 @@
-.root {
+.carousel {
+  width: 100%;
+  display: flex;
+  transition: transform 0.3s;
+}
+
+.carousel > * {
+  flex: 1;
+}
+
+.controls {
   list-style-type: none;
   margin: 2em auto 1em;
   padding: 0;
@@ -28,7 +38,7 @@ button.active {
   transition: background-color 0.3s;
 }
 
-.root button:disabled {
+.controls button:disabled {
   color: var(--col-grey);
 }
 
