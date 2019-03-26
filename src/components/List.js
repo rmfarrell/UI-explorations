@@ -36,6 +36,11 @@ class Collection extends Component {
             );
           })}
         </Carousel>
+        {this.props.showControls || (
+          <button onClick={this.props.expand} className={styles.readmore}>
+            Read more
+          </button>
+        )}
       </div>
     );
   }

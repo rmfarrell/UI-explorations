@@ -5,6 +5,9 @@
 
 .root {
   margin-bottom: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .root h3 {
@@ -29,4 +32,12 @@ ul.itemList li {
 
 ul.itemList li:last-child {
   border-bottom: 0;
+}
+
+button.readmore {
+  width: 100%;
+  background-color: var(--col-grey);
+  color: var(--col-text);
+  font-size: 1.5em;
+  padding: 1em 0;
 }
