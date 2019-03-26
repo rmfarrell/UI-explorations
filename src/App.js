@@ -35,7 +35,7 @@ function AppRouter() {
                 </p>
               </NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to="/expandable-list" activeClassName={styles.active}>
                 <h2>Expanding link lists</h2>
                 <p>
@@ -43,7 +43,7 @@ function AppRouter() {
                   when `read more` is clicked.
                 </p>
               </NavLink>
-            </li> */}
+            </li>
           </ul>
         </nav>
         <Route path="/collection" exact component={InfiniteCollection} />
