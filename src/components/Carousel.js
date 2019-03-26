@@ -37,7 +37,10 @@ class Carousel extends Component {
     );
   }
   get childLength() {
-    return this.props.children.length;
+    return this.props.children.length / this.groupSize;
+  }
+  get groupSize() {
+    return this.props.groupSize || 1;
   }
   setOffset = (n = 0) => {
     this.setState({ current: n });
