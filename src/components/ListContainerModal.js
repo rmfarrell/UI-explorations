@@ -30,8 +30,8 @@ class ListContainer extends Component {
         />
         <ReactCSSTransitionGroup
           transitionName="modal"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={300}
         >
           {this.state.openModal && (
             <Modal close={this.toggleModal} isOpen={this.state.openModal}>
