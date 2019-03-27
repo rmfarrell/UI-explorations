@@ -1,7 +1,15 @@
-/* Smallest size */
-
 .root h3 {
-  font-family: bold 1.6em var(--opensans);
+  font: bold 1.5em var(--opensans);
+}
+.root > a {
+  display: block;
+  color: inherit;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.root > a:hover {
+  background: var(--col-light-grey);
 }
 
 .root h4 {
@@ -11,9 +19,44 @@
 
 .root {
   border-bottom: 1px solid var(--col-light-grey);
-  padding: 2% 12% 2% 2%;
 }
 
 .root:last-child {
   border-bottom: 0;
+}
+
+.root h5 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.columnContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.columnContainer > * {
+  flex: 12;
+}
+
+/* Size 0 */
+.size-0 > a {
+  padding: 2% 12% 2% 2%;
+}
+
+/* Size 1 */
+.size-1 > a {
+  padding: 2% 3% 2% 2%;
+}
+.size-1 .imgContainer {
+  flex: 7;
+  margin: 0 2em 0 0;
+}
+.size-1 h3 {
+  font-size: 1.75em;
+}
+.size-1 h4 em {
+  font-style: normal;
+  color: var(--col-text);
+  display: inline-block;
 }

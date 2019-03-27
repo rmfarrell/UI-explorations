@@ -1,0 +1,18 @@
+.root {
+  margin-top: 2em;
+}
+.group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.root ul {
+  background-color: white;
+  margin: 0 1% 1em;
+}
+ul.small {
+  flex: 1 1 20em;
+}
+ul.medium {
+  flex: 3 1 40em;
+}
