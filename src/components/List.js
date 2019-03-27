@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { summary, teaser } from '../mocks/generator';
 import styles from '../styles/List.module.css';
 import Carousel from './Carousel';
+import ListItem from './ListItem';
 
 class Collection extends Component {
   constructor(props) {
@@ -23,12 +24,7 @@ class Collection extends Component {
             return (
               <ul key={idx} className={styles.itemList}>
                 {collection.map(item => {
-                  return (
-                    <li key={item.id}>
-                      <h4>{item.date}</h4>
-                      <h3>{item.title}</h3>
-                    </li>
-                  );
+                  return <ListItem key={item.id} data={item} />;
                 })}
               </ul>
             );

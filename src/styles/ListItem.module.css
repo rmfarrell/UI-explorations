@@ -1,0 +1,19 @@
+/* Smallest size */
+
+.root h3 {
+  font-family: bold 1.6em var(--opensans);
+}
+
+.root h4 {
+  font: normal 1.2em var(--oswald);
+  color: var(--col-orange);
+}
+
+.root {
+  border-bottom: 1px solid var(--col-light-grey);
+  padding: 2% 12% 2% 2%;
+}
+
+.root:last-child {
+  border-bottom: 0;
+}
