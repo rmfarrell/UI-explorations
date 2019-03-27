@@ -4,6 +4,7 @@ import InfiniteCollection from './components/InfiniteCollection';
 import ListContainer from './components/ListContainer';
 import ListContainerExpandable from './components/ListContainerExpandable';
 import ListContainerModal from './components/ListContainerModal';
+import LayoutGenerator from './components/LayoutGenerator';
 import styles from './styles/Nav.module.css';
 
 function AppRouter() {
@@ -53,6 +54,12 @@ function AppRouter() {
                 </p>
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/layout" activeClassName={styles.active}>
+                <h2>Layout</h2>
+                <p>Context-sensitive layout explorer</p>
+              </NavLink>
+            </li>
           </ul>
         </nav>
         <Route path="/collection" exact component={InfiniteCollection} />
@@ -63,6 +70,7 @@ function AppRouter() {
           component={ListContainerExpandable}
         />
         <Route path="/modal-list" exact component={ListContainerModal} />
+        <Route path="/layout" exact component={LayoutGenerator} />
       </div>
     </Router>
   );
