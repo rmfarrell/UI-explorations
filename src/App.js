@@ -14,17 +14,20 @@ function AppRouter() {
         <nav className={styles.main}>
           <ul className="constrain">
             <li>
+              <NavLink to="/layout" activeClassName={styles.active}>
+                <h2>Layout (Work in Progress)</h2>
+                <p>
+                  Context-sensitive layout. Render related content items w/
+                  configuration
+                </p>
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/collection" activeClassName={styles.active}>
                 <h2>Infinite Scroll with Filters</h2>
                 <p>
                   Pinterest-inspired infinite scroll with filters for type and
-                  topic. This approach allows you to put all the content cards
-                  in the same spot with easy filtering. It's a familiar design
-                  pattern and allows for great information density. "Invisible"
-                  pagination tends to front load newer content. Depending on the
-                  backend capabilities filtering by headline may also be
-                  possible with this approach. One limitation is that it has to
-                  be the last thing on the page.
+                  topic.
                 </p>
               </NavLink>
             </li>
@@ -52,12 +55,6 @@ function AppRouter() {
                 <p>
                   <em>Read More</em> launches a modal with the full list.
                 </p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/layout" activeClassName={styles.active}>
-                <h2>Layout</h2>
-                <p>Context-sensitive layout explorer</p>
               </NavLink>
             </li>
           </ul>
