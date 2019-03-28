@@ -43,14 +43,16 @@ function summary() {
   };
 }
 
-function capitalize(str = '') {
-  return str
-    .split(' ')
-    .map(s => {
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    })
-    .join(' ');
+// -- Multiples
+function teasers(n = 1) {
+  const out = [];
+  for (let x = 0; x < n; x++) {
+    out.push(teaser());
+  }
+  return out;
 }
+
+// -- Field Generators
 
 function issues() {
   const times = randomInt(1, 2),
@@ -77,4 +79,15 @@ function randomColor() {
   ${randomInt(0, 150)})`;
 }
 
-export { teaser, summary, randomColor, TYPES, TOPICS };
+// -- Helpers
+
+function capitalize(str = '') {
+  return str
+    .split(' ')
+    .map(s => {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    })
+    .join(' ');
+}
+
+export { teaser, teasers, summary, randomColor, TYPES, TOPICS };

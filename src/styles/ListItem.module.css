@@ -62,9 +62,6 @@
   color: var(--col-text);
   display: inline-block;
 }
-.size-1 p {
-  display: none;
-}
 
 /* -- Size 2 -- */
 
@@ -91,10 +88,4 @@
 }
 .size-2 .imgContainer {
   margin: 0 0 2em;
-}
-
-@media (min-width: 1000px) {
-  .size-1 p {
-    display: block;
-  }
 }
