@@ -91,8 +91,6 @@ a.readMore {
 .size-2 {
   display: flex;
   justify-content: stretch;
-  flex: 1;
-  flex: 0 0 32%;
   background: white;
 }
 
@@ -111,4 +109,10 @@ a.readMore {
 }
 .size-2 .imgContainer {
   margin: 0 0 2em;
+}
+
+@media (min-width: 650px) {
+  .size-2 {
+    flex: 0 0 32%;
+  }
 }
