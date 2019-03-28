@@ -13,16 +13,37 @@
 }
 
 .root h4 {
-  font: normal 1.2em var(--oswald);
+  font: normal 1.3em var(--oswald);
   color: var(--col-orange);
+  display: flex;
+  justify-content: space-between;
+}
+
+.root h4 a {
+  color: var(--col-text);
 }
 
 .root {
   border-bottom: 1px solid var(--col-light-grey);
 }
 
+.root p {
+  font-size: 1.3em;
+  line-height: 1.45em;
+}
+
 .root:last-child {
   border-bottom: 0;
+}
+
+.root > * a {
+  color: var(--col-blue);
+  transition: color 0.3s;
+}
+
+.root > * a:hover {
+  color: var(--col-text);
+  text-decoration: underline;
 }
 
 .root h5 {
@@ -41,10 +62,9 @@ a.columnContainer {
 }
 
 a.readMore {
-  display: block;
   margin: 0.5em 0 0;
-  color: var(--col-blue);
   text-align: right;
+  white-space: nowrap;
 }
 
 /* -- Size 0 -- */
@@ -57,11 +77,6 @@ a.readMore {
   color: var(--col-text);
 }
 
-.size-0 p {
-  font-size: 1.3em;
-  line-height: 1.4em;
-}
-
 /* -- Social -- */
 
 .size-0 > .social {
@@ -70,7 +85,7 @@ a.readMore {
 
 /* -- Size 1 -- */
 
-.size-1 > a {
+.size-1 > * {
   padding: 2% 3% 2% 2%;
 }
 .size-1 .imgContainer {
@@ -84,6 +99,9 @@ a.readMore {
   font-style: normal;
   color: var(--col-text);
   display: inline-block;
+}
+.size-1 .readMore {
+  text-align: left;
 }
 
 /* -- Size 2 -- */

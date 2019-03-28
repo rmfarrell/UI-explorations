@@ -29,20 +29,20 @@ function SmallSocialTeaser({
   return (
     <div className={styles.social}>
       <h4>
-        {date}{' '}
         <a href="https://twitter.com" target="_blank">
           @{author}
         </a>
+        {date}
       </h4>
       {image && <div style={placeholderImage(image.color, image.ratio)} />}
       <p>
-        {elipse(text, limit)}
+        {elipse(text, limit)} &nbsp;
         <a
           className={styles.readMore}
           href="https://twitter.com"
           target="_blank"
         >
-          {source}&raquo;
+          &laquo;{source}&raquo;
         </a>
       </p>
     </div>
@@ -68,19 +68,31 @@ function MediumTeaser({
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
-    <a href="#" className={styles.columnContainer}>
+    <div className={styles.columnContainer}>
       <div className={styles.imgContainer}>
         <div style={placeholderImage(color, ratio)} />
       </div>
       <div className={styles.textContainer}>
-        <h4>{date}</h4>
+        <h4>
+          <a href="https://twitter.com" target="_blank">
+            {source}
+          </a>
+          {date}
+        </h4>
         <h3>{title}</h3>
-        <h5>
-          By {author}, <em>{source}</em>
-        </h5>
-        <p>{summary}</p>
+        <h5>By {author}</h5>
+        <p>
+          {summary} &nbsp;
+          <a
+            className={styles.readMore}
+            href="https://twitter.com"
+            target="_blank"
+          >
+            &laquo;{source}&raquo;
+          </a>
+        </p>
       </div>
-    </a>
+    </div>
   );
 }
 
