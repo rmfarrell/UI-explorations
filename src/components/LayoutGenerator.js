@@ -14,7 +14,7 @@ class LayoutGenerator extends Component {
           <div className={styles.small}>
             <h2>Social (small)</h2>
             <ul>
-              {socialMediaItems(4).map(t => {
+              {socialMediaItems(3).map(t => {
                 return <ListItem data={t} key={t.id} type="social" />;
               })}
             </ul>

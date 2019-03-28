@@ -46,7 +46,7 @@ function SocialMediaItem() {
     source: pickRandomFromArray(['Twitter', 'Facebook', 'Instagram']),
     text: lorem.generateWords(randomInt(10, 200)),
     author: lorem.generateWords(1),
-    image: image(),
+    image: randomInt(0, 4) === 0 ? image() : null,
     date: date()
   };
 }

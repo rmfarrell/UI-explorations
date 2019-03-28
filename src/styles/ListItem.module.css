@@ -62,6 +62,12 @@ a.readMore {
   line-height: 1.4em;
 }
 
+/* -- Social -- */
+
+.size-0 > .social {
+  padding: 2%;
+}
+
 /* -- Size 1 -- */
 
 .size-1 > a {

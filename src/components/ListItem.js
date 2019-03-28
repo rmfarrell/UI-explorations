@@ -25,16 +25,18 @@ function SmallSocialTeaser({
   source = '',
   image = ''
 }) {
+  const limit = image ? 10 : 25;
   return (
-    <div>
+    <div className={styles.social}>
       <h4>
         {date}{' '}
         <a href="https://twitter.com" target="_blank">
           @{author}
         </a>
       </h4>
+      {image && <div style={placeholderImage(image.color, image.ratio)} />}
       <p>
-        {elipse(text, 25)}
+        {elipse(text, limit)}
         <a
           className={styles.readMore}
           href="https://twitter.com"
