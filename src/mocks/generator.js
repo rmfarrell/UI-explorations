@@ -12,7 +12,16 @@ const lorem = new LoremIpsum({
     }
   }),
   TOPICS = ['Trade', 'Government', 'Regulation', 'Environment', 'Crime'],
-  TYPES = ['Opinion', 'White paper', 'Analysis', 'Media', 'Social'];
+  TYPES = [
+    'Article',
+    'Policy Document',
+    'Analysis',
+    'Opinion',
+    'Media',
+    'Data'
+  ];
+
+// -- Models
 
 function teaser() {
   return {
@@ -20,14 +29,11 @@ function teaser() {
     title: lorem.generateSentences(1),
     source: capitalize(lorem.generateWords(3)),
     author: capitalize(lorem.generateWords(2)),
-    date: 'December 31, 2019',
+    date: date(),
     country: capitalize(lorem.generateWords(2)),
     issues: issues(),
     summary: lorem.generateSentences(3),
-    image: {
-      color: randomColor(),
-      ratio: randomInt(50, 50)
-    },
+    image: image(),
     type: type()
   };
 }
@@ -36,10 +42,24 @@ function summary() {
   const { title, date, image, source, id } = teaser();
   return {
     title,
-    date,
-    image,
+    date: date(),
+    image: image(),
     source,
     id
+  };
+}
+
+const Article = teaser;
+const articles = teasers;
+
+function SocialMediaItem() {
+  return {
+    contentType: 'Social Media Item',
+    source: ['Twitter', 'Facebook', 'Instagram', 'LinkedIn'][randomInt(0, 3)],
+    text: '',
+    author: '',
+    image: image(),
+    date: date()
   };
 }
 
@@ -47,6 +67,24 @@ function summary() {
 function teasers(n = 1) {
   const out = [];
   for (let x = 0; x < n; x++) {
+    out.push(teaser());
+  }
+  return out;
+}
+
+function multiple(n = 0, type = 'Article') {
+  const out = [];
+  for (let x = 0; x < n; x++) {
+    switch (type) {
+      case 'Article':
+        out.push(Article());
+        break;
+      case 'Social':
+        out.push(SocialMediaItem());
+        break;
+      default:
+        out.push(Article());
+    }
     out.push(teaser());
   }
   return out;
@@ -79,6 +117,17 @@ function randomColor() {
   ${randomInt(0, 150)})`;
 }
 
+function image() {
+  return {
+    color: randomColor(),
+    ratio: randomInt(50, 50)
+  };
+}
+
+function date() {
+  return 'November 31, 2019';
+}
+
 // -- Helpers
 
 function capitalize(str = '') {
@@ -90,4 +139,15 @@ function capitalize(str = '') {
     .join(' ');
 }
 
-export { teaser, teasers, summary, randomColor, TYPES, TOPICS };
+export {
+  teaser,
+  teasers,
+  summary,
+  randomColor,
+  TYPES,
+  TOPICS,
+  Article,
+  SocialMediaItem,
+  articles,
+  multiple
+};

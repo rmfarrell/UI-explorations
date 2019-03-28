@@ -32,6 +32,5 @@ class LayoutGenerator extends Component {
       </article>
     );
   }
-  componentDidMount() {}
 }
 export default LayoutGenerator;
