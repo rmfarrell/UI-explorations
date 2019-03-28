@@ -8,11 +8,18 @@
 }
 .root ul {
   background-color: white;
-  margin: 0 1% 1em;
+  margin: 0 1% 2%;
 }
 ul.small {
   flex: 1 1 20em;
 }
 ul.medium {
   flex: 3 1 40em;
+}
+ul.large {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  background: inherit;
 }

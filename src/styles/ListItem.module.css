@@ -39,12 +39,14 @@
   flex: 12;
 }
 
-/* Size 0 */
+/* -- Size 0 -- */
+
 .size-0 > a {
   padding: 2% 12% 2% 2%;
 }
 
-/* Size 1 */
+/* -- Size 1 -- */
+
 .size-1 > a {
   padding: 2% 3% 2% 2%;
 }
@@ -62,6 +64,33 @@
 }
 .size-1 p {
   display: none;
+}
+
+/* -- Size 2 -- */
+
+.size-2 {
+  display: flex;
+  justify-content: stretch;
+  flex: 1;
+  flex: 0 0 32%;
+  background: white;
+}
+
+.size-2 h3,
+.size-2 h4,
+.size-2 h5,
+.size-2 p {
+  padding: 0 5%;
+}
+
+.size-2 h3 {
+  font-size: 2em;
+}
+.size-2 h5 {
+  line-height: 1.5em;
+}
+.size-2 .imgContainer {
+  margin: 0 0 2em;
 }
 
 @media (min-width: 1000px) {

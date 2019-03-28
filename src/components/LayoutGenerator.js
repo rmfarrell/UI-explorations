@@ -25,6 +25,11 @@ class LayoutGenerator extends Component {
               return <ListItem data={t} size={1} />;
             })}
           </ul>
+          <ul className={styles.large}>
+            {teasers.slice(0, 3).map(t => {
+              return <ListItem data={t} size={2} />;
+            })}
+          </ul>
         </div>
       </article>
     );
