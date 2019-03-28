@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.root > * {
+  padding: 1.2em;
+}
+
 .root > a:hover {
   background: var(--col-light-grey);
 }
@@ -39,10 +43,6 @@
 
 .root:last-child {
   border-bottom: 0;
-}
-
-.root > * {
-  padding: 3%;
 }
 
 .root > * a {
@@ -86,9 +86,8 @@ a.readMore {
 }
 
 /* -- Social -- */
-
-.size-0 > .social {
-  padding: 3%;
+.social {
+  padding: 1.2em;
 }
 
 /* -- Size 1 -- */

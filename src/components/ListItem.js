@@ -113,22 +113,24 @@ function LargeTeaser({
         className={styles.imgContainer}
         style={placeholderImage(color, ratio)}
       />
-      <h3>
-        <a href="#">{title}</a>
-      </h3>
-      <h5>
-        By {author},{' '}
-        <a href="#">
-          <em>{source}</em>
-        </a>
-      </h5>
-      <h5>{date}</h5>
-      <p>
-        {summary} &nbsp;
-        <a className={styles.readMore} href="#" target="_blank">
-          &laquo;{source}&raquo;
-        </a>
-      </p>
+      <div class={styles.textContainer}>
+        <h3>
+          <a href="#">{title}</a>
+        </h3>
+        <h5>
+          By {author},{' '}
+          <a href="#">
+            <em>{source}</em>
+          </a>
+        </h5>
+        <h5>{date}</h5>
+        <p>
+          {summary} &nbsp;
+          <a className={styles.readMore} href="#" target="_blank">
+            &laquo;{source}&raquo;
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
