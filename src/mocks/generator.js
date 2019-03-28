@@ -24,7 +24,6 @@ const lorem = new LoremIpsum({
 // -- Models
 
 function teaser() {
-  console.log('teaser called somehow??');
   return {
     id: uuid(),
     contentType: 'Article',
@@ -45,8 +44,8 @@ function SocialMediaItem() {
     id: uuid(),
     contentType: 'Social Media Item',
     source: pickRandomFromArray(['Twitter', 'Facebook', 'Instagram']),
-    text: lorem.generateWords(randomInt(25, 200)),
-    author: '',
+    text: lorem.generateWords(randomInt(10, 200)),
+    author: lorem.generateWords(1),
     image: image(),
     date: date()
   };
@@ -143,7 +142,7 @@ function pickRandomFromArray(arr = [], n = 1) {
   const out = [];
   for (let x = 0; x < n; x++) {
     let filtered = arr.filter(t => !out.includes(t));
-    out.push(filtered[randomInt(0, filtered.length - 1)]);
+    out.push(filtered[randomInt(0, filtered.length)]);
   }
   return out;
 }

@@ -1,25 +1,39 @@
 .root {
   margin-top: 2em;
 }
+
+.root h2 {
+  margin: 0.5em 2%;
+  font-size: 2em;
+}
+
 .group {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.root ul {
-  background-color: white;
+
+.group > * {
   margin: 0 1% 2%;
 }
+
 .small {
   flex: 1 1 30em;
+  background-color: white;
 }
 .medium {
   flex: 3 1 50em;
+  background-color: white;
 }
 .large {
   flex: 1 1 100%;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-between;
   background: inherit;
+}
+
+.large h2 {
+  margin: 0.5em 0 1em;
+  flex: 1 1 100%;
 }

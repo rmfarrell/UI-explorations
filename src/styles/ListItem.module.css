@@ -30,7 +30,8 @@
   margin: 0;
 }
 
-.columnContainer {
+.columnContainer,
+a.columnContainer {
   display: flex;
   justify-content: space-between;
 }
@@ -39,10 +40,26 @@
   flex: 12;
 }
 
+a.readMore {
+  display: block;
+  margin: 0.5em 0 0;
+  color: var(--col-blue);
+  text-align: right;
+}
+
 /* -- Size 0 -- */
 
-.size-0 > a {
+.size-0 > * {
   padding: 2% 12% 2% 2%;
+}
+
+.size-0 h4 a {
+  color: var(--col-text);
+}
+
+.size-0 p {
+  font-size: 1.3em;
+  line-height: 1.4em;
 }
 
 /* -- Size 1 -- */

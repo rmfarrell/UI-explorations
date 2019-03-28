@@ -2,24 +2,57 @@ import React from 'react';
 import styles from '../styles/ListItem.module.css';
 
 // TODO this could be merged with Card probably
-export default function ListItem({ data = {}, className = '', size = 0 }) {
+export default function ListItem({
+  data = {},
+  className = '',
+  size = 0,
+  type = 'article'
+}) {
   return (
     <li className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
-      <a href="#">
-        {size === 0 && <SmallTeaser {...data} />}
-        {size === 1 && <MediumTeaser {...data} />}
-        {size === 2 && <LargeTeaser {...data} />}
-      </a>
+      {size === 0 && type === 'social' && <SmallSocialTeaser {...data} />}
+      {size === 0 && type === 'article' && <SmallTeaser {...data} />}
+      {size === 1 && type === 'article' && <MediumTeaser {...data} />}
+      {size === 2 && type === 'article' && <LargeTeaser {...data} />}
     </li>
+  );
+}
+
+function SmallSocialTeaser({
+  date = '',
+  text = '',
+  author = '',
+  source = '',
+  image = ''
+}) {
+  return (
+    <div>
+      <h4>
+        {date}{' '}
+        <a href="https://twitter.com" target="_blank">
+          @{author}
+        </a>
+      </h4>
+      <p>
+        {elipse(text, 25)}
+        <a
+          className={styles.readMore}
+          href="https://twitter.com"
+          target="_blank"
+        >
+          {source}&raquo;
+        </a>
+      </p>
+    </div>
   );
 }
 
 function SmallTeaser({ date = '', title = '' }) {
   return (
-    <div>
+    <a href="#">
       <h4>{date}</h4>
       <h3>{title}</h3>
-    </div>
+    </a>
   );
 }
 
@@ -33,9 +66,9 @@ function MediumTeaser({
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
-    <div className={styles.columnContainer}>
+    <a href="#" className={styles.columnContainer}>
       <div className={styles.imgContainer}>
-        <div style={horizontalImageStyle(color, ratio)} />
+        <div style={placeholderImage(color, ratio)} />
       </div>
       <div className={styles.textContainer}>
         <h4>{date}</h4>
@@ -45,7 +78,7 @@ function MediumTeaser({
         </h5>
         <p>{summary}</p>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -59,10 +92,10 @@ function LargeTeaser({
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
-    <div>
+    <a href="#">
       <div
         className={styles.imgContainer}
-        style={horizontalImageStyle(color, ratio)}
+        style={placeholderImage(color, ratio)}
       />
       <h3>{title}</h3>
       <h5>
@@ -70,16 +103,26 @@ function LargeTeaser({
       </h5>
       <h5>{date}</h5>
       <p>{summary}</p>
-    </div>
+    </a>
   );
 }
 
 // -- Helpers
 
-function horizontalImageStyle(color, ratio) {
+function placeholderImage(color, ratio) {
   return {
     background: `${color}`,
     height: '0',
     paddingBottom: `${ratio}%`
   };
+}
+
+function elipse(text = '', limit = 25) {
+  const words = text.split(' '),
+    elipse = words.length > limit ? `...` : '';
+
+  return words
+    .slice(0, limit)
+    .concat(elipse)
+    .join(' ');
 }
