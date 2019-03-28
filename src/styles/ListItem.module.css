@@ -23,13 +23,18 @@
   color: var(--col-text);
 }
 
+.root h4 a:hover {
+  text-decoration: none;
+  color: var(--col-blue);
+}
+
 .root {
   border-bottom: 1px solid var(--col-light-grey);
 }
 
 .root p {
   font-size: 1.3em;
-  line-height: 1.45em;
+  line-height: 1.5em;
 }
 
 .root:last-child {

@@ -137,6 +137,6 @@ function elipse(text = '', limit = 25) {
 
   return words
     .slice(0, limit)
-    .concat(elipse)
-    .join(' ');
+    .join(' ')
+    .concat(elipse);
 }
