@@ -12,7 +12,7 @@ class LayoutGenerator extends Component {
       <article className={[styles.root, 'constrain'].join(' ')}>
         <div className={styles.group}>
           <ul className={styles.small}>
-            {teasers(10).map(t => {
+            {teasers(12).map(t => {
               return <ListItem data={t} />;
             })}
           </ul>

@@ -11,10 +11,10 @@
   margin: 0 1% 2%;
 }
 ul.small {
-  flex: 1 1 20em;
+  flex: 1 1 30em;
 }
 ul.medium {
-  flex: 3 1 40em;
+  flex: 3 1 50em;
 }
 ul.large {
   flex: 1 1 100%;
