@@ -41,6 +41,10 @@
   border-bottom: 0;
 }
 
+.root > * {
+  padding: 3%;
+}
+
 .root > * a {
   color: var(--col-blue);
   transition: color 0.3s;
@@ -48,7 +52,6 @@
 
 .root > * a:hover {
   color: var(--col-text);
-  text-decoration: underline;
 }
 
 .root h5 {
@@ -75,7 +78,7 @@ a.readMore {
 /* -- Size 0 -- */
 
 .size-0 > * {
-  padding: 2% 12% 2% 2%;
+  padding-right: 12%;
 }
 
 .size-0 h4 a {
@@ -85,20 +88,23 @@ a.readMore {
 /* -- Social -- */
 
 .size-0 > .social {
-  padding: 2%;
+  padding: 3%;
 }
 
 /* -- Size 1 -- */
 
-.size-1 > * {
-  padding: 2% 3% 2% 2%;
-}
 .size-1 .imgContainer {
   flex: 7;
   margin: 0 2em 0 0;
 }
 .size-1 h3 {
   font-size: 1.75em;
+}
+.size-1 h3 a {
+  color: var(--col-black);
+}
+.size-1 h3 a:hover {
+  color: var(--col-blue);
 }
 .size-1 h4 em {
   font-style: normal;
@@ -117,6 +123,10 @@ a.readMore {
   background: white;
 }
 
+.size-2 > * {
+  padding: 0;
+}
+
 .size-2 h3,
 .size-2 h4,
 .size-2 h5,
@@ -132,6 +142,13 @@ a.readMore {
 }
 .size-2 .imgContainer {
   margin: 0 0 2em;
+}
+
+.size-2 h3 a {
+  color: var(--col-black);
+}
+.size-2 h3 a:hover {
+  color: var(--col-blue);
 }
 
 @media (min-width: 650px) {

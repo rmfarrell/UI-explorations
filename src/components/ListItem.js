@@ -29,10 +29,10 @@ function SmallSocialTeaser({
   return (
     <div className={styles.social}>
       <h4>
+        {date}
         <a href="https://twitter.com" target="_blank">
           @{author}
         </a>
-        {date}
       </h4>
       {image && <div style={placeholderImage(image.color, image.ratio)} />}
       <p>
@@ -79,7 +79,9 @@ function MediumTeaser({
           </a>
           {date}
         </h4>
-        <h3>{title}</h3>
+        <h3>
+          <a href="#">{title}</a>
+        </h3>
         <h5>By {author}</h5>
         <p>
           {summary} &nbsp;
@@ -106,18 +108,28 @@ function LargeTeaser({
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
-    <a href="#">
+    <div>
       <div
         className={styles.imgContainer}
         style={placeholderImage(color, ratio)}
       />
-      <h3>{title}</h3>
+      <h3>
+        <a href="#">{title}</a>
+      </h3>
       <h5>
-        By {author}, <em>{source}</em>
+        By {author},{' '}
+        <a href="#">
+          <em>{source}</em>
+        </a>
       </h5>
       <h5>{date}</h5>
-      <p>{summary}</p>
-    </a>
+      <p>
+        {summary} &nbsp;
+        <a className={styles.readMore} href="#" target="_blank">
+          &laquo;{source}&raquo;
+        </a>
+      </p>
+    </div>
   );
 }
 
