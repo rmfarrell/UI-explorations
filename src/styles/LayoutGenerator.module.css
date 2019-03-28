@@ -10,13 +10,13 @@
   background-color: white;
   margin: 0 1% 2%;
 }
-ul.small {
+.small {
   flex: 1 1 30em;
 }
-ul.medium {
+.medium {
   flex: 3 1 50em;
 }
-ul.large {
+.large {
   flex: 1 1 100%;
   display: flex;
   flex-wrap: nowrap;

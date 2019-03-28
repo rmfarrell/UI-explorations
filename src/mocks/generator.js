@@ -24,6 +24,7 @@ const lorem = new LoremIpsum({
 // -- Models
 
 function teaser() {
+  console.log('teaser called somehow??');
   return {
     id: uuid(),
     contentType: 'Article',
@@ -44,7 +45,7 @@ function SocialMediaItem() {
     id: uuid(),
     contentType: 'Social Media Item',
     source: pickRandomFromArray(['Twitter', 'Facebook', 'Instagram']),
-    text: '',
+    text: lorem.generateWords(randomInt(25, 200)),
     author: '',
     image: image(),
     date: date()
@@ -68,14 +69,14 @@ const articles = teasers;
 
 // -- Multiples
 function teasers(n = 1) {
-  const out = [];
-  for (let x = 0; x < n; x++) {
-    out.push(teaser());
-  }
-  return out;
+  return multiple('article', n);
 }
 
-function multiple(n = 0, type = 'Article') {
+function socialMediaItems(n = 1) {
+  return multiple('social', n);
+}
+
+function multiple(type = 'article', n = 1) {
   const out = [];
   for (let x = 0; x < n; x++) {
     switch (type) {
@@ -90,7 +91,6 @@ function multiple(n = 0, type = 'Article') {
       default:
         out.push(Article());
     }
-    out.push(teaser());
   }
   return out;
 }
@@ -104,7 +104,7 @@ function issues() {
 }
 
 function type() {
-  return TYPES[randomInt(0, TYPES.length)];
+  return pickRandomFromArray(TYPES.slice(0))[0];
 }
 
 function image() {
@@ -139,7 +139,7 @@ function randomInt(min = 0, max = 100) {
   return Math.floor(Math.random() * Math.floor(max)) + min;
 }
 
-function pickRandomFromArray(arr = [null], n = 1) {
+function pickRandomFromArray(arr = [], n = 1) {
   const out = [];
   for (let x = 0; x < n; x++) {
     let filtered = arr.filter(t => !out.includes(t));
@@ -156,6 +156,7 @@ export {
   TOPICS,
   Article,
   SocialMediaItem,
+  socialMediaItems,
   articles,
   multiple
 };
