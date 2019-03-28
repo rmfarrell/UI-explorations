@@ -31,6 +31,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   background: inherit;
+  align-items: start;
 }
 
 .large h2 {

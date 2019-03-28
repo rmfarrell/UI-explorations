@@ -117,13 +117,10 @@ function LargeTeaser({
         <h3>
           <a href="#">{title}</a>
         </h3>
-        <h5>
-          By {author},{' '}
-          <a href="#">
-            <em>{source}</em>
-          </a>
-        </h5>
-        <h5>{date}</h5>
+        <h4>
+          <a href="#">{source}</a> | {date}
+        </h4>
+        <h5>By {author}</h5>
         <p>
           {summary} &nbsp;
           <a className={styles.readMore} href="#" target="_blank">

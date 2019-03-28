@@ -117,8 +117,6 @@ a.readMore {
 /* -- Size 2 -- */
 
 .size-2 {
-  display: flex;
-  justify-content: stretch;
   background: white;
 }
 
@@ -148,6 +146,13 @@ a.readMore {
 }
 .size-2 h3 a:hover {
   color: var(--col-blue);
+}
+.size-2 h4 {
+  font-size: 1.4em;
+  color: var(--col-grey-text);
+  display: block;
+  text-transform: uppercase;
+  margin: 0 0 1em;
 }
 
 @media (min-width: 650px) {
