@@ -42,7 +42,7 @@ function SmallSocialTeaser({
           href="https://twitter.com"
           target="_blank"
         >
-          &laquo;{source}&raquo;
+          ({source})
         </a>
       </p>
     </div>
@@ -90,7 +90,7 @@ function MediumTeaser({
             href="https://twitter.com"
             target="_blank"
           >
-            &laquo;{source}&raquo;
+            ({source})
           </a>
         </p>
       </div>

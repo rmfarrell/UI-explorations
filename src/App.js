@@ -4,6 +4,7 @@ import InfiniteCollection from './components/InfiniteCollection';
 import ListContainer from './components/ListContainer';
 import ListContainerExpandable from './components/ListContainerExpandable';
 import ListContainerModal from './components/ListContainerModal';
+import ExpandingColumns from './components/ExpandingColumns';
 import LayoutGenerator from './components/LayoutGenerator';
 import styles from './styles/Nav.module.css';
 
@@ -15,7 +16,16 @@ function AppRouter() {
           <ul className="constrain">
             <li>
               <NavLink to="/layout" activeClassName={styles.active}>
-                <h2>Layout (Work in Progress)</h2>
+                <h2>Layout</h2>
+                <p>
+                  Context-sensitive layout. Render related content items w/
+                  configuration
+                </p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/expanding-columns" activeClassName={styles.active}>
+                <h2>Expanding Columns</h2>
                 <p>
                   Context-sensitive layout. Render related content items w/
                   configuration
@@ -68,6 +78,7 @@ function AppRouter() {
         />
         <Route path="/modal-list" exact component={ListContainerModal} />
         <Route path="/layout" exact component={LayoutGenerator} />
+        <Route path="/expanding-columns" exact component={ExpandingColumns} />
       </div>
     </Router>
   );
