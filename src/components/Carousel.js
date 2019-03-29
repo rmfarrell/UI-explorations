@@ -11,7 +11,7 @@ class Carousel extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={[this.props.className, styles.root].join(' ')}>
         <div
           className={styles.carousel}
           style={{

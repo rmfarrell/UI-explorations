@@ -4,7 +4,12 @@
 
 .root h2 {
   margin: 0.5em 2%;
-  font-size: 2em;
+  font-size: 1.75em;
+}
+
+.root h1 {
+  font-size: 2.75em;
+  margin: 2em 1% 0.5em;
 }
 
 .group {
@@ -18,11 +23,11 @@
 }
 
 .small {
-  flex: 1 1 30em;
+  flex: 1 1 20em;
   background-color: white;
 }
 .medium {
-  flex: 3 1 50em;
+  flex: 3 1 40em;
   background-color: white;
 }
 .large {

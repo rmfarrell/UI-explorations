@@ -121,7 +121,7 @@ a.readMore {
 }
 
 .size-2 > * {
-  padding: 0;
+  padding: 0 0 2em;
 }
 
 .size-2 h3,
