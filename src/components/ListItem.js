@@ -113,7 +113,7 @@ function LargeTeaser({
         className={styles.imgContainer}
         style={placeholderImage(color, ratio)}
       />
-      <div class={styles.textContainer}>
+      <div className={styles.textContainer}>
         <h3>
           <a href="#">{title}</a>
         </h3>

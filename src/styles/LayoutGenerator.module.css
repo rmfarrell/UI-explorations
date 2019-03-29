@@ -3,7 +3,7 @@
 }
 
 .root h2 {
-  margin: 0.5em 2%;
+  margin: 0.5em 1rem;
   font-size: 1.75em;
 }
 
@@ -14,21 +14,24 @@
 
 .group {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
 }
 
 .group > * {
   margin: 0 1% 2%;
+  transition: all 0.3s;
 }
 
 .small {
   flex: 1 1 20em;
   background-color: white;
+  max-width: 40em;
 }
 .medium {
-  flex: 3 1 40em;
+  flex: 3 1 50em;
   background-color: white;
+  max-width: 80em;
 }
 .large {
   flex: 1 1 100%;
@@ -42,4 +45,17 @@
 .large h2 {
   margin: 0.5em 0 1em;
   flex: 1 1 100%;
+}
+
+/* -- Expandles */
+.expandable {
+}
+
+button.expander {
+  display: block;
+  background-color: var(--col-grey);
+  width: 100%;
+  font-size: 1.4em;
+  font-family: var(--oswald);
+  text-transform: uppercase;
 }
