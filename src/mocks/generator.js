@@ -129,9 +129,7 @@ function capitalize(str = '') {
 }
 
 function randomColor() {
-  return `rgb(${randomInt(0, 150)}, 
-  ${50}, 
-  ${randomInt(0, 150)})`;
+  return `hsl(${randomInt(30, 30)},0%, ${randomInt(30, 30)}%)`;
 }
 
 function randomInt(min = 0, max = 100) {
