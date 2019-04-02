@@ -26,7 +26,9 @@ class LayoutGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      status: {},
       showStatus: true,
+      featuredCount: 0,
       categories: categories.reduce((acc, cat) => {
         acc[cat] = {
           total: 0,
@@ -36,17 +38,7 @@ class LayoutGenerator extends Component {
       }, {})
     };
   }
-  setArticleQuantity = ({ target }) => {
-    const { name, value } = target,
-      [key, val] = name.split('-'),
-      newVal = Object.assign(this.state.categories[key], { [val]: value });
-    console.log(newVal);
-    this.setState({
-      categories: Object.assign(this.state.categories, {
-        [key]: newVal
-      })
-    });
-  };
+
   render() {
     const subject = Object.keys(this.state.categories).map(cat => {
       return (
@@ -76,16 +68,39 @@ class LayoutGenerator extends Component {
         </div>
       );
     });
+
+    // const { singleArticleTiles, shortListTiles, featuredTiles } = this.update;
     return (
       <article className={[styles.root, 'constrain'].join(' ')}>
         <form>
           <label htmlFor="showStatus">Show Status</label>
-          <input type="checkbox" checked={this.state.showStatus} />
+          <input
+            type="checkbox"
+            name="showStatus"
+            checked={this.state.showStatus}
+            onChange={this.setBoolean}
+          />
+          <label htmlFor="featuredCount">Featured Count</label>
+          <input
+            type="number"
+            name="featuredCount"
+            value={this.state.featuredCount}
+            onChange={this.setInput}
+            min="0"
+            max="3"
+          />
           <div className={styles.articlesConfig}>
             <h3>Articles</h3>
             {subject}
           </div>
         </form>
+        <p>
+          singleArticleTiles: {JSON.stringify(this.update.singleArticleTiles)}
+        </p>
+        <p>shortListTiles: {JSON.stringify(this.update.shortListTiles)}</p>
+        <p>featuredTiles: {JSON.stringify(this.update.featuredTiles)}</p>
+        <p />
+        <p />
         <h1>Columns</h1>
         <div className={styles.group}>
           <ul className={styles.medium}>
@@ -153,5 +168,85 @@ class LayoutGenerator extends Component {
       </article>
     );
   }
+  get update() {
+    return update(
+      this.state.featuredCount,
+      this.state.categories,
+      this.state.showStatus
+    );
+  }
+  setInput = ({ target: { name = '', value = '' } }) => {
+    this.setState({ [name]: value });
+  };
+  setArticleQuantity = ({ target }) => {
+    const { name, value } = target,
+      [key, val] = name.split('-'),
+      newVal = Object.assign(this.state.categories[key], {
+        [val]: Number(value)
+      });
+    this.setState({
+      categories: Object.assign(this.state.categories, {
+        [key]: newVal
+      })
+    });
+  };
+  setBoolean = ({ target: { name = '', value = '' } }) => {
+    this.setState({ [name]: value !== 'on' });
+  };
 }
 export default LayoutGenerator;
+
+function update(featured = 0, categories = {}, showStatus = false) {
+  // TODO: Featured Articles and Short Article Lists may be made single- or double-wide
+  // ?????
+
+  const agg = Object.keys(categories).reduce(
+      (acc = 0, item) => {
+        acc.total += categories[item].total;
+        acc.images += categories[item].images;
+        return acc;
+      },
+      { images: 0, total: 0 }
+    ),
+    singleArticleTiles = [],
+    shortListTiles = [],
+    featuredTiles = [];
+
+  if (agg.total <= 4) {
+    // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
+    if (agg.total === agg.images) {
+      Object.keys(categories).forEach(cat => {
+        for (let x = 0; x < categories[cat].total; x++) {
+          singleArticleTiles.push(singleArticleTile(cat));
+        }
+      });
+      // If there are four or less articles total and any one does not have an image they are
+      // all put in one Short Article List.
+    } else {
+      singleArticleTiles.push(shortList(agg.total));
+    }
+  }
+
+  // double wide social media and video??
+
+  // console.log(total);
+
+  return {
+    singleArticleTiles,
+    shortListTiles,
+    featuredTiles
+  };
+}
+
+function shortList(length = 0, category = '') {
+  return {
+    length,
+    category
+  };
+}
+
+function singleArticleTile(category = '') {
+  return {
+    category
+  };
+}
