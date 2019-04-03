@@ -5,22 +5,22 @@ import ListItem from './ListItem';
 import styles from '../styles/LayoutGenerator.module.css';
 
 const categories = [
-  'latestDevelopments',
-  'policyDocuments',
-  'analysis',
-  'opinion',
-  'media',
-  'social',
-  'data',
-  'deepDives'
-];
-const mocks = {
-  columns: {
-    social: socialMediaItems(3),
-    small: articles(6),
-    medium: articles(3)
-  }
-};
+    'latestDevelopments',
+    'policyDocuments',
+    'analysis',
+    'opinion',
+    'media',
+    'social',
+    'data',
+    'deepDives'
+  ],
+  colorMap = {
+    map: '#A13D63',
+    status: '#351E29',
+    featured: '#C8E9A0',
+    single: '#F7A278',
+    list: '#6DD3CE'
+  };
 
 class LayoutGenerator extends Component {
   constructor(props) {
@@ -104,9 +104,17 @@ class LayoutGenerator extends Component {
           </form>
         </div>
         <div className={styles.main}>
-          <p>{JSON.stringify(this.tiles)}</p>
-          <div class={styles.grid}>
-            <Block />
+          <div className="grid">
+            <Block backgroundColor={colorMap.map}>
+              <p>Map</p>
+            </Block>
+            {this.tiles.map(tile => {
+              return (
+                <Block backgroundColor={colorMap[tile.type]}>
+                  <div>{JSON.stringify(tile, null, '\t')}</div>
+                </Block>
+              );
+            })}
           </div>
         </div>
 
@@ -230,8 +238,20 @@ class LayoutGenerator extends Component {
 }
 export default LayoutGenerator;
 
-function Block({ height = '400px', backgroundColor = '#000', className }) {
-  return <div className={className} style={{ backgroundColor, height }} />;
+function Block({
+  height = '200px',
+  backgroundColor = '#000',
+  className = '',
+  children = []
+}) {
+  return (
+    <div
+      className={[className, styles.block].join(' ')}
+      style={{ backgroundColor, height }}
+    >
+      {children}
+    </div>
+  );
 }
 
 function update(featuredCount = 0, categories = {}, showStatus = false) {
@@ -323,6 +343,7 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
 function shortListTile(length = 0, category = '') {
   const width = 1;
   return {
+    type: 'list',
     length,
     category,
     width
@@ -332,20 +353,21 @@ function shortListTile(length = 0, category = '') {
 function singleArticleTile(category = '') {
   const width = 1;
   return {
+    type: 'single',
     category
   };
 }
 
 function featuredTile() {
   return {
-    featured: true,
+    type: 'featured',
     width: 2
   };
 }
 
 function newStatusTile(width = 1) {
   return {
-    status: true,
+    type: 'status',
     width
   };
 }

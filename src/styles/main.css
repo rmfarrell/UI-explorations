@@ -1,4 +1,5 @@
 @import './type.css';
+@import './grid.css';
 @custom-media --viewport-medium (width <= 50rem);
 
 :root {

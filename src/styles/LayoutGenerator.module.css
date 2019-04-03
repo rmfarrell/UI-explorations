@@ -30,13 +30,21 @@
   font-weight: bold;
 }
 
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  white-space: pre;
+}
+
 .root input[type='number'] {
   width: 2.5em;
 }
 
 .main {
-  background-color: tan;
   flex: 1;
+  padding: 1% 0;
 }
 
 .categoryInput {

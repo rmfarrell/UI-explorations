@@ -1,0 +1,35 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.grid > * {
+  margin: 0 1% 2%;
+  transition: all 0.3s;
+}
+
+.grid > *,
+.grid__quarter {
+  flex: 1 1 20em;
+  max-width: 40em;
+}
+
+/* .small {
+  flex: 1 1 20em;
+  background-color: white;
+  max-width: 40em;
+}
+.medium {
+  flex: 3 1 50em;
+  background-color: white;
+  max-width: 80em;
+}
+.large {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: inherit;
+  align-items: start;
+} */
