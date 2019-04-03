@@ -64,7 +64,6 @@ class LayoutGenerator extends Component {
                 value={this.state.categories[cat].wide}
                 onChange={this.toggleWide}
               />
-              <p>{JSON.stringify(this.state.categories[cat])}</p>
             </div>
           )}
         </div>
@@ -106,7 +105,9 @@ class LayoutGenerator extends Component {
         </div>
         <div className={styles.main}>
           <p>{JSON.stringify(this.tiles)}</p>
-          <h1>TILES</h1>
+          <div class={styles.grid}>
+            <Block />
+          </div>
         </div>
 
         {/* <h1>Columns</h1>
@@ -228,6 +229,10 @@ class LayoutGenerator extends Component {
   };
 }
 export default LayoutGenerator;
+
+function Block({ height = '400px', backgroundColor = '#000', className }) {
+  return <div className={className} style={{ backgroundColor, height }} />;
+}
 
 function update(featuredCount = 0, categories = {}, showStatus = false) {
   // TODO: Featured Articles and Short Article Lists may be made single- or double-wide

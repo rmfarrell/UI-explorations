@@ -12,6 +12,11 @@
   margin: 2em 1% 0.5em;
 }
 
+.grid {
+  padding: 1%;
+  max-width: 1200px;
+}
+
 .rightGutter {
   width: 18em;
   padding: 1%;
