@@ -5,6 +5,7 @@ module.exports = ctx => ({
     require('autoprefixer'),
     require('postcss-custom-selectors'),
     require('postcss-custom-media'),
-    require('postcss-import')
+    require('postcss-import'),
+    require('lost')
   ]
 });

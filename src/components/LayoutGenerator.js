@@ -20,6 +20,10 @@ const categories = [
     featured: '#C8E9A0',
     single: '#F7A278',
     list: '#6DD3CE'
+  },
+  widthMap = {
+    1: 'grid--item__quarter',
+    2: 'grid--item__half'
   };
 
 class LayoutGenerator extends Component {
@@ -106,11 +110,14 @@ class LayoutGenerator extends Component {
         <div className={styles.main}>
           <div className="grid">
             <Block backgroundColor={colorMap.map}>
-              <p>Map</p>
+              <div>Map</div>
             </Block>
             {this.tiles.map(tile => {
               return (
-                <Block backgroundColor={colorMap[tile.type]}>
+                <Block
+                  backgroundColor={colorMap[tile.type]}
+                  className={widthMap[tile.width]}
+                >
                   <div>{JSON.stringify(tile, null, '\t')}</div>
                 </Block>
               );
@@ -340,7 +347,7 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
   }
 }
 
-function shortListTile(length = 0, category = '') {
+function shortListTile(length = 0, category = 'mixed') {
   const width = 1;
   return {
     type: 'list',
