@@ -1,5 +1,5 @@
 @lost flexbox flex;
-@lost gutter 20px;
+@lost gutter 0;
 /* .grid {
   display: flex;
   flex-wrap: wrap;
@@ -27,11 +27,12 @@
 .grid--item,
 .grid--item__quarter {
   lost-column: 3/12 0;
-  margin: 0 0 20px;
+  flex: 1 0 20%;
 }
 
 .grid--item__half {
   lost-column: 6/12 0;
+  flex: 1 0 40%;
 }
 
 /* .small {

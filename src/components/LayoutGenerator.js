@@ -255,7 +255,7 @@ class LayoutGenerator extends Component {
     });
   };
   randomize = () => {
-    this.setState({ showStatus: randomInt(0, 1) });
+    this.setState({ showStatus: coinToss() });
     this.setState({ featuredCount: randomInt(0, 4) });
     this.setState({
       categories: categories.reduce((acc, cat) => {
@@ -281,7 +281,7 @@ class LayoutGenerator extends Component {
 export default LayoutGenerator;
 
 function Block({
-  height = '200px',
+  height = '250px',
   backgroundColor = '#000',
   className = '',
   children = []
