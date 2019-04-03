@@ -25,36 +25,26 @@ const mocks = {
 class LayoutGenerator extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      status: {},
-      showStatus: true,
-      featuredCount: 0,
-      categories: categories.reduce((acc, cat) => {
-        acc[cat] = {
-          total: 0,
-          images: 0
-        };
-        return acc;
-      }, {})
-    };
+    this.state = this.reset();
   }
-
   render() {
     const subject = Object.keys(this.state.categories).map(cat => {
       return (
-        <div key={cat}>
+        <div key={cat} className={styles.categoryInput}>
           <h4>{cat}</h4>
-          <label htmlFor={`${cat}-total`}>total</label>
-          <input
-            type="number"
-            name={`${cat}-total`}
-            value={this.state.categories[cat].total}
-            onChange={this.setArticleQuantity}
-            min="0"
-          />
+          <div>
+            <label htmlFor={`${cat}-total`}>total</label>
+            <input
+              type="number"
+              name={`${cat}-total`}
+              value={this.state.categories[cat].total}
+              onChange={this.setArticleQuantity}
+              min="0"
+            />
+          </div>
           {this.state.categories[cat].total > 0 && cat !== 'media' && (
-            <span>
-              <label htmlFor={`${cat}-images`}>with images</label>
+            <div>
+              <label htmlFor={`${cat}-images`}>w/ images</label>
               <input
                 type="number"
                 name={`${cat}-images`}
@@ -63,46 +53,51 @@ class LayoutGenerator extends Component {
                 max={this.state.categories[cat].total}
                 min="0"
               />
-            </span>
+            </div>
           )}
         </div>
       );
     });
-
-    // const { singleArticleTiles, shortListTiles, featuredTiles } = this.update;
     return (
-      <article className={[styles.root, 'constrain'].join(' ')}>
-        <form>
-          <label htmlFor="showStatus">Show Status</label>
-          <input
-            type="checkbox"
-            name="showStatus"
-            checked={this.state.showStatus}
-            onChange={this.setBoolean}
-          />
-          <label htmlFor="featuredCount">Featured Count</label>
-          <input
-            type="number"
-            name="featuredCount"
-            value={this.state.featuredCount}
-            onChange={this.setInput}
-            min="0"
-            max="3"
-          />
-          <div className={styles.articlesConfig}>
-            <h3>Articles</h3>
-            {subject}
-          </div>
-        </form>
-        <p>
-          singleArticleTiles: {JSON.stringify(this.update.singleArticleTiles)}
-        </p>
-        <p>shortListTiles: {JSON.stringify(this.update.shortListTiles)}</p>
-        <p>featuredTiles: {JSON.stringify(this.update.featuredTiles)}</p>
-        <p>featuredTiles: {JSON.stringify(this.update.statusTile)}</p>
-        <p />
-        <p />
-        <h1>Columns</h1>
+      <article className={styles.root}>
+        <div className={styles.rightGutter}>
+          <form>
+            <div className={styles.categoryInput}>
+              <div>
+                <label htmlFor="showStatus">Show Status</label>
+                <input
+                  type="checkbox"
+                  name="showStatus"
+                  checked={this.state.showStatus}
+                  onChange={this.setBoolean}
+                />
+              </div>
+            </div>
+            <div className={styles.categoryInput}>
+              <div>
+                <label htmlFor="featuredCount">Featured Count</label>
+                <input
+                  type="number"
+                  name="featuredCount"
+                  value={this.state.featuredCount}
+                  onChange={this.setInput}
+                  min="0"
+                  max="3"
+                />
+              </div>
+            </div>
+            <div className={styles.articlesConfig}>{subject}</div>
+            <p>
+              <button onClick={this.reset}>Reset</button>
+            </p>
+          </form>
+        </div>
+        <div className={styles.main}>
+          <p>{JSON.stringify(this.tiles)}</p>
+          <h1>TILES</h1>
+        </div>
+
+        {/* <h1>Columns</h1>
         <div className={styles.group}>
           <ul className={styles.medium}>
             <h2>Article (medium)</h2>
@@ -165,11 +160,11 @@ class LayoutGenerator extends Component {
               return <ListItem data={t} key={t.id} />;
             })}
           </ul>
-        </div>
+        </div> */}
       </article>
     );
   }
-  get update() {
+  get tiles() {
     return update(
       this.state.featuredCount,
       this.state.categories,
@@ -193,6 +188,19 @@ class LayoutGenerator extends Component {
   };
   setBoolean = ({ target: { name = '' } }) => {
     this.setState({ [name]: !this.state[name] });
+  };
+  reset = () => {
+    return {
+      showStatus: true,
+      featuredCount: 0,
+      categories: categories.reduce((acc, cat) => {
+        acc[cat] = {
+          total: 0,
+          images: 0
+        };
+        return acc;
+      }, {})
+    };
   };
 }
 export default LayoutGenerator;
@@ -234,7 +242,7 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
     Object.keys(categories).forEach(cat => {
       const count = categories[cat].total;
       if (count > 1) {
-        shortListTiles.push(count, cat);
+        shortListTiles.push(shortListTile(count, cat));
       } else if (count === 1) {
         singleArticleTiles.push(singleArticleTile(cat));
       }
@@ -262,12 +270,24 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
     featuredTiles = [],
     statusTile
   }) {
-    return {
-      singleArticleTiles,
-      shortListTiles,
-      featuredTiles,
-      statusTile
-    };
+    let sorted = [];
+    sorted = sorted.concat(...shortListTiles, ...singleArticleTiles);
+
+    if (featuredTiles.length) {
+      sorted = [featuredTiles[0], ...sorted];
+
+      if (featuredTiles.length > 1) {
+        sorted = sorted.concat(featuredTiles[1]);
+      }
+      if (featuredTiles.length === 3) {
+        sorted.splice(Math.floor(sorted.length / 2), 0, featuredTiles[2]);
+      }
+    }
+
+    if (statusTile) {
+      sorted = [statusTile, ...sorted];
+    }
+    return sorted;
   }
 }
 
@@ -289,12 +309,14 @@ function singleArticleTile(category = '') {
 
 function featuredTile() {
   return {
+    featured: true,
     width: 2
   };
 }
 
 function newStatusTile(width = 1) {
   return {
+    status: true,
     width
   };
 }

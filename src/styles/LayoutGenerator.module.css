@@ -1,5 +1,5 @@
 .root {
-  margin-top: 2em;
+  display: flex;
 }
 
 .root h2 {
@@ -10,6 +10,49 @@
 .root h1 {
   font-size: 2.75em;
   margin: 2em 1% 0.5em;
+}
+
+.rightGutter {
+  width: 18em;
+  padding: 1%;
+  background-color: var(--col-grey);
+  color: #666;
+}
+
+.rightGutter h4 {
+  font: 1.75em var(--opensans);
+  margin: 0 0 0.5em;
+  font-weight: bold;
+}
+
+.root input[type='number'] {
+  width: 2.5em;
+}
+
+.main {
+  background-color: tan;
+  flex: 1;
+}
+
+.categoryInput {
+  font-size: 0.8em;
+  padding: 1em 0 0;
+}
+
+.categoryInput:first-of-type {
+  border-top: none;
+}
+
+.categoryInput h4,
+.categoryInput > div {
+  flex: 100%;
+}
+
+.categoryInput > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 0 1em;
 }
 
 .group {
