@@ -227,7 +227,7 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
       // If there are four or less articles total and any one does not have an image they are
       // all put in one Short Article List.
     } else {
-      singleArticleTiles.push(shortListTile(agg.total));
+      shortListTiles.push(shortListTile(agg.total));
     }
   } else {
     // There must be at least two items in a list, otherwise the item becomes a Single Article Tile.
