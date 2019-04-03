@@ -55,6 +55,18 @@ class LayoutGenerator extends Component {
               />
             </div>
           )}
+          {this.state.categories[cat].total > 0 && (
+            <div>
+              <label htmlFor={`${cat}-wide`}>show wide</label>
+              <input
+                type="checkbox"
+                name={`${cat}-wide`}
+                value={this.state.categories[cat].wide}
+                onChange={this.toggleWide}
+              />
+              <p>{JSON.stringify(this.state.categories[cat])}</p>
+            </div>
+          )}
         </div>
       );
     });
@@ -164,6 +176,17 @@ class LayoutGenerator extends Component {
       </article>
     );
   }
+  toggleWide = ({ target: { name = '' } }) => {
+    const [key] = name.split('-'),
+      newVal = Object.assign(this.state.categories[key], {
+        wide: !this.state.categories[key].wide
+      });
+    this.setState({
+      categories: Object.assign(this.state.categories, {
+        [key]: newVal
+      })
+    });
+  };
   get tiles() {
     return update(
       this.state.featuredCount,
@@ -196,7 +219,8 @@ class LayoutGenerator extends Component {
       categories: categories.reduce((acc, cat) => {
         acc[cat] = {
           total: 0,
-          images: 0
+          images: 0,
+          wide: false
         };
         return acc;
       }, {})
