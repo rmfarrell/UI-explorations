@@ -28,7 +28,8 @@ const categories = [
   },
   widthMap = {
     1: 'grid--item__quarter',
-    2: 'grid--item__half'
+    2: 'grid--item__half',
+    3: 'grid--item__full'
   };
 
 class LayoutGenerator extends Component {
@@ -407,9 +408,9 @@ function featuredTile() {
   };
 }
 
-function newStatusTile(width = 2) {
+function newStatusTile() {
   return {
     type: 'status',
-    width
+    width: 3
   };
 }
