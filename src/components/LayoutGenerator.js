@@ -99,6 +99,7 @@ class LayoutGenerator extends Component {
         </p>
         <p>shortListTiles: {JSON.stringify(this.update.shortListTiles)}</p>
         <p>featuredTiles: {JSON.stringify(this.update.featuredTiles)}</p>
+        <p>featuredTiles: {JSON.stringify(this.update.statusTile)}</p>
         <p />
         <p />
         <h1>Columns</h1>
@@ -190,15 +191,17 @@ class LayoutGenerator extends Component {
       })
     });
   };
-  setBoolean = ({ target: { name = '', value = '' } }) => {
-    this.setState({ [name]: value !== 'on' });
+  setBoolean = ({ target: { name = '' } }) => {
+    this.setState({ [name]: !this.state[name] });
   };
 }
 export default LayoutGenerator;
 
-function update(featured = 0, categories = {}, showStatus = false) {
+function update(featuredCount = 0, categories = {}, showStatus = false) {
   // TODO: Featured Articles and Short Article Lists may be made single- or double-wide
   // ?????
+
+  // TODO: single article no image??
 
   const agg = Object.keys(categories).reduce(
       (acc = 0, item) => {
@@ -210,7 +213,8 @@ function update(featured = 0, categories = {}, showStatus = false) {
     ),
     singleArticleTiles = [],
     shortListTiles = [],
-    featuredTiles = [];
+    featuredTiles = [],
+    statusTile = showStatus && newStatusTile();
 
   if (agg.total <= 4) {
     // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
@@ -223,30 +227,74 @@ function update(featured = 0, categories = {}, showStatus = false) {
       // If there are four or less articles total and any one does not have an image they are
       // all put in one Short Article List.
     } else {
-      singleArticleTiles.push(shortList(agg.total));
+      singleArticleTiles.push(shortListTile(agg.total));
     }
+  } else {
+    // There must be at least two items in a list, otherwise the item becomes a Single Article Tile.
+    Object.keys(categories).forEach(cat => {
+      const count = categories[cat].total;
+      if (count > 1) {
+        shortListTiles.push(count, cat);
+      } else if (count === 1) {
+        singleArticleTiles.push(singleArticleTile(cat));
+      }
+    });
+  }
+
+  for (let x = 0; x < featuredCount; x++) {
+    featuredTiles.push(featuredTile());
   }
 
   // double wide social media and video??
 
   // console.log(total);
 
-  return {
+  return sortTiles({
     singleArticleTiles,
     shortListTiles,
-    featuredTiles
-  };
+    featuredTiles,
+    statusTile
+  });
+
+  function sortTiles({
+    singleArticleTiles = [],
+    shortListTiles = [],
+    featuredTiles = [],
+    statusTile
+  }) {
+    return {
+      singleArticleTiles,
+      shortListTiles,
+      featuredTiles,
+      statusTile
+    };
+  }
 }
 
-function shortList(length = 0, category = '') {
+function shortListTile(length = 0, category = '') {
+  const width = 1;
   return {
     length,
-    category
+    category,
+    width
   };
 }
 
 function singleArticleTile(category = '') {
+  const width = 1;
   return {
     category
+  };
+}
+
+function featuredTile() {
+  return {
+    width: 2
+  };
+}
+
+function newStatusTile(width = 1) {
+  return {
+    width
   };
 }
