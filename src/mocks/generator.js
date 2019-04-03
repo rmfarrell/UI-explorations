@@ -155,5 +155,6 @@ export {
   SocialMediaItem,
   socialMediaItems,
   articles,
-  multiple
+  multiple,
+  randomInt
 };

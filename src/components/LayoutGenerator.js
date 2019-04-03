@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { articles, socialMediaItems, Article } from '../mocks/generator';
+import {
+  articles,
+  socialMediaItems,
+  Article,
+  randomInt
+} from '../mocks/generator';
 import Carousel from './Carousel';
 import ListItem from './ListItem';
 import styles from '../styles/LayoutGenerator.module.css';
@@ -29,7 +34,11 @@ const categories = [
 class LayoutGenerator extends Component {
   constructor(props) {
     super(props);
-    this.state = this.reset();
+    this.state = {
+      showStatus: true,
+      featuredCount: 0,
+      categories: {}
+    };
   }
   render() {
     const subject = Object.keys(this.state.categories).map(cat => {
@@ -76,36 +85,38 @@ class LayoutGenerator extends Component {
     return (
       <article className={styles.root}>
         <div className={styles.rightGutter}>
-          <form>
-            <div className={styles.categoryInput}>
-              <div>
-                <label htmlFor="showStatus">Show Status</label>
-                <input
-                  type="checkbox"
-                  name="showStatus"
-                  checked={this.state.showStatus}
-                  onChange={this.setBoolean}
-                />
-              </div>
+          <div className={styles.categoryInput}>
+            <div>
+              <label htmlFor="showStatus">Show Status</label>
+              <input
+                type="checkbox"
+                name="showStatus"
+                checked={this.state.showStatus}
+                onChange={this.setBoolean}
+              />
             </div>
-            <div className={styles.categoryInput}>
-              <div>
-                <label htmlFor="featuredCount">Featured Count</label>
-                <input
-                  type="number"
-                  name="featuredCount"
-                  value={this.state.featuredCount}
-                  onChange={this.setInput}
-                  min="0"
-                  max="3"
-                />
-              </div>
+          </div>
+          <div className={styles.categoryInput}>
+            <div>
+              <label htmlFor="featuredCount">Featured Count</label>
+              <input
+                type="number"
+                name="featuredCount"
+                value={this.state.featuredCount}
+                onChange={this.setInput}
+                min="0"
+                max="3"
+              />
             </div>
-            <div className={styles.articlesConfig}>{subject}</div>
-            <p>
+          </div>
+          <div className={styles.articlesConfig}>{subject}</div>
+
+          <div className={styles.categoryInput}>
+            <div>
               <button onClick={this.reset}>Reset</button>
-            </p>
-          </form>
+              <button onClick={this.randomize}>🎲</button>
+            </div>
+          </div>
         </div>
         <div className={styles.main}>
           <div className="grid">
@@ -230,9 +241,9 @@ class LayoutGenerator extends Component {
     this.setState({ [name]: !this.state[name] });
   };
   reset = () => {
-    return {
-      showStatus: true,
-      featuredCount: 0,
+    this.setState({ showStatus: true });
+    this.setState({ featuredCount: 0 });
+    this.setState({
       categories: categories.reduce((acc, cat) => {
         acc[cat] = {
           total: 0,
@@ -241,8 +252,31 @@ class LayoutGenerator extends Component {
         };
         return acc;
       }, {})
-    };
+    });
   };
+  randomize = () => {
+    this.setState({ showStatus: randomInt(0, 1) });
+    this.setState({ featuredCount: randomInt(0, 4) });
+    this.setState({
+      categories: categories.reduce((acc, cat) => {
+        const total = coinToss() ? (coinToss() ? randomInt(0, 12) : 1) : 0,
+          images = randomInt(0, total);
+        acc[cat] = {
+          total,
+          images,
+          wide: false
+        };
+        return acc;
+      }, {})
+    });
+
+    function coinToss() {
+      return randomInt(0, 2) === 0;
+    }
+  };
+  componentDidMount() {
+    this.reset();
+  }
 }
 export default LayoutGenerator;
 
@@ -315,10 +349,6 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
   for (let x = 0; x < featuredCount; x++) {
     featuredTiles.push(featuredTile());
   }
-
-  // double wide social media and video??
-
-  // console.log(total);
 
   return sortTiles({
     singleArticleTiles,

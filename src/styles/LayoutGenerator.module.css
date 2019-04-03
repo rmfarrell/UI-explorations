@@ -42,6 +42,11 @@
   width: 2.5em;
 }
 
+.root button {
+  margin: 1em 0 0;
+  font-size: 1.6em;
+}
+
 .main {
   flex: 1;
   padding: 1% 0;
