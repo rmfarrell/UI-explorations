@@ -27,7 +27,7 @@
 .grid--item,
 .grid--item__quarter {
   lost-column: 3/12 0;
-  flex: 1 0 20%;
+  flex: 1 0 25%;
   max-width: 50%;
 }
 
