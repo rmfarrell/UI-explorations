@@ -120,7 +120,7 @@ class LayoutGenerator extends Component {
         </div>
         <div className={styles.main}>
           <div className="grid">
-            <Block backgroundColor={colorMap.map}>
+            <Block backgroundColor={colorMap.map} className={styles.mapTile}>
               <div>Map</div>
             </Block>
             {this.tiles.map((tile, idx) => {
@@ -407,7 +407,7 @@ function featuredTile() {
   };
 }
 
-function newStatusTile(width = 1) {
+function newStatusTile(width = 2) {
   return {
     type: 'status',
     width

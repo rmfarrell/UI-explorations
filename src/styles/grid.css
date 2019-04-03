@@ -28,11 +28,13 @@
 .grid--item__quarter {
   lost-column: 3/12 0;
   flex: 1 0 20%;
+  max-width: 50%;
 }
 
 .grid--item__half {
   lost-column: 6/12 0;
   flex: 1 0 40%;
+  max-width: 50em;
 }
 
 /* .small {
