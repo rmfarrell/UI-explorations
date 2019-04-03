@@ -112,9 +112,10 @@ class LayoutGenerator extends Component {
             <Block backgroundColor={colorMap.map}>
               <div>Map</div>
             </Block>
-            {this.tiles.map(tile => {
+            {this.tiles.map((tile, idx) => {
               return (
                 <Block
+                  key={idx}
                   backgroundColor={colorMap[tile.type]}
                   className={widthMap[tile.width]}
                 >
@@ -266,8 +267,8 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
   // ?????
 
   // TODO: single article no image??
-
-  const agg = Object.keys(categories).reduce(
+  const keys = Object.keys(categories);
+  const agg = keys.reduce(
       (acc = 0, item) => {
         acc.total += categories[item].total;
         acc.images += categories[item].images;
@@ -278,7 +279,8 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
     singleArticleTiles = [],
     shortListTiles = [],
     featuredTiles = [],
-    statusTile = showStatus && newStatusTile();
+    statusTile = showStatus && newStatusTile(),
+    uniqueCategories = keys.filter(cat => categories[cat].total > 0);
 
   if (agg.total <= 4) {
     // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
@@ -291,14 +293,19 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
       // If there are four or less articles total and any one does not have an image they are
       // all put in one Short Article List.
     } else {
-      shortListTiles.push(shortListTile(agg.total));
+      shortListTiles.push(
+        shortListTile(
+          agg.total,
+          uniqueCategories.length > 1 ? 'mixed' : keys[0]
+        )
+      );
     }
   } else {
     // There must be at least two items in a list, otherwise the item becomes a Single Article Tile.
-    Object.keys(categories).forEach(cat => {
+    keys.forEach(cat => {
       const count = categories[cat].total;
       if (count > 1) {
-        shortListTiles.push(shortListTile(count, cat));
+        shortListTiles.push(shortListTile(count, cat, categories[cat].wide));
       } else if (count === 1) {
         singleArticleTiles.push(singleArticleTile(cat));
       }
@@ -347,18 +354,16 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
   }
 }
 
-function shortListTile(length = 0, category = 'mixed') {
-  const width = 1;
+function shortListTile(length = 0, category = 'mixed', wide = false) {
   return {
     type: 'list',
     length,
     category,
-    width
+    width: wide ? 2 : 1
   };
 }
 
 function singleArticleTile(category = '') {
-  const width = 1;
   return {
     type: 'single',
     category
