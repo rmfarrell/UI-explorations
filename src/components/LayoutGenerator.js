@@ -8,6 +8,7 @@ import {
 import Carousel from './Carousel';
 import ListItem from './ListItem';
 import styles from '../styles/LayoutGenerator.module.css';
+import { Z_FULL_FLUSH } from 'zlib';
 
 const categories = [
     'latestDevelopments',
@@ -25,11 +26,6 @@ const categories = [
     featured: '#C8E9A0',
     single: '#F7A278',
     list: '#6DD3CE'
-  },
-  widthMap = {
-    1: 'grid--item__quarter',
-    2: 'grid--item__half',
-    3: 'grid--item__full'
   };
 
 class LayoutGenerator extends Component {
@@ -121,17 +117,14 @@ class LayoutGenerator extends Component {
         </div>
         <div className={styles.main}>
           <div className="grid">
-            <Block backgroundColor={colorMap.map} className={styles.mapTile}>
-              <div>Map</div>
-            </Block>
-            {this.tiles.map((tile, idx) => {
+            {this.items.map((item, idx) => {
               return (
                 <Block
                   key={idx}
-                  backgroundColor={colorMap[tile.type]}
-                  className={widthMap[tile.width]}
+                  backgroundColor={colorMap[item.type]}
+                  className={item.className}
                 >
-                  <div>{JSON.stringify(tile, null, '\t')}</div>
+                  <div>{JSON.stringify(item, null, '\t')}</div>
                 </Block>
               );
             })}
@@ -216,8 +209,8 @@ class LayoutGenerator extends Component {
       })
     });
   };
-  get tiles() {
-    return update(
+  get items() {
+    return makeGrid(
       this.state.featuredCount,
       this.state.categories,
       this.state.showStatus
@@ -385,7 +378,164 @@ function update(featuredCount = 0, categories = {}, showStatus = false) {
   }
 }
 
-function shortListTile(length = 0, category = 'mixed', wide = false) {
+function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
+  // TODO: Featured Articles and Short Article Lists may be made single- or double-wide
+  // ?????
+
+  // TODO: single article no image??
+  const keys = Object.keys(categories),
+    agg = keys.reduce(
+      (acc = 0, item) => {
+        acc.total += categories[item].total;
+        acc.images += categories[item].images;
+        return acc;
+      },
+      { images: 0, total: 0 }
+    ),
+    statusTile = showStatus && newStatusTile(),
+    tiles = statusTile ? [mapTile(), statusTile] : [mapTile()],
+    uniqueCategories = keys.filter(cat => categories[cat].total > 0),
+    grid = Grid(Row(3));
+
+  for (let x = 0; x < featuredCount; x++) {
+    tiles.push(featuredTile());
+  }
+
+  if (agg.total <= 4) {
+    // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
+    if (agg.total === agg.images) {
+      keys.forEach(cat => {
+        for (let x = 0; x < categories[cat].total; x++) {
+          tiles.push(singleArticleTile(cat));
+        }
+      });
+      // If there are four or less articles total and any one does not have an image they are
+      // all put in one Short Article List.
+    } else {
+      tiles.push(
+        shortListTile(
+          agg.total,
+          uniqueCategories.length > 1 ? 'mixed' : keys[0]
+        )
+      );
+    }
+  } else {
+    keys.forEach(cat => {
+      if (!categories[cat].total) {
+        return;
+      }
+      tiles.push(categoryTile(categories[cat].total, cat));
+    });
+  }
+
+  // Make the grid
+  tiles.forEach(tile => {
+    grid.addItem(tile);
+  });
+
+  console.log(grid.items);
+
+  // console.log(grid.rows);
+
+  // for (let x = 0; x < featuredCount; x++) {
+  //   featuredTiles.push(featuredTile());
+  // }
+  return grid.items;
+}
+
+function Grid(head) {
+  const thirdClass = 'grid--item__third';
+  let tail = head;
+
+  function addItem(item) {
+    tail.add(item);
+    tail = findTail();
+  }
+
+  function separateFeatured() {}
+
+  function findTail() {
+    let row = head,
+      out;
+    while (row) {
+      out = row;
+      row = row.next;
+    }
+    return out;
+  }
+
+  return {
+    addItem,
+    separateFeatured,
+    head,
+    get rows() {
+      const out = [];
+      let row = head;
+      while (row) {
+        out.push([row.items]);
+        row = row.next;
+      }
+      return out;
+    },
+    get items() {
+      const itemClasses = {
+        1: 'grid--item__quarter',
+        2: 'grid--item__half'
+      };
+      return this.rows.reduce((acc = [], row, idx) => {
+        const rowNumber = idx;
+        const items = row.map((items, idx) => {
+          return items.map((item, idx) => {
+            let className = '';
+            if (rowNumber === 0) {
+              className = 'grid--item__third';
+            } else {
+              className = itemClasses[item.width];
+            }
+            item.className = className;
+            return item;
+          });
+        });
+        acc = acc.concat(...items);
+        return acc;
+      }, []);
+    }
+  };
+}
+
+function Row(size = 4) {
+  let capacity = size;
+
+  return {
+    next: null,
+    items: [],
+    get isGap() {
+      return capacity > 0;
+    },
+    add(item) {
+      if (!item.width) {
+        throw new Error('Cannot add item without width');
+      }
+      if (!capacity || capacity < item.width) {
+        const newRow = Row();
+        newRow.add(item);
+        this.next = newRow;
+        return;
+      }
+      this.items.push(item);
+      capacity = capacity - item.width;
+    }
+  };
+}
+
+function categoryTile() {
+  return shortListTile(...arguments);
+}
+
+function shortListTile(length = 2, category = 'mixed', wide = false) {
+  if (length < 2) {
+    return singleArticleTile(category);
+  }
   return {
     type: 'list',
     length,
@@ -397,7 +547,8 @@ function shortListTile(length = 0, category = 'mixed', wide = false) {
 function singleArticleTile(category = '') {
   return {
     type: 'single',
-    category
+    category,
+    width: 1
   };
 }
 
@@ -411,6 +562,13 @@ function featuredTile() {
 function newStatusTile() {
   return {
     type: 'status',
-    width: 3
+    width: 1
+  };
+}
+
+function mapTile() {
+  return {
+    type: 'map',
+    width: 1
   };
 }

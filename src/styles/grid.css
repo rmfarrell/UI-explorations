@@ -1,22 +1,5 @@
 @lost flexbox flex;
-@lost gutter 0;
-/* .grid {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  
-}
-
-.grid > * {
-  margin: 0 1% 2%;
-  transition: all 0.3s;
-}
-
-.grid > *,
-.grid__quarter {
-  flex: 1 1 20em;
-  max-width: 40em;
-} */
+@lost gutter 1em;
 
 .grid {
   lost-center: 980px;
@@ -26,20 +9,26 @@
 .grid > *,
 .grid--item,
 .grid--item__quarter {
-  lost-column: 3/12 0;
-  flex: 1 0 25%;
-  max-width: 40%;
+  lost-column: 3/12;
+  margin: 0 0 1em;
+  /* flex: 1 0 25%;
+  max-width: 40%; */
+}
+
+.grid--item__third {
+  lost-column: 4/12;
 }
 
 .grid--item__half {
-  lost-column: 6/12 0;
-  flex: 1 0 40%;
-  max-width: 50em;
+  lost-column: 6/12;
+  /* flex: 1 0 40%;
+  max-width: 50em; */
 }
 
 .grid--item__full {
-  flex: 1 0 40%;
-  max-width: none;
+  lost-column: 1;
+  /* flex: 1 0 40%;
+  max-width: none; */
 }
 
 /* .small {
