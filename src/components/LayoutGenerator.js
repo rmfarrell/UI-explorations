@@ -478,20 +478,16 @@ function Grid(head) {
       return out;
     },
     get items() {
-      const itemClasses = {
-        1: 'grid--item__quarter',
-        2: 'grid--item__half'
+      const classNames = {
+        first: ['grid--item__third', 'grid--item__two-thirds'],
+        rest: ['grid--item__quarter', 'grid--item__half']
       };
       return this.rows.reduce((acc = [], row, idx) => {
-        const rowNumber = idx;
+        const isFirst = idx === 0;
         const items = row.map((items, idx) => {
-          return items.map((item, idx) => {
-            let className = '';
-            if (rowNumber === 0) {
-              className = 'grid--item__third';
-            } else {
-              className = itemClasses[item.width];
-            }
+          return items.map(item => {
+            let className =
+              classNames[isFirst ? 'first' : 'rest'][item.width - 1];
             item.className = className;
             return item;
           });

@@ -16,11 +16,15 @@
 }
 
 .grid--item__third {
-  lost-column: 4/12;
+  lost-column: 4/12 3;
+}
+
+.grid--item__two-thirds {
+  lost-column: 8/12 2;
 }
 
 .grid--item__half {
-  lost-column: 6/12;
+  lost-column: 6/12 2;
   /* flex: 1 0 40%;
   max-width: 50em; */
 }
