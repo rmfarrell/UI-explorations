@@ -119,8 +119,8 @@ class LayoutGenerator extends Component {
           <div className="grid">
             {this.items.map((item, idx) => {
               return (
-                <div className={item.className}>
-                  <Block key={idx} backgroundColor={colorMap[item.type]}>
+                <div className={item.className} key={idx}>
+                  <Block backgroundColor={colorMap[item.type]}>
                     <div>{JSON.stringify(item, null, '\t')}</div>
                   </Block>
                 </div>
@@ -430,19 +430,12 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
   tiles.forEach(tile => {
     grid.addItem(tile);
   });
+  grid.balance();
 
-  console.log(grid.items);
-
-  // console.log(grid.rows);
-
-  // for (let x = 0; x < featuredCount; x++) {
-  //   featuredTiles.push(featuredTile());
-  // }
   return grid.items;
 }
 
 function Grid(head) {
-  const thirdClass = 'grid--item__third';
   let tail = head;
 
   function addItem(item) {
@@ -462,10 +455,35 @@ function Grid(head) {
     return out;
   }
 
+  function balance() {
+    let row = head;
+    while (row) {
+      // push featured down
+      if (row.gap) {
+        const fit = findFirstFit(row.next, 1);
+        fit && row.add(fit);
+      }
+      row = row.next;
+    }
+  }
+
+  function findFirstFit(row, size = 1) {
+    let out = null;
+    while (row && !out) {
+      const fitIdx = row.items.findIndex(({ width }) => width <= size);
+      if (fitIdx >= 0) {
+        out = row.remove(fitIdx);
+      }
+      row = row.next;
+    }
+    return out;
+  }
+
   return {
     addItem,
     separateFeatured,
     head,
+    balance,
     get rows() {
       const out = [];
       let row = head;
@@ -503,8 +521,8 @@ function Row(size = 4) {
   return {
     next: null,
     items: [],
-    get isGap() {
-      return capacity > 0;
+    get gap() {
+      return capacity;
     },
     add(item) {
       if (!item.width) {
@@ -518,6 +536,9 @@ function Row(size = 4) {
       }
       this.items.push(item);
       capacity = capacity - item.width;
+    },
+    remove(idx = 0) {
+      return this.items.splice(idx, 1)[0];
     }
   };
 }
