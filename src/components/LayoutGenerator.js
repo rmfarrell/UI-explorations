@@ -119,13 +119,11 @@ class LayoutGenerator extends Component {
           <div className="grid">
             {this.items.map((item, idx) => {
               return (
-                <Block
-                  key={idx}
-                  backgroundColor={colorMap[item.type]}
-                  className={item.className}
-                >
-                  <div>{JSON.stringify(item, null, '\t')}</div>
-                </Block>
+                <div className={item.className}>
+                  <Block key={idx} backgroundColor={colorMap[item.type]}>
+                    <div>{JSON.stringify(item, null, '\t')}</div>
+                  </Block>
+                </div>
               );
             })}
           </div>
