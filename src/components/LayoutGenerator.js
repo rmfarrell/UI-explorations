@@ -347,10 +347,12 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       grid.addItem(tile);
     });
   grid.expand();
-  grid.separateFeatured();
+  // grid.separateFeatured();
 
   // TODO: there is a bug here that adds "rows"
   // grid.balance();
+
+  console.log(grid.rows);
 
   return grid.items;
 }
@@ -426,9 +428,13 @@ function Grid(head) {
       }, 0);
     },
     expand() {
-      let row = head;
-      while (row) {
-        row = row.next;
+      const rows = this.rows.reverse();
+      let current = 0,
+        gaps = this.gaps;
+      while (gaps > 0 && rows[current]) {
+        const expanded = rows[current].expandItems(gaps);
+        gaps = gaps - expanded;
+        current++;
       }
     },
     separateFeatured() {
@@ -452,11 +458,6 @@ function Grid(head) {
         row = row.next;
       }
       return out;
-    },
-    get rowItems() {
-      return this.rows.reduce((acc, { items }) => {
-        return acc.concat(...items);
-      }, []);
     },
     get items() {
       const classNames = {
@@ -485,7 +486,26 @@ function Row(size = 4) {
     get gap() {
       return this.capacity;
     },
-    expand() {},
+    expandItems(max = 0) {
+      // console.log(max);
+
+      let current = 0;
+      while (current < this.items.length && max) {
+        const item = this.items[current];
+        let items = [];
+        if (item.canExpand) {
+          max--;
+          item.width = item.width + 1;
+          item.canExpand = false;
+          // items = this.items.slice(0);
+          // this.items = [];
+          // items.forEach(item => this.append(item));
+        }
+        current++;
+      }
+      console.log(max);
+      return max;
+    },
     append(item) {
       this.add(item);
     },
