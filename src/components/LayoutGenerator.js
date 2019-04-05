@@ -288,94 +288,6 @@ function Block({
   );
 }
 
-function update(featuredCount = 0, categories = {}, showStatus = false) {
-  // TODO: Featured Articles and Short Article Lists may be made single- or double-wide
-  // ?????
-
-  // TODO: single article no image??
-  const keys = Object.keys(categories);
-  const agg = keys.reduce(
-      (acc = 0, item) => {
-        acc.total += categories[item].total;
-        acc.images += categories[item].images;
-        return acc;
-      },
-      { images: 0, total: 0 }
-    ),
-    singleArticleTiles = [],
-    shortListTiles = [],
-    featuredTiles = [],
-    statusTile = showStatus && newStatusTile(),
-    uniqueCategories = keys.filter(cat => categories[cat].total > 0);
-
-  if (agg.total <= 4) {
-    // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
-    if (agg.total === agg.images) {
-      Object.keys(categories).forEach(cat => {
-        for (let x = 0; x < categories[cat].total; x++) {
-          singleArticleTiles.push(singleArticleTile(cat));
-        }
-      });
-      // If there are four or less articles total and any one does not have an image they are
-      // all put in one Short Article List.
-    } else {
-      shortListTiles.push(
-        shortListTile(
-          agg.total,
-          uniqueCategories.length > 1 ? 'mixed' : keys[0]
-        )
-      );
-    }
-  } else {
-    // There must be at least two items in a list, otherwise the item becomes a Single Article Tile.
-    keys.forEach(cat => {
-      const count = categories[cat].total;
-      if (count > 1) {
-        shortListTiles.push(shortListTile(count, cat, categories[cat].wide));
-      } else if (count === 1) {
-        singleArticleTiles.push(singleArticleTile(cat));
-      }
-    });
-  }
-
-  for (let x = 0; x < featuredCount; x++) {
-    featuredTiles.push(featuredTile());
-  }
-
-  return sortTiles({
-    singleArticleTiles,
-    shortListTiles,
-    featuredTiles,
-    statusTile
-  });
-
-  function sortTiles({
-    singleArticleTiles = [],
-    shortListTiles = [],
-    featuredTiles = [],
-    statusTile
-  }) {
-    let sorted = [];
-    sorted = sorted.concat(...shortListTiles, ...singleArticleTiles);
-
-    if (featuredTiles.length) {
-      sorted = [featuredTiles[0], ...sorted];
-
-      if (featuredTiles.length > 1) {
-        sorted = sorted.concat(featuredTiles[1]);
-      }
-      if (featuredTiles.length === 3) {
-        sorted.splice(Math.floor(sorted.length / 2), 0, featuredTiles[2]);
-      }
-    }
-
-    if (statusTile) {
-      sorted = [statusTile, ...sorted];
-    }
-    return sorted;
-  }
-}
-
 function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
   // TODO: Featured Articles and Short Article Lists may be made single- or double-wide
   // ?????
@@ -394,10 +306,6 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
     tiles = statusTile ? [mapTile(), statusTile] : [mapTile()],
     uniqueCategories = keys.filter(cat => categories[cat].total > 0),
     grid = Grid(Row(3));
-
-  for (let x = 0; x < featuredCount; x++) {
-    tiles.push(featuredTile());
-  }
 
   if (agg.total <= 4) {
     // If there are four or less articles and they all have images they are expanded as Single Article Tiles.
@@ -426,11 +334,18 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
     });
   }
 
+  for (let x = 0; x < featuredCount; x++) {
+    tiles.push(featuredTile(x === 0 ? 1 : 2));
+  }
+
   // Make the grid
-  tiles.forEach(tile => {
-    grid.addItem(tile);
-  });
-  grid.balance();
+  tiles
+    .sort((a, b) => b.sortWeight - a.sortWeight)
+    .forEach(tile => {
+      grid.addItem(tile);
+    });
+  grid.separateFeatured();
+  // grid.balance();
 
   return grid.items;
 }
@@ -442,8 +357,6 @@ function Grid(head) {
     tail.add(item);
     tail = findTail();
   }
-
-  function separateFeatured() {}
 
   function findTail() {
     let row = head,
@@ -479,9 +392,42 @@ function Grid(head) {
     return out;
   }
 
+  function swap(row, idx) {
+    if (!row.next || !row.next.items.length) {
+      return;
+    }
+    const toNext = row.remove(idx);
+    let toThis = [],
+      size = toNext.width;
+    while (size > 0 && row.next.items.length) {
+      const newSib = row.next.remove(0);
+      toThis.push(newSib);
+      size = size - newSib.width;
+    }
+    row.next.append(toNext);
+    toThis.forEach(item => {
+      row.append(item);
+    });
+  }
+
   return {
     addItem,
-    separateFeatured,
+    separateFeatured() {
+      let row = head;
+      while (row) {
+        const types = row.items.map(({ type }) => type),
+          first = types.indexOf('featured'),
+          last = types.lastIndexOf('featured');
+
+        if (first !== -1 && first !== last) {
+          swap(row, last);
+        }
+        // if (row.items.filter(({ type }) => type === 'featured').length > 1) {
+        //   console.log(row.items.lastIndexOf(''));
+        // }
+        row = row.next;
+      }
+    },
     head,
     balance,
     get rows() {
@@ -522,20 +468,38 @@ function Row(size = 4) {
     next: null,
     items: [],
     get gap() {
-      return capacity;
+      return this.capacity;
     },
-    add(item) {
+    reverse() {},
+    append(item) {
+      this.add(item);
+    },
+    prepend(item) {
+      this.add(item, true);
+    },
+    get width() {
+      return this.items.reduce((acc = 0, { width }) => {
+        acc += width;
+        return acc;
+      }, 0);
+    },
+    get capacity() {
+      return size - this.width;
+    },
+    add(item, toBeginning = false) {
       if (!item.width) {
         throw new Error('Cannot add item without width');
       }
-      if (!capacity || capacity < item.width) {
-        const newRow = Row();
-        newRow.add(item);
-        this.next = newRow;
+      if (!this.capacity || this.capacity < item.width) {
+        this.next = this.next || Row();
+        this.next.add(item, toBeginning);
         return;
       }
-      this.items.push(item);
-      capacity = capacity - item.width;
+      if (toBeginning) {
+        this.items.unshift(item);
+      } else {
+        this.items.push(item);
+      }
     },
     remove(idx = 0) {
       return this.items.splice(idx, 1)[0];
@@ -547,7 +511,7 @@ function categoryTile() {
   return shortListTile(...arguments);
 }
 
-function shortListTile(length = 2, category = 'mixed', wide = false) {
+function shortListTile(length = 2, category = 'mixed', images = 0) {
   if (length < 2) {
     return singleArticleTile(category);
   }
@@ -555,7 +519,8 @@ function shortListTile(length = 2, category = 'mixed', wide = false) {
     type: 'list',
     length,
     category,
-    width: wide ? 2 : 1
+    width: 1,
+    sortWeight: 10
   };
 }
 
@@ -563,27 +528,31 @@ function singleArticleTile(category = '') {
   return {
     type: 'single',
     category,
-    width: 1
+    width: 1,
+    sortWeight: 1
   };
 }
 
-function featuredTile() {
+function featuredTile(width = 1) {
   return {
     type: 'featured',
-    width: 2
+    width,
+    sortWeight: 20
   };
 }
 
 function newStatusTile() {
   return {
     type: 'status',
-    width: 1
+    width: 1,
+    sortWeight: 30
   };
 }
 
 function mapTile() {
   return {
     type: 'map',
-    width: 1
+    width: 1,
+    sortWeight: 40
   };
 }
