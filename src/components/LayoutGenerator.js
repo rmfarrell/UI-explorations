@@ -346,9 +346,11 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
     .forEach(tile => {
       grid.addItem(tile);
     });
-  grid.separateFeatured();
   grid.expand();
-  grid.balance();
+  grid.separateFeatured();
+
+  // TODO: there is a bug here that adds "rows"
+  // grid.balance();
 
   return grid.items;
 }
@@ -413,18 +415,22 @@ function Grid(head) {
     });
   }
 
-  function expand() {
-    let row = head;
-    while (row) {
-      row = row.next;
-    }
-  }
-
   return {
     addItem,
     head,
     balance,
-    expand,
+    get gaps() {
+      return this.rows.reduce((acc, item) => {
+        acc += item.gap;
+        return acc;
+      }, 0);
+    },
+    expand() {
+      let row = head;
+      while (row) {
+        row = row.next;
+      }
+    },
     separateFeatured() {
       let row = head;
       while (row) {
@@ -435,20 +441,22 @@ function Grid(head) {
         if (first !== -1 && first !== last) {
           swap(row, last);
         }
-        // if (row.items.filter(({ type }) => type === 'featured').length > 1) {
-        //   console.log(row.items.lastIndexOf(''));
-        // }
         row = row.next;
       }
     },
     get rows() {
-      const out = [];
+      let out = [];
       let row = head;
       while (row) {
-        out.push([row.items]);
+        out = out.concat(row);
         row = row.next;
       }
       return out;
+    },
+    get rowItems() {
+      return this.rows.reduce((acc, { items }) => {
+        return acc.concat(...items);
+      }, []);
     },
     get items() {
       const classNames = {
@@ -457,13 +465,11 @@ function Grid(head) {
       };
       return this.rows.reduce((acc = [], row, idx) => {
         const isFirst = idx === 0;
-        const items = row.map((items, idx) => {
-          return items.map(item => {
-            let className =
-              classNames[isFirst ? 'first' : 'rest'][item.width - 1];
-            item.className = className;
-            return item;
-          });
+        const items = row.items.map((item, idx) => {
+          let className =
+            classNames[isFirst ? 'first' : 'rest'][item.width - 1];
+          item.className = className;
+          return item;
         });
         acc = acc.concat(...items);
         return acc;
@@ -473,8 +479,6 @@ function Grid(head) {
 }
 
 function Row(size = 4) {
-  let capacity = size;
-
   return {
     next: null,
     items: [],
