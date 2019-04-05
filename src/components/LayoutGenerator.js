@@ -345,7 +345,7 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       grid.addItem(tile);
     });
   grid.separateFeatured();
-  // grid.balance();
+  grid.balance();
 
   return grid.items;
 }
