@@ -330,7 +330,9 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       if (!categories[cat].total) {
         return;
       }
-      tiles.push(categoryTile(categories[cat].total, cat));
+      tiles.push(
+        categoryTile(categories[cat].total, cat, categories[cat].images)
+      );
     });
   }
 
@@ -345,6 +347,7 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       grid.addItem(tile);
     });
   grid.separateFeatured();
+  grid.expand();
   grid.balance();
 
   return grid.items;
@@ -410,8 +413,18 @@ function Grid(head) {
     });
   }
 
+  function expand() {
+    let row = head;
+    while (row) {
+      row = row.next;
+    }
+  }
+
   return {
     addItem,
+    head,
+    balance,
+    expand,
     separateFeatured() {
       let row = head;
       while (row) {
@@ -428,8 +441,6 @@ function Grid(head) {
         row = row.next;
       }
     },
-    head,
-    balance,
     get rows() {
       const out = [];
       let row = head;
@@ -470,7 +481,7 @@ function Row(size = 4) {
     get gap() {
       return this.capacity;
     },
-    reverse() {},
+    expand() {},
     append(item) {
       this.add(item);
     },
@@ -512,15 +523,20 @@ function categoryTile() {
 }
 
 function shortListTile(length = 2, category = 'mixed', images = 0) {
+  let width = 1;
   if (length < 2) {
     return singleArticleTile(category);
+  }
+  if (category === 'media' || (category === 'social' && images > 1)) {
+    width = 2;
   }
   return {
     type: 'list',
     length,
     category,
-    width: 1,
-    sortWeight: 10
+    width,
+    sortWeight: 10,
+    canExpand: width < 2 && length > 3
   };
 }
 
@@ -529,7 +545,8 @@ function singleArticleTile(category = '') {
     type: 'single',
     category,
     width: 1,
-    sortWeight: 1
+    sortWeight: 1,
+    canExpand: true
   };
 }
 
@@ -545,7 +562,8 @@ function newStatusTile() {
   return {
     type: 'status',
     width: 1,
-    sortWeight: 30
+    sortWeight: 30,
+    canExpand: true
   };
 }
 
