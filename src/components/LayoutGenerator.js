@@ -345,13 +345,23 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
   }
 
   for (let x = 0; x < featuredCount; x++) {
-    // if (x === 0) {
-    //   tiles.featured.push(featuredTile(1, false));
-    // }
-    tiles.featured.push(featuredTile(1));
+    tiles.featured.push(featuredTile(x === 0 ? 1 : 2));
   }
 
-  grid.add(tiles.map, tiles.status, ...tiles.featured, ...tiles.rest);
+  // const tilesArr = [tiles.map, tiles.status, ...tiles.featured, ...tiles.rest]
+
+  // let tilesArr = [tiles.map];
+  // tiles.status && tilesArr.push(tiles.status);
+  // tilesArr = tilesArr.concat(...tiles.featured);
+  // tilesArr = tilesArr.concat(...tiles.rest);
+  let tilesArr = [
+    tiles.map,
+    tiles.status,
+    ...tiles.featured,
+    ...tiles.rest
+  ].filter(tile => tile);
+
+  grid.add(tilesArr);
 
   // Make the grid
   // tiles
@@ -419,7 +429,7 @@ function Grid(head) {
 
   function expandTiles(tiles = [], amt = 0) {
     let current = tiles.length - 1;
-    while (amt > 0 && current > 0) {
+    while (amt > 0 && tiles[current]) {
       if (tiles[current].canExpand) {
         console.log('expanded', tiles[current].category || tiles[current].type);
         tiles[current].width++;
@@ -440,11 +450,11 @@ function Grid(head) {
       }
       return cap;
     },
-    add(...tiles) {
-      const width = calculateWidth([...tiles]);
+    add(tiles = []) {
+      const width = calculateWidth(tiles);
       let cap = this.gaps - width;
       cap = this.addCapacity(cap);
-      tiles = expandTiles([...tiles], cap);
+      tiles = expandTiles(tiles, cap);
 
       tiles.forEach(item => {
         head.add(item);
@@ -615,11 +625,12 @@ function singleArticleTile(category = '') {
 }
 
 function featuredTile(width = 1) {
+  const canExpand = width <= 1;
   return {
     type: 'featured',
     width,
     sortWeight: 20,
-    canExpand: true
+    canExpand
   };
 }
 
