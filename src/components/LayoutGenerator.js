@@ -116,17 +116,21 @@ class LayoutGenerator extends Component {
           </div>
         </div>
         <div className={styles.main}>
-          <div className="grid">
-            {this.items.map((item, idx) => {
-              return (
-                <div className={item.className} key={idx}>
-                  <Block backgroundColor={colorMap[item.type]}>
-                    <div>{JSON.stringify(item, null, '\t')}</div>
-                  </Block>
-                </div>
-              );
-            })}
-          </div>
+          {this.items.map(({ items }, idx) => {
+            return (
+              <div className="grid" key={idx}>
+                {items.map((item, idx) => {
+                  return (
+                    <div className={item.className} key={idx}>
+                      <Block backgroundColor={colorMap[item.type]}>
+                        <div>{JSON.stringify(item, null, '\t')}</div>
+                      </Block>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
 
         {/* <h1>Columns</h1>
@@ -302,8 +306,12 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       },
       { images: 0, total: 0 }
     ),
-    statusTile = showStatus && newStatusTile(),
-    tiles = statusTile ? [mapTile(), statusTile] : [mapTile()],
+    tiles = {
+      map: mapTile(),
+      status: showStatus && newStatusTile(),
+      rest: [],
+      featured: []
+    },
     uniqueCategories = keys.filter(cat => categories[cat].total > 0),
     grid = Grid(Row(3));
 
@@ -312,13 +320,13 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
     if (agg.total === agg.images) {
       keys.forEach(cat => {
         for (let x = 0; x < categories[cat].total; x++) {
-          tiles.push(singleArticleTile(cat));
+          tiles.rest.push(singleArticleTile(cat));
         }
       });
       // If there are four or less articles total and any one does not have an image they are
       // all put in one Short Article List.
     } else {
-      tiles.push(
+      tiles.rest.push(
         shortListTile(
           agg.total,
           uniqueCategories.length > 1 ? 'mixed' : keys[0]
@@ -330,51 +338,39 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       if (!categories[cat].total) {
         return;
       }
-      tiles.push(
+      tiles.rest.push(
         categoryTile(categories[cat].total, cat, categories[cat].images)
       );
     });
   }
 
   for (let x = 0; x < featuredCount; x++) {
-    tiles.push(featuredTile(x === 0 ? 1 : 2));
+    // if (x === 0) {
+    //   tiles.featured.push(featuredTile(1, false));
+    // }
+    tiles.featured.push(featuredTile(1));
   }
 
+  grid.add(tiles.map, tiles.status, ...tiles.featured, ...tiles.rest);
+
   // Make the grid
-  tiles
-    .sort((a, b) => b.sortWeight - a.sortWeight)
-    .forEach(tile => {
-      grid.addItem(tile);
-    });
-  grid.expand();
+  // tiles
+  //   .sort((a, b) => b.sortWeight - a.sortWeight)
+  //   .forEach(tile => {
+  //     grid.addItem(tile);
+  //   });
+  // grid.expand();
   // grid.separateFeatured();
 
   // TODO: there is a bug here that adds "rows"
   // grid.balance();
 
-  console.log(grid.rows);
+  // return grid.items;
 
-  return grid.items;
+  return grid.rows;
 }
 
 function Grid(head) {
-  let tail = head;
-
-  function addItem(item) {
-    tail.add(item);
-    tail = findTail();
-  }
-
-  function findTail() {
-    let row = head,
-      out;
-    while (row) {
-      out = row;
-      row = row.next;
-    }
-    return out;
-  }
-
   function balance() {
     let row = head;
     while (row) {
@@ -417,10 +413,55 @@ function Grid(head) {
     });
   }
 
+  function calculateWidth(items = []) {
+    return items.reduce((acc, { width }) => (acc += width), 0);
+  }
+
+  function expandTiles(tiles = [], amt = 0) {
+    let current = tiles.length - 1;
+    while (amt > 0 && current > 0) {
+      if (tiles[current].canExpand) {
+        console.log('expanded', tiles[current].category || tiles[current].type);
+        tiles[current].width++;
+        amt--;
+      }
+      current--;
+    }
+    return tiles;
+  }
+
   return {
-    addItem,
     head,
     balance,
+    addCapacity(cap) {
+      while (cap < 0) {
+        this.tail.next = Row(4);
+        cap = cap + 4;
+      }
+      return cap;
+    },
+    add(...tiles) {
+      const width = calculateWidth([...tiles]);
+      let cap = this.gaps - width;
+      cap = this.addCapacity(cap);
+      tiles = expandTiles([...tiles], cap);
+
+      tiles.forEach(item => {
+        head.add(item);
+      });
+    },
+    get tail() {
+      let row = head,
+        out;
+      while (row) {
+        out = row;
+        row = row.next;
+      }
+      return out;
+    },
+    addRow(cap = 4) {
+      this.tail.next = Row(cap);
+    },
     get gaps() {
       return this.rows.reduce((acc, item) => {
         acc += item.gap;
@@ -458,28 +499,26 @@ function Grid(head) {
         row = row.next;
       }
       return out;
-    },
-    get items() {
-      const classNames = {
-        first: ['grid--item__third', 'grid--item__two-thirds'],
-        rest: ['grid--item__quarter', 'grid--item__half']
-      };
-      return this.rows.reduce((acc = [], row, idx) => {
-        const isFirst = idx === 0;
-        const items = row.items.map((item, idx) => {
-          let className =
-            classNames[isFirst ? 'first' : 'rest'][item.width - 1];
-          item.className = className;
-          return item;
-        });
-        acc = acc.concat(...items);
-        return acc;
-      }, []);
     }
+    // get items() {
+    //   return this.rows.reduce((acc = [], row, idx) => {
+    //     const isFirst = idx === 0;
+    //     const items = row.items.map((item, idx) => {
+    //       item.className = className;
+    //       return item;
+    //     });
+    //     acc = acc.concat(...items);
+    //     return acc;
+    //   }, []);
+    // }
   };
 }
 
 function Row(size = 4) {
+  const classNames = {
+    3: ['grid--item__third', 'grid--item__two-thirds'],
+    4: ['grid--item__quarter', 'grid--item__half']
+  };
   return {
     next: null,
     items: [],
@@ -535,6 +574,7 @@ function Row(size = 4) {
       } else {
         this.items.push(item);
       }
+      item.className = classNames[size][item.width - 1];
     },
     remove(idx = 0) {
       return this.items.splice(idx, 1)[0];
@@ -578,7 +618,8 @@ function featuredTile(width = 1) {
   return {
     type: 'featured',
     width,
-    sortWeight: 20
+    sortWeight: 20,
+    canExpand: true
   };
 }
 
