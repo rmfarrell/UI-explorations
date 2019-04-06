@@ -343,7 +343,7 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
       );
     });
   }
-
+  // featuredCount = 3;
   for (let x = 0; x < featuredCount; x++) {
     tiles.featured.push(featuredTile(x === 0 ? 1 : 2));
   }
@@ -362,6 +362,8 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
   ].filter(tile => tile);
 
   grid.add(tilesArr);
+  grid.separateFeatured();
+  grid.balance();
 
   // Make the grid
   // tiles
@@ -370,7 +372,6 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
   //     grid.addItem(tile);
   //   });
   // grid.expand();
-  // grid.separateFeatured();
 
   // TODO: there is a bug here that adds "rows"
   // grid.balance();
@@ -381,18 +382,6 @@ function makeGrid(featuredCount = 0, categories = {}, showStatus = false) {
 }
 
 function Grid(head) {
-  function balance() {
-    let row = head;
-    while (row) {
-      // push featured down
-      if (row.gap) {
-        const fit = findFirstFit(row.next, 1);
-        fit && row.add(fit);
-      }
-      row = row.next;
-    }
-  }
-
   function findFirstFit(row, size = 1) {
     let out = null;
     while (row && !out) {
@@ -433,6 +422,7 @@ function Grid(head) {
       if (tiles[current].canExpand) {
         console.log('expanded', tiles[current].category || tiles[current].type);
         tiles[current].width++;
+        tiles[current].canExpand = false;
         amt--;
       }
       current--;
@@ -442,7 +432,20 @@ function Grid(head) {
 
   return {
     head,
-    balance,
+    balance() {
+      let row = head;
+      while (row) {
+        let tries = 4;
+        console.log(row.capacity, tries);
+        while (row.capacity > 0 && tries > 0) {
+          if (row.next) {
+            row.add(row.next.remove(0));
+          }
+          tries--;
+        }
+        row = row.next;
+      }
+    },
     addCapacity(cap) {
       while (cap < 0) {
         this.tail.next = Row(4);
@@ -496,7 +499,9 @@ function Grid(head) {
           last = types.lastIndexOf('featured');
 
         if (first !== -1 && first !== last) {
-          swap(row, last);
+          // console.log(row.remove(last));
+          row.next = row.next || Row(4);
+          row.next.append(row.remove(last));
         }
         row = row.next;
       }
@@ -572,7 +577,9 @@ function Row(size = 4) {
     },
     add(item, toBeginning = false) {
       if (!item.width) {
-        throw new Error('Cannot add item without width');
+        throw new Error(
+          `Cannot add item without width: ${JSON.stringify(item, null, '\t')}`
+        );
       }
       if (!this.capacity || this.capacity < item.width) {
         this.next = this.next || Row();
