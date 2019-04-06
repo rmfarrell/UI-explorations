@@ -12,13 +12,22 @@ class Collection extends Component {
     };
   }
   render() {
+    const {
+      className,
+      children,
+      variant,
+      groupSize,
+      showControls = true,
+      showReadMore = false,
+      perpage = 5
+    } = this.props;
     return (
-      <aside className={[styles.root, this.props.className].join(' ')}>
-        {this.props.children && <header>{this.props.children}</header>}
+      <aside className={[styles.root, className].join(' ')}>
+        {children && <header>{children}</header>}
         <Carousel
-          variant={this.props.variant}
-          groupSize={this.props.groupSize}
-          showControls={this.props.showControls}
+          variant={variant}
+          groupSize={groupSize}
+          showControls={showControls && this.total > perpage}
         >
           {this.slides.map((collection, idx) => {
             return (
@@ -30,7 +39,7 @@ class Collection extends Component {
             );
           })}
         </Carousel>
-        {this.props.showReadMore && (
+        {showReadMore && (
           <button onClick={this.props.expand} className={styles.readmore}>
             Read more ({this.total})
           </button>

@@ -6,27 +6,20 @@ import {
   randomInt
 } from '../mocks/generator';
 import Carousel from './Carousel';
-import ListItem from './ListItem';
+import List from './List';
 import styles from '../styles/LayoutGenerator.module.css';
 import { Grid, Row } from '../grid';
 
 const categories = [
-    'latestDevelopments',
-    'policyDocuments',
-    'analysis',
-    'opinion',
-    'media',
-    'social',
-    'data',
-    'deepDives'
-  ],
-  colorMap = {
-    map: '#A13D63',
-    status: '#351E29',
-    featured: '#C8E9A0',
-    single: '#F7A278',
-    list: '#6DD3CE'
-  };
+  'latestDevelopments',
+  'policyDocuments',
+  'analysis',
+  'opinion',
+  'media',
+  'social',
+  'data',
+  'deepDives'
+];
 
 class LayoutGenerator extends Component {
   constructor(props) {
@@ -130,13 +123,17 @@ class LayoutGenerator extends Component {
         <div className={styles.main}>
           {this.items.map(({ items }, idx) => {
             return (
-              <div className="grid" key={idx}>
+              <div
+                className="grid"
+                key={idx}
+                style={{
+                  outline: this.state.debug ? '1px dotted Fuchsia' : ''
+                }}
+              >
                 {items.map((item, idx) => {
                   return (
                     <div className={item.className} key={idx}>
-                      <Block backgroundColor={colorMap[item.type]}>
-                        <div>{JSON.stringify(item, null, '\t')}</div>
-                      </Block>
+                      {this.tile(item)}
                     </div>
                   );
                 })}
@@ -212,6 +209,47 @@ class LayoutGenerator extends Component {
       </article>
     );
   }
+  tile = tile => {
+    const { type, length = 0, width = 1 } = tile,
+      colorMap = {
+        map: '#A13D63',
+        status: '#351E29',
+        featured: '#C8E9A0',
+        single: '#F7A278',
+        list: '#6DD3CE'
+      };
+    console.log(tile.length);
+
+    if (this.state.debug) {
+      return (
+        <Block backgroundColor={colorMap[type]}>
+          <div>{JSON.stringify(tile, null, '\t')}</div>
+        </Block>
+      );
+    }
+
+    switch (type) {
+      case 'list':
+        return (
+          <List
+            className={styles.list}
+            variant="progress"
+            showControls={true}
+            total={length}
+            groupSize={width}
+            perpage={3}
+          >
+            {length}
+          </List>
+        );
+      default:
+        return (
+          <Block>
+            <p>{type}</p>
+          </Block>
+        );
+    }
+  };
   toggleWide = ({ target: { name = '' } }) => {
     const [key] = name.split('-'),
       newVal = Object.assign(this.state.categories[key], {
