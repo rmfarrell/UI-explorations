@@ -47,7 +47,7 @@
   width: 2.5em;
 }
 
-.root button {
+.root .rightGutter button {
   margin: 1em 0 0;
   font-size: 1.6em;
 }

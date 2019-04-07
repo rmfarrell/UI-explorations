@@ -26,10 +26,9 @@ export default function List({
   //   }
   let slide = [],
     slides = [],
-    slidesCounts = Math.ceil(total / perpage),
     counter = total;
   while (counter > 0) {
-    if (slide.length < perpage) {
+    if (slide.length < perpage * groupSize) {
       slide.push(teaser());
     } else {
       slides.push(slide);
@@ -45,18 +44,17 @@ export default function List({
   //   slides.push(slide);
   //   slide = [];
   // }
-  console.log(slides);
+  const ulClassName = [styles.itemList, styles[`width${groupSize}`]].join(' ');
   return (
     <aside className={[styles.root, className].join(' ')}>
       {children && <header>{children}</header>}
       <Carousel
         variant={variant}
-        groupSize={groupSize}
         showControls={showControls && total > perpage * groupSize}
       >
         {slides.map((collection, idx) => {
           return (
-            <ul key={idx} className={styles.itemList}>
+            <ul key={idx} className={ulClassName}>
               {collection.map(item => {
                 return <ListItem key={item.id} data={item} />;
               })}

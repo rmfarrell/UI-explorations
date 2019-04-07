@@ -6,6 +6,7 @@ import {
   randomInt
 } from '../mocks/generator';
 import Carousel from './Carousel';
+import changeCase from 'change-case';
 import List from './List';
 import styles from '../styles/LayoutGenerator.module.css';
 import { Grid, Row } from '../grid';
@@ -210,7 +211,7 @@ class LayoutGenerator extends Component {
     );
   }
   tile = tile => {
-    const { type, length = 0, width = 1 } = tile,
+    const { type, length = 0, width = 1, category = '' } = tile,
       colorMap = {
         map: '#A13D63',
         status: '#351E29',
@@ -239,7 +240,7 @@ class LayoutGenerator extends Component {
             groupSize={width}
             perpage={3}
           >
-            {length}
+            <h4>{category !== 'mixed' && changeCase.title(category)}</h4>
           </List>
         );
       default:
