@@ -8,6 +8,7 @@ import {
 import Carousel from './Carousel';
 import changeCase from 'change-case';
 import List from './List';
+import ListItem from './ListItem';
 import styles from '../styles/LayoutGenerator.module.css';
 import { Grid, Row } from '../grid';
 
@@ -211,6 +212,7 @@ class LayoutGenerator extends Component {
     );
   }
   tile = tile => {
+    let data = {};
     const { type, length = 0, width = 1, category = '' } = tile,
       colorMap = {
         map: '#A13D63',
@@ -219,7 +221,6 @@ class LayoutGenerator extends Component {
         single: '#F7A278',
         list: '#6DD3CE'
       };
-    console.log(tile.length);
 
     if (this.state.debug) {
       return (
@@ -238,10 +239,32 @@ class LayoutGenerator extends Component {
             showControls={true}
             total={length}
             groupSize={width}
-            perpage={3}
+            perpage={4}
           >
-            <h4>{category !== 'mixed' && changeCase.title(category)}</h4>
+            <h4 className={styles.categoryHeader}>
+              {category !== 'mixed' && changeCase.title(category)}
+            </h4>
           </List>
+        );
+      case 'single':
+        data = Object.assign(Article(), {
+          category
+        });
+        // TODO: width is shifted since lsat prototype
+        return (
+          <ListItem data={data} size={width}>
+            <h4 className={styles.categoryHeader}>
+              {changeCase.title(category)}
+            </h4>
+          </ListItem>
+        );
+      case 'featured':
+        return (
+          <ListItem data={Article()} size={2}>
+            <h4 className={styles.categoryHeader}>
+              {changeCase.title(category)}
+            </h4>
+          </ListItem>
         );
       default:
         return (

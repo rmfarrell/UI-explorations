@@ -15,7 +15,6 @@
 .root > a:hover {
   background: var(--col-light-grey);
 }
-
 .root h4 {
   font: normal 1.3em var(--oswald);
   color: var(--col-orange);

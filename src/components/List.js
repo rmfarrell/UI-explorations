@@ -56,7 +56,11 @@ export default function List({
           return (
             <ul key={idx} className={ulClassName}>
               {collection.map(item => {
-                return <ListItem key={item.id} data={item} />;
+                return (
+                  <li>
+                    <ListItem key={item.id} data={item} />
+                  </li>
+                );
               })}
             </ul>
           );

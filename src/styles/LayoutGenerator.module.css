@@ -12,6 +12,12 @@
   margin: 2em 1% 0.5em;
 }
 
+h4.categoryHeader {
+  font: 1.4em var(--oswald);
+  text-transform: uppercase;
+  margin: 0.75em 0.75em 0.25em;
+}
+
 .grid {
   padding: 1%;
   max-width: 1200px;

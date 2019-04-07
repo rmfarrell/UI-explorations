@@ -6,15 +6,17 @@ export default function ListItem({
   data = {},
   className = '',
   size = 0,
-  type = 'article'
+  type = 'article',
+  children = []
 }) {
   return (
-    <li className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
+    <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
+      {children}
       {size === 0 && type === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && type === 'article' && <SmallTeaser {...data} />}
-      {size === 1 && type === 'article' && <MediumTeaser {...data} />}
+      {size === 1 && type === 'article' && <LargeTeaser {...data} />}
       {size === 2 && type === 'article' && <LargeTeaser {...data} />}
-    </li>
+    </div>
   );
 }
 
