@@ -35,7 +35,6 @@ export default function List({
       slides.push(slide);
       slide = [teaser()];
     }
-    console.log(counter);
     counter--;
   }
   slides.push(slide);
