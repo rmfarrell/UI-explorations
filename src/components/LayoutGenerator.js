@@ -253,19 +253,13 @@ class LayoutGenerator extends Component {
         // TODO: width is shifted since lsat prototype
         return (
           <ListItem data={data} size={width}>
-            <h4 className={styles.categoryHeader}>
+            {/* <h4 className={styles.categoryHeader}>
               {changeCase.title(category)}
-            </h4>
+            </h4> */}
           </ListItem>
         );
       case 'featured':
-        return (
-          <ListItem data={Article()} size={2}>
-            <h4 className={styles.categoryHeader}>
-              {changeCase.title(category)}
-            </h4>
-          </ListItem>
-        );
+        return <ListItem data={Article()} size={2} />;
       default:
         return (
           <Block>
