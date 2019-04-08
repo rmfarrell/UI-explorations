@@ -10,7 +10,6 @@
 
 .grid > * {
   box-sizing: border-box;
-  /* should be padding in prod */
   padding: 0.5em;
 }
 

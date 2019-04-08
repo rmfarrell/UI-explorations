@@ -1,3 +1,8 @@
+.root {
+  height: 100%;
+  background-color: white;
+}
+
 .root h3 {
   font: bold 1.5em var(--opensans);
 }
@@ -18,8 +23,10 @@
 .root h4 {
   font: normal 1.3em var(--oswald);
   color: var(--col-orange);
-  display: flex;
-  justify-content: space-between;
+}
+
+.root h4 > * {
+  flex: 1;
 }
 
 .root h4 a {
@@ -91,9 +98,17 @@ a.readMore {
 
 /* -- Size 1 -- */
 
+.size-1 > div {
+  padding: 0 0 2em;
+}
+
+.size-1 > div > * {
+  padding: 0 1em;
+}
+
 .size-1 .imgContainer {
   flex: 7;
-  margin: 0 2em 0 0;
+  margin: 0 0 1em 0;
 }
 .size-1 h3 {
   font-size: 1.75em;
@@ -117,6 +132,7 @@ a.readMore {
 
 .size-2 {
   background: white;
+  height: 100%;
 }
 
 .size-2 > * {

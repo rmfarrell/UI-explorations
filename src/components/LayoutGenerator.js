@@ -61,7 +61,7 @@ class LayoutGenerator extends Component {
               />
             </div>
           )}
-          {this.state.categories[cat].total > 0 && (
+          {/* {this.state.categories[cat].total > 0 && (
             <div>
               <label htmlFor={`${cat}-wide`}>show wide</label>
               <input
@@ -71,7 +71,7 @@ class LayoutGenerator extends Component {
                 onChange={this.toggleWide}
               />
             </div>
-          )}
+          )} */}
         </div>
       );
     });
@@ -259,7 +259,9 @@ class LayoutGenerator extends Component {
           </ListItem>
         );
       case 'featured':
-        return <ListItem data={Article()} size={2} />;
+        return (
+          <ListItem data={Article()} className={styles.featured} size={2} />
+        );
       default:
         return (
           <Block>
@@ -346,7 +348,7 @@ export default LayoutGenerator;
 
 function Block({
   height = '250px',
-  backgroundColor = '#000',
+  backgroundColor = '#666',
   className = '',
   children = []
 }) {

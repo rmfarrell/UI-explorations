@@ -129,3 +129,8 @@ button.expander {
   font-family: var(--oswald);
   text-transform: uppercase;
 }
+
+.featured {
+  background-color: var(--col-grey);
+  /* color: white; */
+}
