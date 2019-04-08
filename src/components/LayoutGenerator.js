@@ -77,7 +77,7 @@ class LayoutGenerator extends Component {
     });
     return (
       <article className={styles.root}>
-        <div className={styles.rightGutter}>
+        <div className={styles.gutter}>
           <div className={styles.categoryInput}>
             <div>
               <label htmlFor="showStatus">Show Status</label>

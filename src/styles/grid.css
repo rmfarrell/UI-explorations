@@ -57,6 +57,7 @@
 
   .grid--item__third {
     width: 33.333333%;
+    flex: auto 0;
   }
 
   .grid--item__two-thirds {

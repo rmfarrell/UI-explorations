@@ -18,19 +18,19 @@ h4.categoryHeader {
   margin: 0.75em 0.75em 0.25em;
 }
 
-.grid {
-  padding: 1%;
-  max-width: 1200px;
-}
-
-.rightGutter {
+.gutter {
+  box-sizing: border-box;
   width: 18em;
   padding: 1%;
   background-color: var(--col-grey);
   color: #666;
+  position: fixed;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-.rightGutter h4 {
+.gutter h4 {
   font: 1.75em var(--opensans);
   margin: 0 0 0.5em;
   font-weight: bold;
@@ -53,7 +53,7 @@ h4.categoryHeader {
   width: 2.5em;
 }
 
-.root .rightGutter button {
+.root .gutter button {
   margin: 1em 0 0;
   font-size: 1.6em;
 }
@@ -61,6 +61,7 @@ h4.categoryHeader {
 .main {
   flex: 1;
   padding: 1% 0;
+  margin-left: 18em;
 }
 
 .categoryInput {
