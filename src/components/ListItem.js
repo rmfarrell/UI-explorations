@@ -15,7 +15,7 @@ export default function ListItem({
       {children}
       {size === 0 && type === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && type === 'article' && <SmallTeaser {...data} />}
-      {size === 1 && type === 'article' && <LargeTeaser {...data} />}
+      {size === 1 && type === 'article' && <MediumTeaser {...data} />}
       {size === 2 && type === 'article' && <LargeTeaser {...data} />}
     </div>
   );
@@ -56,7 +56,15 @@ function SmallTeaser({ date = '', title = '' }) {
   return (
     <a href="#">
       <h4>{date}</h4>
-      <h3>{title}</h3>
+      <h3>
+        <LinesEllipsis
+          text={title}
+          maxLine="3"
+          ellipsis="..."
+          trimRight
+          basedOn="letters"
+        />
+      </h3>
     </a>
   );
 }
@@ -71,30 +79,27 @@ function MediumTeaser({
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
-    <div className={styles.columnContainer}>
-      <div className={styles.imgContainer}>
-        <div style={placeholderImage(color, ratio)} />
-      </div>
+    <div>
+      <div
+        className={styles.imgContainer}
+        style={placeholderImage(color, ratio)}
+      />
       <div className={styles.textContainer}>
-        <h4>
-          <a href="https://twitter.com" target="_blank">
-            {source}
-          </a>
-          {date}
-        </h4>
         <h3>
           <a href="#">{title}</a>
         </h3>
+        <h4>
+          <a href="#">{source}</a> | {date}
+        </h4>
         <h5>By {author}</h5>
         <p>
-          {summary} &nbsp;
-          <a
-            className={styles.readMore}
-            href="https://twitter.com"
-            target="_blank"
-          >
-            ({source})
-          </a>
+          <LinesEllipsis
+            text={summary}
+            maxLine="8"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
+          />
         </p>
       </div>
     </div>

@@ -88,7 +88,11 @@ a.readMore {
 /* -- Size 0 -- */
 
 .size-0 > * {
-  padding-right: 12%;
+  height: 8em;
+}
+
+.size-0 > * {
+  padding: 0.5em 12% 0.5em 1em;
 }
 
 .size-0 h3 {
