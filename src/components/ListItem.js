@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../styles/ListItem.module.css';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 // TODO this could be merged with Card probably
 export default function ListItem({
@@ -117,17 +118,28 @@ function LargeTeaser({
       />
       <div className={styles.textContainer}>
         <h3>
-          <a href="#">{title}</a>
+          <a href="#">
+            <LinesEllipsis
+              text={title}
+              maxLine="2"
+              ellipsis="..."
+              trimRight
+              basedOn="letters"
+            />
+          </a>
         </h3>
         <h4>
           <a href="#">{source}</a> | {date}
         </h4>
         <h5>By {author}</h5>
         <p>
-          {summary} &nbsp;
-          <a className={styles.readMore} href="#" target="_blank">
-            &laquo;{source}&raquo;
-          </a>
+          <LinesEllipsis
+            text={summary}
+            maxLine="4"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
+          />
         </p>
       </div>
     </div>
