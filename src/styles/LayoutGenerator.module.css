@@ -135,3 +135,19 @@ button.expander {
   background-color: var(--col-grey);
   /* color: white; */
 }
+
+/* Blocks */
+.block {
+  height: 100%;
+  min-height: 300px;
+}
+
+.map {
+  position: relative;
+}
+
+.map p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

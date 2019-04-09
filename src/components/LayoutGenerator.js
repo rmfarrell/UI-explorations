@@ -143,71 +143,6 @@ class LayoutGenerator extends Component {
             );
           })}
         </div>
-
-        {/* <h1>Columns</h1>
-        <div className={styles.group}>
-          <ul className={styles.medium}>
-            <h2>Article (medium)</h2>
-            {mocks.columns.medium.map(t => {
-              return <ListItem data={t} size={1} key={t.id} />;
-            })}
-          </ul>
-          <ul className={styles.small}>
-            <h2>Article (small)</h2>
-            {mocks.columns.small.map(t => {
-              return <ListItem data={t} key={t.id} />;
-            })}
-          </ul>
-          <div className={styles.small}>
-            <h2>Social (small)</h2>
-            <ul>
-              {mocks.columns.social.map(t => {
-                return <ListItem data={t} key={t.id} type="social" />;
-              })}
-            </ul>
-          </div>
-        </div>
-        <h1>Article (large)</h1>
-        <div className={styles.group}>
-          <ul className={styles.large}>
-            {articles(3).map(t => {
-              return <ListItem data={t} size={2} key={t.id} />;
-            })}
-          </ul>
-        </div>
-        <h1>Mixed Layouts</h1>
-        <div className={styles.group}>
-          <ul className={styles.medium}>
-            <ListItem data={Article()} size={2} />
-          </ul>
-          <Carousel className={styles.small}>
-            <ul>
-              {articles(4).map(t => {
-                return <ListItem data={t} key={t.id} size={0} />;
-              })}
-            </ul>
-            <ul>
-              {articles(4).map(t => {
-                return <ListItem data={t} key={t.id} size={0} />;
-              })}
-            </ul>
-            <ul>
-              {articles(4).map(t => {
-                return <ListItem data={t} key={t.id} size={0} />;
-              })}
-            </ul>
-            <ul>
-              {articles(4).map(t => {
-                return <ListItem data={t} key={t.id} size={0} />;
-              })}
-            </ul>
-          </Carousel>
-          <ul className={styles.small}>
-            {articles(4).map(t => {
-              return <ListItem data={t} key={t.id} />;
-            })}
-          </ul>
-        </div> */}
       </article>
     );
   }
@@ -261,6 +196,15 @@ class LayoutGenerator extends Component {
       case 'featured':
         return (
           <ListItem data={Article()} className={styles.featured} size={2} />
+        );
+      case 'map':
+        return (
+          <Block
+            className={styles.map}
+            style={{ height: '0', paddingBottom: '100%', minHeight: '0px' }}
+          >
+            <p>Map</p>
+          </Block>
         );
       default:
         return (
@@ -347,16 +291,14 @@ class LayoutGenerator extends Component {
 export default LayoutGenerator;
 
 function Block({
-  height = '250px',
   backgroundColor = '#666',
   className = '',
-  children = []
+  children = [],
+  style = {}
 }) {
+  style = Object.assign({ backgroundColor }, style);
   return (
-    <div
-      className={[className, styles.block].join(' ')}
-      style={{ backgroundColor, height }}
-    >
+    <div className={[className, styles.block].join(' ')} style={style}>
       {children}
     </div>
   );
