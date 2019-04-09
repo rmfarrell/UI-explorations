@@ -69,6 +69,10 @@
   margin: 0;
 }
 
+.root .imgContainer {
+  box-shadow: inset 0 0 25em rgba(0, 0, 0, 0.5);
+}
+
 .columnContainer,
 a.columnContainer {
   display: flex;
@@ -92,7 +96,7 @@ a.readMore {
 }
 
 .size-0 > * {
-  padding: 0.5em 12% 0.5em 1em;
+  padding: 0.5em 15% 0.5em 1em;
 }
 
 .size-0 h3 {
@@ -157,19 +161,29 @@ a.readMore {
 
 .size-2 h3,
 .size-2 h4,
-.size-2 h5,
 .size-2 p {
-  padding: 0 5%;
+  padding: 0 1.5rem;
 }
 
 .size-2 h3 {
   font-size: 2em;
 }
 .size-2 h5 {
-  line-height: 1.5em;
+  font: normal 1.25em var(--oswald);
 }
 .size-2 .imgContainer {
   margin: 0 0 2em;
+  position: relative;
+}
+.size-2 .imgOverlay {
+  background: rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  padding: 0.25em 1em;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 .size-2 h3 {
   font-size: 1.75em;
@@ -180,14 +194,6 @@ a.readMore {
 .size-2 h3 a:hover {
   color: var(--col-blue);
 }
-.size-2 h4 {
-  font-size: 1.25em;
-  color: var(--col-grey-text);
-  display: block;
-  text-transform: uppercase;
-  margin: 0 0 1em;
-}
-
 @media (min-width: 650px) {
   .size-2 {
     flex: 0 0 32%;

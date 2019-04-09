@@ -117,10 +117,15 @@ function LargeTeaser({
   const { color = '#000', ratio = 100 } = image;
   return (
     <div>
-      <div
+      <figure
         className={styles.imgContainer}
         style={placeholderImage(color, ratio)}
-      />
+      >
+        <div className={styles.imgOverlay}>
+          <h5>{source}</h5>
+          <h5>{date}</h5>
+        </div>
+      </figure>
       <div className={styles.textContainer}>
         <h3>
           <a href="#">
@@ -133,10 +138,6 @@ function LargeTeaser({
             />
           </a>
         </h3>
-        <h4>
-          <a href="#">{source}</a> | {date}
-        </h4>
-        <h5>By {author}</h5>
         <p>
           <LinesEllipsis
             text={summary}
