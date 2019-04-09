@@ -95,7 +95,7 @@ function MediumTeaser({
         <p>
           <LinesEllipsis
             text={summary}
-            maxLine="8"
+            maxLine="6"
             ellipsis="..."
             trimRight
             basedOn="letters"
