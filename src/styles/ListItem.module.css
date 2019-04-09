@@ -25,6 +25,10 @@
   color: var(--col-orange);
 }
 
+.root h3 {
+  font: 600 1.3em var(--merriweather);
+}
+
 .root h4 > * {
   flex: 1;
 }
@@ -85,6 +89,14 @@ a.readMore {
 
 .size-0 > * {
   padding-right: 12%;
+}
+
+.size-0 h3 {
+  font: 600 1.2em var(--opensans);
+}
+
+.size-0 h4 {
+  font: 500 1.3em var(--oswald);
 }
 
 .size-0 h4 a {
@@ -155,7 +167,9 @@ a.readMore {
 .size-2 .imgContainer {
   margin: 0 0 2em;
 }
-
+.size-2 h3 {
+  font-size: 1.75em;
+}
 .size-2 h3 a {
   color: var(--col-black);
 }

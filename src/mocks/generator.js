@@ -109,7 +109,7 @@ function type() {
 function image() {
   return {
     color: randomColor(),
-    ratio: randomInt(50, 50)
+    ratio: randomInt(50, 10)
   };
 }
 
