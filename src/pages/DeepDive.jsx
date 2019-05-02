@@ -1,4 +1,5 @@
 import React from 'react';
+import Map from '../components/Map.jsx';
 
 export default function(props) {
   const {
@@ -8,7 +9,7 @@ export default function(props) {
   } = props;
   return (
     <div>
-      <h1>Deep Dive</h1>
+      <Map />
     </div>
   );
 }

@@ -1,0 +1,35 @@
+.container {
+  overflow: hidden;
+}
+
+.map {
+  font-size: 0;
+  width: 100%;
+}
+
+.map div,
+.map a {
+  width: 10%;
+  display: inline-block;
+  padding-bottom: 10%;
+  position: relative;
+  font-size: 1.5rem;
+}
+
+.land {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sea {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.map .eu {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.map span {
+  position: absolute;
+  top: 0;
+  color: white;
+}

@@ -11,7 +11,7 @@
   font-size: 1.2em;
 }
 
-.root a {
+.root nav a {
   color: inherit;
   display: block;
   padding: 0.75em 1em;
@@ -20,24 +20,24 @@
   box-sizing: border-box;
 }
 
-.root a.active {
+.root nav a.active {
   background: white;
   color: var(--col-text);
 }
 
-.root ul {
+.root nav ul {
   display: flex;
   margin: 0 auto;
   padding: 0 2%;
 }
 
-.root li {
+.root nav li {
   font-size: 1.5rem;
   white-space: nowrap;
   margin: 0;
 }
 
-.root em {
+.root nav em {
   font-family: monospace;
   font-style: normal;
   color: var(--col-orange);
