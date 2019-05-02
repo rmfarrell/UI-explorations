@@ -1,43 +1,43 @@
-nav.main {
+.root nav {
   background: var(--col-text);
   color: var(--col-grey);
 }
 
-.main h2 {
+.root h2 {
   font-size: 1.4em;
 }
 
-.main p {
+.root p {
   font-size: 1.2em;
 }
 
-.main a {
+.root a {
   color: inherit;
   display: block;
-  padding: 1em 5%;
+  padding: 0.75em 1em;
   transition: all 0.3s;
   height: 100%;
   box-sizing: border-box;
 }
 
-.main a.active {
+.root a.active {
   background: white;
   color: var(--col-text);
 }
 
-.main ul {
+.root ul {
   display: flex;
   margin: 0 auto;
   padding: 0 2%;
-  align-items: stretch;
 }
 
-.main li {
-  flex: 32em 0;
+.root li {
+  font-size: 1.5rem;
+  white-space: nowrap;
   margin: 0;
 }
 
-.main em {
+.root em {
   font-family: monospace;
   font-style: normal;
   color: var(--col-orange);
