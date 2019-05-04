@@ -18,6 +18,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "spdy-transport": "^3.0.0",
+    "storeon": "^0.8.0",
+    "unfetch": "^4.1.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

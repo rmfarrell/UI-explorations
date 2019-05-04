@@ -24,4 +24,4 @@ yarn-error.log*
 
 # assets
 src/index.css
-src/data
+public/data
