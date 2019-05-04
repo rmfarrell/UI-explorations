@@ -1,5 +1,5 @@
 import React from 'react';
-import map from '../data/map';
+import data from '../lib/map';
 import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
@@ -8,13 +8,13 @@ export default function(props) {
 
   function getFocus() {
     let x, y;
-    for (let i = 0; i < map.length; i++) {
-      const containsCountry = map[i].some(col => {
+    for (let i = 0; i < data.length; i++) {
+      const containsCountry = data[i].some(col => {
         return col && col.country === focus;
       });
       if (containsCountry) {
         y = i;
-        x = map[i].findIndex(tile => {
+        x = data[i].findIndex(tile => {
           return tile && tile.country === focus;
         });
         break;
@@ -38,7 +38,7 @@ export default function(props) {
           }
         }
       >
-        {map.map(tiles => {
+        {data.map(tiles => {
           return tiles.map((tile, idx) => {
             return (
               <Tile key={idx} data={tile}>
