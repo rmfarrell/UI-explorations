@@ -20,10 +20,7 @@ export default function(props) {
         break;
       }
     }
-    // -20 -225
-    console.log(x, y);
     const out = `-${x * 40}%, -${y * 50}%`;
-    console.log(out);
     return out;
   }
 
