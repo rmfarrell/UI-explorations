@@ -23,7 +23,11 @@ export default function(props) {
       custom_article,
       articles: { featured, collection }
     } = deepdive,
-    featuredData = dereferenceArticles(featured, articles),
+    featuredData = dereferenceArticles(
+      // Filter out socials from filter :(
+      featured.filter(id => !id.includes('SOC')),
+      articles
+    ),
     collectionData = dereferenceArticles(collection, articles).reduce(
       reduceArticleCollection,
       {}

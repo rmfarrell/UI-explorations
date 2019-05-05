@@ -46,7 +46,6 @@ function MediumTeaser(data) {
     source = '',
     author = ''
   } = data;
-  console.log(data);
 
   const { color = '#000', ratio = 100 } = image;
   return (
@@ -60,10 +59,10 @@ function MediumTeaser(data) {
           <a href="#">{title}</a>
         </h3>
         <h4>
-          <a href="#">{source}</a> | {date}
+          <a href="#">{source}</a> | {String(date)}
         </h4>
         <h5>By {author}</h5>
-        <div>
+        <p>
           <LinesEllipsis
             text={summary}
             maxLine="6"
@@ -71,7 +70,7 @@ function MediumTeaser(data) {
             trimRight
             basedOn="letters"
           />
-        </div>
+        </p>
       </div>
     </div>
   );
