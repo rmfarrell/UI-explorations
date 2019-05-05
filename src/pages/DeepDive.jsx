@@ -9,6 +9,7 @@ import { Grid, Row } from '../lib/grid';
 import CustomArticle from '../components/CustomArticle.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
+import List from '../components/List.jsx';
 
 export default function(props) {
   const {
@@ -97,15 +98,21 @@ function Tile(props) {
     { content } = data;
 
   switch (category) {
+    case 'Custom Article':
+      return <CustomArticle />;
     case 'Map':
       return <Map />;
     case 'Featured':
-      return featured();
+      return featured(data);
     default:
-      return placeholder();
+      return content.length > 1 ? (
+        <List items={content} />
+      ) : (
+        featured(content[0])
+      );
   }
 
-  function featured() {
+  function featured(data = {}) {
     return <SingleItem data={data} className="" size={1} type="article" />;
   }
 

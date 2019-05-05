@@ -7,15 +7,17 @@ export default function SingleItem({
   data = {},
   className = '',
   size = 0,
-  type = 'article',
-  children = []
+  children = [],
+  type
 }) {
+  const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
-      {size === 0 && type === 'article' && <SmallTeaser {...data} />}
-      {size === 1 && type === 'article' && <MediumTeaser {...data} />}
-      {size === 2 && type === 'article' && <LargeTeaser {...data} />}
+      {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
+      {size === 0 && modifier === 'article' && <SmallTeaser {...data} />}
+      {size === 1 && modifier === 'article' && <MediumTeaser {...data} />}
+      {size === 2 && modifier === 'article' && <LargeTeaser {...data} />}
     </div>
   );
 }
@@ -23,7 +25,7 @@ export default function SingleItem({
 function SmallTeaser({ date = '', title = '' }) {
   return (
     <a href="#">
-      <h4>{date}</h4>
+      <h4>{date.toString()}</h4>
       <LinesEllipsis
         text={title}
         maxLine="3"
@@ -81,13 +83,10 @@ function LargeTeaser({
   const { color = '#000', ratio = 100 } = image;
   return (
     <div>
-      <figure
-        className={styles.imgContainer}
-        style={placeholderImage(color, ratio)}
-      >
+      <figure className={styles.imgContainer} style={placeholderImage()}>
         <div className={styles.imgOverlay}>
           <h5>{source}</h5>
-          <h5>{date}</h5>
+          <h5>{date.toString()}</h5>
         </div>
       </figure>
       <div className={styles.textContainer}>
@@ -112,6 +111,33 @@ function LargeTeaser({
           />
         </p>
       </div>
+    </div>
+  );
+}
+
+function SmallSocialTeaser(data) {
+  const { date = '', summary = '', author = '', source = '' } = data;
+  console.log(data);
+  const limit = 25;
+  return (
+    <div className={styles.social}>
+      <h4>
+        {date.toString()}
+        <a href="https://twitter.com" target="_blank">
+          @{author}
+        </a>
+      </h4>
+      {/* <div style={placeholderImage()} /> */}
+      <p>
+        {elipse(summary, limit)} &nbsp;
+        <a
+          className={styles.readMore}
+          href="https://twitter.com"
+          target="_blank"
+        >
+          ({source})
+        </a>
+      </p>
     </div>
   );
 }

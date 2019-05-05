@@ -55,7 +55,7 @@ function normalizeArticle(data, type) {
       out.title = '';
       out.summary = data.text;
       out.source = 'Twitter';
-      out.author = `@${data.author.split(' ')[0].toLowerCase()}`;
+      out.author = `${data.author.split(' ')[0].toLowerCase()}`;
       return out;
     default:
       return data;
