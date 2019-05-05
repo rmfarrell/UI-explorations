@@ -9,7 +9,12 @@ export default function(props) {
         params: { id }
       }
     } = props,
-    { deepdives } = useStoreon('deepdives'),
+    { deepdives, rss, socialMedia, externalResources } = useStoreon(
+      'deepdives',
+      'rss',
+      'socialMedia',
+      'externalResources'
+    ),
     deepdive = id && deepdives[`DDV:${id}`];
   if (!deepdive) return loading();
   const {
@@ -21,6 +26,10 @@ export default function(props) {
   // articles = collection.reduce(reduceArticleCollection, {});
 
   // console.log(articles);
+  console.log(rss);
+  console.log(deepdives);
+  console.log(socialMedia);
+  console.log(externalResources);
 
   const tiles = [<Map />, <CustomArticle />];
 
@@ -34,7 +43,9 @@ export default function(props) {
   );
 }
 
-function dereferenceArticles(ids = []) {}
+function dereferenceArticles(ids = []) {
+  return ids;
+}
 
 function reduceArticleCollection(acc, item) {
   const type = item.document_type || item.type;

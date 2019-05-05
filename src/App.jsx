@@ -7,19 +7,31 @@ import Relationship from './pages/Relationship.jsx';
 import styles from './styles/Main.module.css';
 import store from './store/index.js';
 import useStoreon from 'storeon/react';
-import { fetchDeepDives } from './lib/api';
+import {
+  fetchDeepDives,
+  fetchRssItems,
+  fetchSocialMedia,
+  fetchExternalResources
+} from './lib/api';
 
 function AppRouter() {
   return (
     <StoreContext.Provider value={store}>
       <Router>
-        <Main />
+        <Main>
+          <Route path="/deep-dives" exact component={DeepDive} />
+          <Route path="/deep-dives/:id" component={DeepDive} />
+          <Route path="/relationship" exact component={Relationship} />
+          <Route path="/relationship/:id" component={Relationship} />
+          <Route path="/explore" component={Explore} />
+        </Main>
       </Router>
     </StoreContext.Provider>
   );
 }
 
 function Main(props) {
+  const { children } = props;
   // TODO: figure out whyyyy this renders so many times
   console.log('Main rendered');
 
@@ -27,14 +39,20 @@ function Main(props) {
   const [fetched, setFetched] = useState(false);
 
   async function fetchData() {
-    const deepdives = await fetchDeepDives(20);
-    dispatch('deepdives/update', deepdives);
+    dispatch('deepdives/update', await fetchDeepDives(20));
+    dispatch('rss/update', await fetchRssItems(60));
+    dispatch('socialMedia/update', await fetchSocialMedia(40));
+    dispatch('externalResources/update', await fetchExternalResources(15));
     setFetched(true);
   }
 
   useEffect(() => {
     fetched || fetchData();
   }, [fetched]);
+
+  function loading() {
+    return <div>Loading</div>;
+  }
 
   return (
     <div className={styles.root}>
@@ -57,12 +75,7 @@ function Main(props) {
           </li>
         </ul>
       </nav>
-
-      <Route path="/deep-dives" exact component={DeepDive} />
-      <Route path="/deep-dives/:id" component={DeepDive} />
-      <Route path="/relationship" exact component={Relationship} />
-      <Route path="/relationship/:id" component={Relationship} />
-      <Route path="/explore" component={Explore} />
+      {fetched ? children : loading()}
     </div>
   );
 }
