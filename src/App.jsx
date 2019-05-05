@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import StoreContext from 'storeon/react/context';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
-import DeepDive from './pages/DeepDive.jsx';
-import Explore from './pages/Explore.jsx';
-import Relationship from './pages/Relationship.jsx';
 import styles from './styles/Main.module.css';
 import store from './store/index.js';
 import useStoreon from 'storeon/react';
+
+// -- Libs
 import {
   fetchDeepDives,
   fetchRssItems,
@@ -14,12 +13,18 @@ import {
   fetchExternalResources
 } from './lib/api';
 
+// -- Modules
+import DeepDive from './pages/DeepDive.jsx';
+import DeepDives from './pages/DeepDives.jsx';
+import Explore from './pages/Explore.jsx';
+import Relationship from './pages/Relationship.jsx';
+
 function AppRouter() {
   return (
     <StoreContext.Provider value={store}>
       <Router>
         <Main>
-          <Route path="/deep-dives" exact component={DeepDive} />
+          <Route path="/deep-dives" exact component={DeepDives} />
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
