@@ -27,16 +27,13 @@ function Main(props) {
   const [fetched, setFetched] = useState(false);
 
   async function fetchData() {
-    if (fetched) {
-      return;
-    }
     const deepdives = await fetchDeepDives(20);
     dispatch('deepdives/update', deepdives);
     setFetched(true);
   }
 
   useEffect(() => {
-    fetchData();
+    fetched || fetchData();
   }, [fetched]);
 
   return (
