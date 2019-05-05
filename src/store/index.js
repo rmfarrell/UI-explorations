@@ -10,9 +10,7 @@ function data(store) {
   store.on('@init', () => {
     return {
       deepdives: [],
-      socialMedia: [],
-      rss: [],
-      externalResources: []
+      articles: []
     };
   });
 
@@ -23,21 +21,9 @@ function data(store) {
     };
   });
 
-  store.on('socialMedia/update', ({ socialMedia }, value) => {
+  store.on('articles/add', ({ articles }, newArticles) => {
     return {
-      socialMedia: value
-    };
-  });
-
-  store.on('rss/update', ({ rss }, value) => {
-    return {
-      rss: value
-    };
-  });
-
-  store.on('externalResources/update', ({ externalResources }, value) => {
-    return {
-      externalResources: value
+      articles: Object.assign(articles, newArticles)
     };
   });
 }
