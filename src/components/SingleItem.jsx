@@ -24,15 +24,14 @@ function SmallTeaser({ date = '', title = '' }) {
   return (
     <a href="#">
       <h4>{date}</h4>
-      <h3>
-        <LinesEllipsis
-          text={title}
-          maxLine="3"
-          ellipsis="..."
-          trimRight
-          basedOn="letters"
-        />
-      </h3>
+      <LinesEllipsis
+        text={title}
+        maxLine="3"
+        ellipsis="..."
+        trimRight
+        basedOn="letters"
+        component="h3"
+      />
     </a>
   );
 }
@@ -47,13 +46,9 @@ function MediumTeaser(data) {
     author = ''
   } = data;
 
-  const { color = '#000', ratio = 100 } = image;
   return (
     <div>
-      <div
-        className={styles.imgContainer}
-        style={placeholderImage(color, ratio)}
-      />
+      <div className={styles.imgContainer} style={placeholderImage()} />
       <div className={styles.textContainer}>
         <h3>
           <a href="#">{title}</a>
@@ -62,15 +57,14 @@ function MediumTeaser(data) {
           <a href="#">{source}</a> | {String(date)}
         </h4>
         <h5>By {author}</h5>
-        <p>
-          <LinesEllipsis
-            text={summary}
-            maxLine="6"
-            ellipsis="..."
-            trimRight
-            basedOn="letters"
-          />
-        </p>
+        <LinesEllipsis
+          text={summary}
+          maxLine="6"
+          ellipsis="..."
+          trimRight
+          basedOn="letters"
+          component="p"
+        />
       </div>
     </div>
   );
@@ -124,7 +118,7 @@ function LargeTeaser({
 
 // -- Helpers
 
-function placeholderImage(color, ratio) {
+function placeholderImage(color = '#888', ratio = 60) {
   return {
     background: `${color}`,
     height: '0',
