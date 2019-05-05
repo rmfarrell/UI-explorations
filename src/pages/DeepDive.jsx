@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import useStoreon from 'storeon/react';
 import styles from '../styles/DeepDive.module.css';
 
-// libs
+// -- Libs
 import { Grid, Row } from '../lib/grid';
 
-// modules
+// -- Modules
 import CustomArticle from '../components/CustomArticle.jsx';
 import Map from '../components/Map.jsx';
+import SingleItem from '../components/SingleItem.jsx';
 
 export default function(props) {
   const {
@@ -65,11 +66,12 @@ export default function(props) {
         {items.map((data, idx) => {
           return (
             <div
+              key={idx}
               className={[tileClassName(size, data.width), styles.tile].join(
                 ' '
               )}
             >
-              <Tile key={idx} data={data} category={data.cat} />
+              <Tile data={data} category={data.cat} />
             </div>
           );
         })}
@@ -93,8 +95,14 @@ function Tile(props) {
   switch (category) {
     case 'Map':
       return <Map />;
+    case 'Featured':
+      return featured();
     default:
       return placeholder();
+  }
+
+  function featured() {
+    return <SingleItem data={data} className="" size={1} type="article" />;
   }
 
   function placeholder() {

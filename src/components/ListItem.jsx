@@ -75,7 +75,8 @@ function MediumTeaser({
   image = {},
   summary = '',
   source = '',
-  author = ''
+  author = '',
+  link = ''
 }) {
   const { color = '#000', ratio = 100 } = image;
   return (
