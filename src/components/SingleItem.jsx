@@ -22,10 +22,10 @@ export default function SingleItem({
   );
 }
 
-function SmallTeaser({ date = '', title = '' }) {
+function SmallTeaser({ date, title = '' }) {
   return (
     <a href="#">
-      <h4>{date.toString()}</h4>
+      <h4>{formatDate(date)}</h4>
       <LinesEllipsis
         text={title}
         maxLine="3"
@@ -40,7 +40,7 @@ function SmallTeaser({ date = '', title = '' }) {
 
 function MediumTeaser(data) {
   const {
-    date = '',
+    date = new Date(),
     title = '',
     image = {},
     summary = '',
@@ -56,7 +56,7 @@ function MediumTeaser(data) {
           <a href="#">{title}</a>
         </h3>
         <h4>
-          <a href="#">{source}</a> | {String(date)}
+          <a href="#">{source}</a> | {formatDate(date)}
         </h4>
         <h5>By {author}</h5>
         <LinesEllipsis
@@ -80,13 +80,12 @@ function LargeTeaser({
   source = '',
   author = ''
 }) {
-  const { color = '#000', ratio = 100 } = image;
   return (
     <div>
       <figure className={styles.imgContainer} style={placeholderImage()}>
         <div className={styles.imgOverlay}>
           <h5>{source}</h5>
-          <h5>{date.toString()}</h5>
+          <h5>{formatDate(date)}</h5>
         </div>
       </figure>
       <div className={styles.textContainer}>
@@ -116,12 +115,12 @@ function LargeTeaser({
 }
 
 function SmallSocialTeaser(data) {
-  const { date = '', summary = '', author = '', source = '' } = data;
+  const { date, summary = '', author = '', source = '' } = data;
   const limit = 25;
   return (
     <div className={styles.social}>
       <h4>
-        {date.toString()}
+        {formatDate(date)}
         <a href="https://twitter.com" target="_blank">
           @{author}
         </a>
@@ -142,6 +141,15 @@ function SmallSocialTeaser(data) {
 }
 
 // -- Helpers
+
+function formatDate(date = new Date()) {
+  // console.log(date.Date());
+  // return date;
+  const dd = date.getDate(),
+    mm = date.toLocaleString('en-us', { month: 'long' }),
+    yy = date.getFullYear();
+  return `${dd} ${mm} ${yy}`;
+}
 
 function placeholderImage(color = '#888', ratio = 60) {
   return {
