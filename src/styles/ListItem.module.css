@@ -92,7 +92,7 @@ a.readMore {
 /* -- Size 0 -- */
 
 .size-0 > * {
-  height: 8em;
+  /* height: 8em; */
 }
 
 .size-0 > * {
@@ -113,7 +113,7 @@ a.readMore {
 
 /* -- Social -- */
 .social {
-  padding: 1.2em;
+  /* padding: 1.2em; */
 }
 
 /* -- Size 1 -- */

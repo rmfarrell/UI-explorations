@@ -107,7 +107,7 @@ function Tile(props) {
     default:
       return content.length > 1 ? (
         <List items={content}>
-          <h3>{category}</h3>
+          <h3>{pluralize(category)}</h3>
         </List>
       ) : (
         featured(content[0])
@@ -157,5 +157,20 @@ function tileClassName(rowSize = 4, width = 1) {
   }
   if (rowSize === 4) {
     return isWide ? 'grid--item__half' : 'grid--item__quarter';
+  }
+}
+
+function pluralize(category = '') {
+  switch (category) {
+    case 'Policy Document':
+      return 'Policy Documents';
+    case 'Article':
+      return 'Articles';
+    case 'External Resource':
+      return 'External Resources';
+    case 'Social Media Item':
+      return 'Social Media';
+    default:
+      return category;
   }
 }

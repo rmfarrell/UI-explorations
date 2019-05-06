@@ -122,11 +122,21 @@ function SmallSocialTeaser(data) {
       <h4>
         {formatDate(date)}
         <a href="https://twitter.com" target="_blank">
-          @{author}
+          &nbsp;@{author}
         </a>
       </h4>
       {/* <div style={placeholderImage()} /> */}
-      <p>
+      <LinesEllipsis
+        text={summary}
+        maxLine="3"
+        ellipsis="..."
+        trimRight
+        basedOn="letters"
+        component="h3"
+      >
+        test
+      </LinesEllipsis>
+      {/* <p>
         {elipse(summary, limit)} &nbsp;
         <a
           className={styles.readMore}
@@ -135,7 +145,7 @@ function SmallSocialTeaser(data) {
         >
           ({source})
         </a>
-      </p>
+      </p> */}
     </div>
   );
 }
