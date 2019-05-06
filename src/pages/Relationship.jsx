@@ -6,7 +6,7 @@ import styles from '../styles/DeepDive.module.css';
 import { Grid, Row } from '../lib/grid';
 
 // -- Modules
-import CustomArticle from '../components/CustomArticle.jsx';
+import RelationshipStatus from '../components/RelationshipStatus.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
@@ -19,11 +19,10 @@ export default function(props) {
       }
     } = props,
     { relationships, articles } = useStoreon('relationships', 'articles'),
-    relationship = id && relationships[`REL:${id.toUpperCase()}`];
-  if (!relationship) return error();
-  console.log(relationship);
+    relationship = id && relationships[`REL_${id.toUpperCase()}`];
+  if (!relationship) return error(new Error(`no relationship found`));
   const {
-      custom_article,
+      relationship_status,
       articles: { featured, collection }
     } = relationship,
     featuredData = dereferenceArticles(
@@ -40,7 +39,13 @@ export default function(props) {
       {
         cat: 'Map',
         width: 1
-      }
+      },
+      // Custom article
+      Object.assign(relationship_status, {
+        cat: 'Relationship Status',
+        width: 1,
+        canExpand: true
+      })
     ]
       .concat(
         ...featuredData.map(featured => {
@@ -79,45 +84,47 @@ export default function(props) {
       </div>
     );
   });
-}
 
-function error() {
-  return '';
-}
+  /**
+   * Factory funciton for rendering Tiles
+   *
+   */
+  function Tile(props) {
+    const { data, category, width } = props,
+      { content } = data;
 
-/**
- * Factory funciton for rendering Tiles
- *
- */
-function Tile(props) {
-  const { data, category, width } = props,
-    { content } = data;
+    switch (category) {
+      case 'Relationship Status':
+        return <RelationshipStatus />;
+      case 'Map':
+        return <Map focus={id} />;
+      case 'Featured':
+        return featured(data);
+      default:
+        return content.length > 1 ? (
+          <List items={content} groupSize={width}>
+            <h3>{pluralize(category)}</h3>
+          </List>
+        ) : (
+          featured(content[0])
+        );
+    }
 
-  switch (category) {
-    case 'Custom Article':
-      return <CustomArticle />;
-    case 'Map':
-      return <Map />;
-    case 'Featured':
-      return featured(data);
-    default:
-      return content.length > 1 ? (
-        <List items={content} groupSize={width}>
-          <h3>{pluralize(category)}</h3>
-        </List>
-      ) : (
-        featured(content[0])
+    function featured(data = {}) {
+      return (
+        <SingleItem data={data} className="" size={width} type="article" />
       );
+    }
   }
+}
 
-  function featured(data = {}) {
-    return <SingleItem data={data} className="" size={width} type="article" />;
-  }
+function error(err) {
+  console.error(err);
+  return '';
 }
 
 function dereferenceArticles(ids = [], collection = {}) {
   return ids.map(id => {
-    console.log(id);
     const out = collection[id];
     if (!out) {
       throw new Error(`Could not find article ${id}`);

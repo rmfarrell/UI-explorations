@@ -2,6 +2,14 @@
   overflow: hidden;
 }
 
+.focused {
+  height: 100%;
+}
+
+.focused a {
+  pointer-events: none;
+}
+
 .map {
   font-size: 0;
   width: 100%;
