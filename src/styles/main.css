@@ -91,3 +91,58 @@ label {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+/* Drop down */
+.Dropdown-menu {
+  position: absolute;
+  z-index: 100;
+  background: white;
+  cursor: pointer;
+}
+
+.Dropdown-control {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.Dropdown-arrow-wrapper {
+  margin: 0 0 0 0.5em;
+  height: 0.25em;
+  width: 0.25em;
+  border-right: 0.1em solid var(--col-text);
+  border-bottom: 0.1em solid var(--col-text);
+  transform: rotate(45deg);
+}
+
+.Dropdown-root.is-open .Dropdown-arrow-wrapper {
+  transform: rotate(-135deg);
+}
+
+.Dropdown-option {
+  padding: 0.2em 0.5em;
+  width: 10em;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: var(--col-text);
+    color: white;
+  }
+}
+
+.Dropdown-menu {
+  display: flex;
+  max-width: 40em;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.Dropdown-root.big {
+  .Dropdown-control {
+    font: bold 4em var(--merriweather);
+  }
+
+  .Dropdown-menu {
+    font: bold 1.5em var(--merriweather);
+  }
+}

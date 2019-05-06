@@ -80,13 +80,15 @@ export default function(props) {
 
   return (
     <React.Fragment>
-      <Dropdown
-        options={dropdownOptions}
-        onChange={onDropDownSelect}
-        value={id}
-        placeholder="Select an option"
-      />
-      <h1 className="constrain">{COUNTRIES[id]}</h1>
+      <header className={[styles.header, 'constrain'].join(' ')}>
+        <Dropdown
+          className={['big', styles.dropdown].join(' ')}
+          options={dropdownOptions}
+          onChange={onDropDownSelect}
+          value={id}
+          placeholder="Select an option"
+        />
+      </header>
       {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>

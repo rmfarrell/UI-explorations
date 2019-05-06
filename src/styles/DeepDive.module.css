@@ -6,3 +6,9 @@
   font: bold 1.5em var(--oswald);
   text-transform: uppercase;
 }
+
+.header {
+  padding: 0 0.75%;
+  margin: 3em auto 0.5em;
+  box-sizing: border-box;
+}
