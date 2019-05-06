@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/ListItem.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { formatDate, placeholderImage } from '../lib/helpers';
 
 // TODO this could be merged with Card probably
 export default function SingleItem(props) {
@@ -153,33 +154,4 @@ function SmallSocialTeaser(data) {
       </p> */}
     </div>
   );
-}
-
-// -- Helpers
-
-function formatDate(date = new Date()) {
-  // console.log(date.Date());
-  // return date;
-  const dd = date.getDate(),
-    mm = date.toLocaleString('en-us', { month: 'long' }),
-    yy = date.getFullYear();
-  return `${dd} ${mm} ${yy}`;
-}
-
-function placeholderImage(color = '#888', ratio = 60) {
-  return {
-    background: `${color}`,
-    height: '0',
-    paddingBottom: `${ratio}%`
-  };
-}
-
-function elipse(text = '', limit = 25) {
-  const words = text.split(' '),
-    elipse = words.length > limit ? `...` : '';
-
-  return words
-    .slice(0, limit)
-    .join(' ')
-    .concat(elipse);
 }
