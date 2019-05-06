@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import StoreContext from 'storeon/react/context';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  withRouter
+} from 'react-router-dom';
 import styles from './styles/Main.module.css';
 import store from './store/index.js';
 import useStoreon from 'storeon/react';
@@ -19,18 +24,21 @@ import DeepDive from './pages/DeepDive.jsx';
 import DeepDives from './pages/DeepDives.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
+import CountryDropdown from './components/CountryDropdown.jsx';
+
+const MainWithRouter = withRouter(Main);
 
 function AppRouter() {
   return (
     <StoreContext.Provider value={store}>
       <Router>
-        <Main>
+        <MainWithRouter>
           <Route path="/deep-dives" exact component={DeepDives} />
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
           <Route path="/explore" component={Explore} />
-        </Main>
+        </MainWithRouter>
       </Router>
     </StoreContext.Provider>
   );
@@ -38,6 +46,7 @@ function AppRouter() {
 
 function Main(props) {
   const { children } = props;
+  console.log(props);
   // TODO: figure out whyyyy this renders so many times
   console.log('Main rendered');
 
@@ -69,6 +78,10 @@ function Main(props) {
     return <div>Loading</div>;
   }
 
+  function onDropDownSelect({ value }) {
+    props.history.replace(`/relationship/${value}`);
+  }
+
   return (
     <div className={styles.root}>
       <nav>
@@ -79,9 +92,11 @@ function Main(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/relationship" activeClassName={styles.active}>
-              Relationship
-            </NavLink>
+            <CountryDropdown
+              className={''}
+              initialValue="Relationship"
+              onChange={onDropDownSelect}
+            />
           </li>
           <li>
             <NavLink to="/deep-dives" activeClassName={styles.active}>
