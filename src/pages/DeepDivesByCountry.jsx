@@ -59,7 +59,7 @@ export default function(props) {
   return (
     <React.Fragment>
       <header className={[styles.header, 'constrain'].join(' ')}>
-        <h1>All Deep Dives</h1>
+        <h1>Deep Dives: {COUNTRIES[id]}</h1>
       </header>
       {rows.map(({ items, size }, idx) => {
         return (

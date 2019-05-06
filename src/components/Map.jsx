@@ -4,7 +4,7 @@ import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function(props) {
-  const { focus } = props,
+  const { focus, linkPrefix = 'relationship/' } = props,
     containerStyles = [styles.container, focus ? styles.focused : ''].join(' ');
   return (
     <div className={containerStyles}>
@@ -20,7 +20,7 @@ export default function(props) {
         {data.map(tiles => {
           return tiles.map((tile, idx) => {
             return (
-              <Tile key={idx} data={tile}>
+              <Tile key={idx} data={tile} linkPrefix={linkPrefix}>
                 {tile && tile.country}
               </Tile>
             );
@@ -49,7 +49,7 @@ export default function(props) {
   }
 }
 
-function Tile({ data }) {
+function Tile({ data, linkPrefix }) {
   if (!data) {
     return <div className={styles.sea} />;
   }
@@ -63,7 +63,7 @@ function Tile({ data }) {
   }
   return (
     <NavLink
-      to={`/relationship/${country}`}
+      to={`${linkPrefix}${country}`}
       className={styles.eu}
       style={{ backgroundColor: `hsl(3,${75 * (weight / 10)}%, 50%)` }}
     >
