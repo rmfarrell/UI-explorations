@@ -15,13 +15,18 @@ import List from '../components/List.jsx';
 
 // TODO: Use hooks here
 export default function(props) {
+  let relationship;
   const {
       match: {
         params: { id }
       }
     } = props,
-    { relationships, articles } = useStoreon('relationships', 'articles'),
-    relationship = id && relationships[`REL_${id.toUpperCase()}`];
+    { relationships, articles } = useStoreon('relationships', 'articles');
+
+  relationship = id && relationships[`REL_${id.toUpperCase()}`];
+  if (id.toLowerCase() === 'europe') {
+    relationship = relationships['REL_GBR'];
+  }
   if (!relationship) return error(new Error(`no relationship found`));
   const {
       relationship_status,

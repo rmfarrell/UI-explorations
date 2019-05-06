@@ -21,24 +21,27 @@ import {
 
 // -- Modules
 import DeepDive from './pages/DeepDive.jsx';
-import DeepDives from './pages/DeepDives.jsx';
+import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import CountryDropdown from './components/CountryDropdown.jsx';
-
-const MainWithRouter = withRouter(Main);
 
 function AppRouter() {
   return (
     <StoreContext.Provider value={store}>
       <Router>
-        <MainWithRouter>
-          <Route path="/deep-dives" exact component={DeepDives} />
+        <Main>
+          <Route path="/deep-dives" exact component={DeepDivesAll} />
+          <Route
+            path="/deep-dives/country/:id"
+            exact
+            component={DeepDivesAll}
+          />
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
           <Route path="/" exact component={Explore} />
-        </MainWithRouter>
+        </Main>
       </Router>
     </StoreContext.Provider>
   );
@@ -46,7 +49,6 @@ function AppRouter() {
 
 function Main(props) {
   const { children } = props;
-  console.log(props);
   // TODO: figure out whyyyy this renders so many times
   console.log('Main rendered');
 
@@ -78,10 +80,6 @@ function Main(props) {
     return <div>Loading</div>;
   }
 
-  function onDropDownSelect({ value }) {
-    props.history.replace(`/relationship/${value}`);
-  }
-
   return (
     <div className={styles.root}>
       <nav>
@@ -92,11 +90,9 @@ function Main(props) {
             </NavLink>
           </li>
           <li>
-            <CountryDropdown
-              className={''}
-              initialValue="Relationship"
-              onChange={onDropDownSelect}
-            />
+            <NavLink to="/relationship/europe" activeClassName={styles.active}>
+              Relationship
+            </NavLink>
           </li>
           <li>
             <NavLink to="/deep-dives" activeClassName={styles.active}>

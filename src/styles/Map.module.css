@@ -7,7 +7,7 @@
 }
 
 .focused a {
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .map {
