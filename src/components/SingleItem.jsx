@@ -3,28 +3,33 @@ import styles from '../styles/ListItem.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
 
 // TODO this could be merged with Card probably
-export default function SingleItem({
-  data = {},
-  className = '',
-  size = 0,
-  children = [],
-  type
-}) {
+export default function SingleItem(props) {
+  const { data = {}, className = '', size = 0, children = [] } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
+  const link =
+    data.document_type === 'Deep Dive'
+      ? `/deep-dives/${data.id.split(':')[1]}`
+      : '';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
       {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
-      {size === 0 && modifier === 'article' && <SmallTeaser {...data} />}
-      {size === 1 && modifier === 'article' && <MediumTeaser {...data} />}
-      {size === 2 && modifier === 'article' && <LargeTeaser {...data} />}
+      {size === 0 && modifier === 'article' && (
+        <SmallTeaser link={link} {...data} />
+      )}
+      {size === 1 && modifier === 'article' && (
+        <MediumTeaser link={link} {...data} />
+      )}
+      {size === 2 && modifier === 'article' && (
+        <LargeTeaser link={link} {...data} />
+      )}
     </div>
   );
 }
 
-function SmallTeaser({ date, title = '' }) {
+function SmallTeaser({ date, title = '', link = '' }) {
   return (
-    <a href="#">
+    <a href={link}>
       <h4>{formatDate(date)}</h4>
       <LinesEllipsis
         text={title}

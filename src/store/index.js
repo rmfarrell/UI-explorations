@@ -43,7 +43,6 @@ function normalizeArticle(data, type) {
   };
   switch (type) {
     case 'EXR':
-      console.log(data);
       out.date = new Date(data.publication_date);
       out.title = data.title;
       out.summary = data.description;
