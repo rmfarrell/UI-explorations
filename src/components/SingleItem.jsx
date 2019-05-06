@@ -6,7 +6,6 @@ import LinesEllipsis from 'react-lines-ellipsis';
 export default function SingleItem(props) {
   const { data = {}, className = '', size = 0, children = [] } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
-  console.log(data.id);
   const link =
     data.document_type === 'Deep Dive'
       ? `/deep-dives/${data.id.split('_')[1]}`
@@ -28,7 +27,7 @@ export default function SingleItem(props) {
   );
 }
 
-function SmallTeaser({ date, title = '', link = '' }) {
+function SmallTeaser({ date, title = '', link = '#' }) {
   return (
     <a href={link}>
       <h4>{formatDate(date)}</h4>
@@ -44,25 +43,26 @@ function SmallTeaser({ date, title = '', link = '' }) {
   );
 }
 
-function MediumTeaser(data) {
+function MediumTeaser(props) {
   const {
     date = new Date(),
     title = '',
     image = {},
     summary = '',
     source = '',
-    author = ''
-  } = data;
+    author = '',
+    link = '#'
+  } = props;
 
   return (
     <div>
       <div className={styles.imgContainer} style={placeholderImage()} />
       <div className={styles.textContainer}>
         <h3>
-          <a href="#">{title}</a>
+          <a href={link}>{title}</a>
         </h3>
         <h4>
-          <a href="#">{source}</a> | {formatDate(date)}
+          <a href={link}>{source}</a> | {formatDate(date)}
         </h4>
         <h5>By {author}</h5>
         <LinesEllipsis
