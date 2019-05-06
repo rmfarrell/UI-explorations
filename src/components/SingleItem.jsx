@@ -9,7 +9,7 @@ export default function SingleItem(props) {
   const link =
     data.document_type === 'Deep Dive'
       ? `/deep-dives/${data.id.split('_')[1]}`
-      : '';
+      : '#';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
