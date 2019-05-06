@@ -99,7 +99,7 @@ export default function(props) {
       case 'Relationship Status':
         return <RelationshipStatus />;
       case 'Map':
-        return <Map focus={id} linkPrefix="deep-dives/country/" />;
+        return <Map focus={id} linkPrefix="/deep-dives/country/" />;
       case 'Featured':
         return featured(data);
       default:
