@@ -76,7 +76,7 @@ export default function(props) {
                 ' '
               )}
             >
-              <Tile data={data} category={data.cat} />
+              <Tile data={data} category={data.cat} width={data.width} />
             </div>
           );
         })}
@@ -94,7 +94,7 @@ function error() {
  *
  */
 function Tile(props) {
-  const { data, category } = props,
+  const { data, category, width } = props,
     { content } = data;
 
   switch (category) {
@@ -106,7 +106,7 @@ function Tile(props) {
       return featured(data);
     default:
       return content.length > 1 ? (
-        <List items={content}>
+        <List items={content} groupSize={width}>
           <h3>{pluralize(category)}</h3>
         </List>
       ) : (
@@ -115,7 +115,7 @@ function Tile(props) {
   }
 
   function featured(data = {}) {
-    return <SingleItem data={data} className="" size={1} type="article" />;
+    return <SingleItem data={data} className="" size={width} type="article" />;
   }
 }
 
@@ -162,6 +162,8 @@ function tileClassName(rowSize = 4, width = 1) {
 
 function pluralize(category = '') {
   switch (category) {
+    case 'Deep Dive':
+      return 'Deep Dives';
     case 'Policy Document':
       return 'Policy Documents';
     case 'Article':

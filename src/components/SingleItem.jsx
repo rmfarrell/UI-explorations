@@ -100,15 +100,14 @@ function LargeTeaser({
             />
           </a>
         </h3>
-        <p>
-          <LinesEllipsis
-            text={summary}
-            maxLine="4"
-            ellipsis="..."
-            trimRight
-            basedOn="letters"
-          />
-        </p>
+        <LinesEllipsis
+          text={summary}
+          maxLine="4"
+          ellipsis="..."
+          trimRight
+          basedOn="letters"
+          component="p"
+        />
       </div>
     </div>
   );
