@@ -65,58 +65,65 @@ export default function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
-  return rows.map(({ items, size }, idx) => {
-    return (
-      <div className="grid" key={idx}>
-        {items.map((data, idx) => {
-          return (
-            <div
-              key={idx}
-              className={[tileClassName(size, data.width), styles.tile].join(
-                ' '
-              )}
-            >
-              <Tile data={data} category={data.cat} width={data.width} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  });
+  return (
+    <React.Fragment>
+      {rows.map(({ items, size }, idx) => {
+        return (
+          <div className="grid" key={idx}>
+            {items.map((data, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={[
+                    tileClassName(size, data.width),
+                    styles.tile
+                  ].join(' ')}
+                >
+                  <Tile data={data} category={data.cat} width={data.width} />
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </React.Fragment>
+  );
+
+  /**
+   * Factory funciton for rendering Tiles
+   *
+   */
+  function Tile(props) {
+    const { data, category, width } = props,
+      { content } = data;
+
+    switch (category) {
+      case 'Custom Article':
+        return <CustomArticle data={custom_article} />;
+      case 'Map':
+        return <Map />;
+      case 'Featured':
+        return featured(data);
+      default:
+        return content.length > 1 ? (
+          <List items={content} groupSize={width}>
+            <h3>{pluralize(category)}</h3>
+          </List>
+        ) : (
+          featured(content[0])
+        );
+    }
+
+    function featured(data = {}) {
+      return (
+        <SingleItem data={data} className="" size={width} type="article" />
+      );
+    }
+  }
 }
 
 function error() {
   return '';
-}
-
-/**
- * Factory funciton for rendering Tiles
- *
- */
-function Tile(props) {
-  const { data, category, width } = props,
-    { content } = data;
-
-  switch (category) {
-    case 'Custom Article':
-      return <CustomArticle />;
-    case 'Map':
-      return <Map />;
-    case 'Featured':
-      return featured(data);
-    default:
-      return content.length > 1 ? (
-        <List items={content} groupSize={width}>
-          <h3>{pluralize(category)}</h3>
-        </List>
-      ) : (
-        featured(content[0])
-      );
-  }
-
-  function featured(data = {}) {
-    return <SingleItem data={data} className="" size={width} type="article" />;
-  }
 }
 
 function dereferenceArticles(ids = [], collection = {}) {

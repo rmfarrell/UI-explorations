@@ -70,7 +70,7 @@ export default function(props) {
     rows = makeGrid(tiles);
 
   function onDropDownSelect({ value }) {
-    props.history.replace(value);
+    props.history.replace(`/relationship/${value}`);
   }
 
   return (
