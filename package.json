@@ -13,6 +13,7 @@
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.4",
+    "react-dropdown": "^1.6.4",
     "react-lines-ellipsis": "^0.14.1",
     "react-masonry-component": "^6.2.1",
     "react-router-dom": "^5.0.0",

@@ -4,6 +4,7 @@ import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
 import { Grid, Row } from '../lib/grid';
+import { COUNTRIES } from '../lib/constants';
 
 // -- Modules
 import RelationshipStatus from '../components/RelationshipStatus.jsx';
@@ -66,24 +67,30 @@ export default function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
-  return rows.map(({ items, size }, idx) => {
-    return (
-      <div className="grid" key={idx}>
-        {items.map((data, idx) => {
-          return (
-            <div
-              key={idx}
-              className={[tileClassName(size, data.width), styles.tile].join(
-                ' '
-              )}
-            >
-              <Tile data={data} category={data.cat} width={data.width} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  });
+  return (
+    <React.Fragment>
+      <h1 className="constrain">{COUNTRIES[id]}</h1>
+      {rows.map(({ items, size }, idx) => {
+        return (
+          <div className="grid" key={idx}>
+            {items.map((data, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={[
+                    tileClassName(size, data.width),
+                    styles.tile
+                  ].join(' ')}
+                >
+                  <Tile data={data} category={data.cat} width={data.width} />
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </React.Fragment>
+  );
 
   /**
    * Factory funciton for rendering Tiles
