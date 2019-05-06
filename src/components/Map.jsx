@@ -4,7 +4,7 @@ import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function(props) {
-  const { focus, linkPrefix = 'relationship/' } = props,
+  const { focus, linkPrefix = '/relationship/' } = props,
     containerStyles = [styles.container, focus ? styles.focused : ''].join(' ');
   return (
     <div className={containerStyles}>
