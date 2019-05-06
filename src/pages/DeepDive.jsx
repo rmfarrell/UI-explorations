@@ -20,6 +20,8 @@ export default function(props) {
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
     deepdive = id && deepdives[`DDV:${id}`];
   if (!deepdive) return error();
+  console.log(deepdives);
+  console.log(articles);
   const {
       custom_article,
       articles: { featured, collection }
@@ -106,7 +108,9 @@ function Tile(props) {
       return featured(data);
     default:
       return content.length > 1 ? (
-        <List items={content} />
+        <List items={content}>
+          <h3>{category}</h3>
+        </List>
       ) : (
         featured(content[0])
       );
@@ -114,15 +118,6 @@ function Tile(props) {
 
   function featured(data = {}) {
     return <SingleItem data={data} className="" size={1} type="article" />;
-  }
-
-  function placeholder() {
-    return (
-      <div>
-        <div>{data.cat}</div>
-        <div>{content && content.length}</div>
-      </div>
-    );
   }
 }
 

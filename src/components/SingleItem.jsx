@@ -117,7 +117,6 @@ function LargeTeaser({
 
 function SmallSocialTeaser(data) {
   const { date = '', summary = '', author = '', source = '' } = data;
-  console.log(data);
   const limit = 25;
   return (
     <div className={styles.social}>

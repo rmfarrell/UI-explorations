@@ -57,6 +57,16 @@ function normalizeArticle(data, type) {
       out.source = 'Twitter';
       out.author = `${data.author.split(' ')[0].toLowerCase()}`;
       return out;
+
+    case 'DDV':
+      const { custom_article } = data;
+
+      out.date = new Date();
+      out.title = custom_article.title;
+      out.summary = custom_article.short_description;
+      out.source = custom_article.curator;
+      out.author = data.author;
+      return out;
     default:
       return data;
   }

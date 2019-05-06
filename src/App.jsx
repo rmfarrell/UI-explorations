@@ -46,7 +46,10 @@ function Main(props) {
   async function fetchData() {
     const deepdives = await fetchDeepDives(20);
     dispatch('deepdives/update', deepdives);
-    dispatch('articles/add', { data: deepdives, type: 'DDV' });
+    dispatch('articles/add', {
+      data: Object.assign({}, deepdives),
+      type: 'DDV'
+    });
     dispatch('articles/add', { data: await fetchRssItems(60), type: 'RSS' });
     dispatch('articles/add', { data: await fetchSocialMedia(40), type: 'SOC' });
     dispatch('articles/add', {
