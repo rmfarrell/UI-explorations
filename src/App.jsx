@@ -90,7 +90,7 @@ function Main(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/relationship/europe" activeClassName={styles.active}>
+            <NavLink to="/relationship" activeClassName={styles.active}>
               Relationship
             </NavLink>
           </li>
