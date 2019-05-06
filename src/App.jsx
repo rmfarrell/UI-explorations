@@ -40,7 +40,7 @@ function AppRouter() {
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
-          <Route path="/" exact component={Explore} />
+          <Route path="/explore" exact component={Explore} />
         </Main>
       </Router>
     </StoreContext.Provider>

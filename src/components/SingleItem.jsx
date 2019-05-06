@@ -6,6 +6,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 export default function SingleItem(props) {
   const { data = {}, className = '', size = 0, children = [] } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
+  console.log(data.id);
   const link =
     data.document_type === 'Deep Dive'
       ? `/deep-dives/${data.id.split('_')[1]}`
