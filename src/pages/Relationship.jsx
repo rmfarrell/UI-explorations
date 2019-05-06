@@ -7,6 +7,7 @@ import { Grid, Row } from '../lib/grid';
 import { COUNTRIES } from '../lib/constants';
 
 // -- Modules
+import Dropdown from 'react-dropdown';
 import RelationshipStatus from '../components/RelationshipStatus.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
@@ -65,10 +66,26 @@ export default function(props) {
         }))
       )
       .map(addWidths),
-    rows = makeGrid(tiles);
+    rows = makeGrid(tiles),
+    dropdownOptions = Object.keys(COUNTRIES).map(cc => {
+      return {
+        value: cc,
+        label: COUNTRIES[cc]
+      };
+    });
+
+  function onDropDownSelect({ value }) {
+    props.history.replace(value);
+  }
 
   return (
     <React.Fragment>
+      <Dropdown
+        options={dropdownOptions}
+        onChange={onDropDownSelect}
+        value={id}
+        placeholder="Select an option"
+      />
       <h1 className="constrain">{COUNTRIES[id]}</h1>
       {rows.map(({ items, size }, idx) => {
         return (
