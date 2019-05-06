@@ -18,7 +18,7 @@ export default function(props) {
       }
     } = props,
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
-    deepdive = id && deepdives[`DDV:${id}`];
+    deepdive = id && deepdives[`DDV_${id}`];
   if (!deepdive) return error();
   const {
       custom_article,

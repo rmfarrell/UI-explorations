@@ -10,7 +10,8 @@ import {
   fetchDeepDives,
   fetchRssItems,
   fetchSocialMedia,
-  fetchExternalResources
+  fetchExternalResources,
+  fetchRelationships
 } from './lib/api';
 
 // -- Modules
@@ -46,6 +47,7 @@ function Main(props) {
   async function fetchData() {
     const deepdives = await fetchDeepDives(20);
     dispatch('deepdives/update', deepdives);
+    dispatch('relationships/update', await fetchRelationships(20));
     dispatch('articles/add', {
       data: Object.assign({}, deepdives),
       type: 'DDV'

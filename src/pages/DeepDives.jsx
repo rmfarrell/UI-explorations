@@ -9,7 +9,7 @@ export default function(props) {
       {Object.keys(deepdives).map(key => {
         return (
           <li key={key}>
-            <Link to={`deep-dives/${key.split(':')[1]}`}>{key}</Link>
+            <Link to={`deep-dives/${key.split('_')[1]}`}>{key}</Link>
           </li>
         );
       })}

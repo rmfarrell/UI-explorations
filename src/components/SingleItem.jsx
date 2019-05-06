@@ -8,7 +8,7 @@ export default function SingleItem(props) {
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
   const link =
     data.document_type === 'Deep Dive'
-      ? `/deep-dives/${data.id.split(':')[1]}`
+      ? `/deep-dives/${data.id.split('_')[1]}`
       : '';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>

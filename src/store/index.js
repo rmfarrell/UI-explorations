@@ -10,12 +10,18 @@ function data(store) {
   store.on('@init', () => {
     return {
       deepdives: [],
-      articles: []
+      articles: [],
+      relationships: []
+    };
+  });
+
+  store.on('relationships/update', ({ relationships }, value) => {
+    return {
+      relationships: value
     };
   });
 
   store.on('deepdives/update', ({ deepdives }, value) => {
-    console.log('deepdives update');
     return {
       deepdives: value
     };

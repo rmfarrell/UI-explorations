@@ -11,7 +11,7 @@ export const COUNTRIES = {
   FIN: 'Finland',
   FRA: 'France',
   GBR: 'United Kingdom',
-  GR: 'Greece',
+  GRC: 'Greece',
   HUN: 'Hungary',
   CRO: 'Croatia',
   IRL: 'Ireland',

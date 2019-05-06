@@ -18,13 +18,14 @@ export default function(props) {
         params: { id }
       }
     } = props,
-    { deepdives, articles } = useStoreon('deepdives', 'articles'),
-    deepdive = id && deepdives[`DDV:${id}`];
-  if (!deepdive) return error();
+    { relationships, articles } = useStoreon('relationships', 'articles'),
+    relationship = id && relationships[`REL:${id.toUpperCase()}`];
+  if (!relationship) return error();
+  console.log(relationship);
   const {
       custom_article,
       articles: { featured, collection }
-    } = deepdive,
+    } = relationship,
     featuredData = dereferenceArticles(
       // Filter out socials from filter :(
       featured.filter(id => !id.includes('SOC')),
@@ -39,13 +40,7 @@ export default function(props) {
       {
         cat: 'Map',
         width: 1
-      },
-      // Custom article
-      Object.assign(custom_article, {
-        cat: 'Custom Article',
-        width: 1,
-        canExpand: true
-      })
+      }
     ]
       .concat(
         ...featuredData.map(featured => {
@@ -122,6 +117,7 @@ function Tile(props) {
 
 function dereferenceArticles(ids = [], collection = {}) {
   return ids.map(id => {
+    console.log(id);
     const out = collection[id];
     if (!out) {
       throw new Error(`Could not find article ${id}`);
