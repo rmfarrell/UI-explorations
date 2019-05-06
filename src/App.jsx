@@ -38,6 +38,7 @@ function AppRouter() {
             exact
             component={DeepDivesByCountry}
           />
+          <Route path="/deep-dives/:id/:article" component={DeepDive} />
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />

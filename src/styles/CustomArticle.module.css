@@ -15,9 +15,15 @@
   padding: 0 2%;
 }
 
-.root p a {
+.root p a,
+.root p a:visited {
   color: var(--col-blue);
   font-weight: 600;
+}
+
+.root h1 a,
+.root h1 a:visited {
+  color: inherit;
 }
 
 .root h1 a:hover {

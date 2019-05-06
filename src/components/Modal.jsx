@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/Modal.module.css';
 
 export default function({ isOpen = true, children = [], close = () => {} }) {
-  const openClass = isOpen ? styles.open : styles.closed;
+  const openClass = isOpen ? styles._open : styles._closed;
   return (
     <div className={[styles.root, openClass].join(' ')} onClick={close}>
       <aside className={[styles.modal, 'modal'].join(' ')}>

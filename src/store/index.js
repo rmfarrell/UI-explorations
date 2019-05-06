@@ -27,6 +27,10 @@ function data(store) {
     };
   });
 
+  store.on('@dispatch', ({}, b) => {
+    console.log(b);
+  });
+
   store.on('articles/add', ({ articles }, { data, type }) => {
     for (let x in data) {
       data[x] = normalizeArticle(data[x], type);

@@ -14,9 +14,10 @@ import List from '../components/List.jsx';
 export default function(props) {
   const {
       match: {
-        params: { id }
+        params: { id, article }
       }
     } = props,
+    showArticle = Boolean(article),
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
     deepdive = id && deepdives[`DDV_${id}`];
   if (!deepdive) return error();
@@ -89,6 +90,8 @@ export default function(props) {
     </React.Fragment>
   );
 
+  function hideModal() {}
+
   /**
    * Factory funciton for rendering Tiles
    *
@@ -99,7 +102,13 @@ export default function(props) {
 
     switch (category) {
       case 'Custom Article':
-        return <CustomArticle data={custom_article} />;
+        return (
+          <CustomArticle
+            data={custom_article}
+            modalIsVisible={showArticle}
+            hideModal={hideModal}
+          />
+        );
       case 'Map':
         return <Map />;
       case 'Featured':
