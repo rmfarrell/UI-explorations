@@ -1,0 +1,15 @@
+{
+  "type": "Social Media Item",
+  "last_retrieved": "2019-05-06T01:39:56.468Z",
+  "relationships": {
+    "primary_country": "POL",
+    "countries": ["GBR", "DNK"],
+    "primary_issue": "Finance",
+    "issues": ["Diplomacy", "Immigration"],
+    "entities": ["Notre Dame"],
+    "deep_dives": []
+  },
+  "text": "et voluptate minima animi sint est tempora ea quisquam maxime eos rerum est ipsam dolores natus fugiat iure ut qui animi quia provident aliquam ipsam doloremque itaque voluptatem pariatur eos voluptates dolorum ratione et earum dolor sunt vel nostrum et tempora pariatur odit qui deleniti et reprehenderit ea porro eius non explicabo quas atque iusto labore ipsa id eligendi doloribus aspernatur harum voluptate veritatis in corporis quia sed possimus eos repellat eius qui non consectetur blanditiis aut laborum autem laudantium reiciendis ipsam temporibus velit aliquam autem omnis voluptatibus maiores deleniti quis qui ut ea quia accusantium et nam ad qui ab minus omnis culpa sit pariatur consectetur molestiae deserunt qui eius ut nulla consectetur qui maiores officia provident et dolore",
+  "author": "Jacques Nienow",
+  "date": "2019-02-08T02:06:29.770Z"
+}

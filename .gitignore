@@ -24,4 +24,3 @@ yarn-error.log*
 
 # assets
 src/index.css
-public/data
