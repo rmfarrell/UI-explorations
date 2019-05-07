@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/ListItem.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { formatDate, placeholderImage } from '../lib/helpers';
+import Link from './Link';
 
 // TODO this could be merged with Card probably
 export default React.memo(function SingleItem(props) {
@@ -30,7 +31,7 @@ export default React.memo(function SingleItem(props) {
 
 function SmallTeaser({ date, title = '', link = '#' }) {
   return (
-    <a href={link}>
+    <Link to={link}>
       <h4>{formatDate(date)}</h4>
       <LinesEllipsis
         text={title}
@@ -40,7 +41,7 @@ function SmallTeaser({ date, title = '', link = '#' }) {
         basedOn="words"
         component="h3"
       />
-    </a>
+    </Link>
   );
 }
 
@@ -60,10 +61,10 @@ function MediumTeaser(props) {
       <div className={styles.imgContainer} style={placeholderImage()} />
       <div className={styles.textContainer}>
         <h3>
-          <a href={link}>{title}</a>
+          <Link to={link}>{title}</Link>
         </h3>
         <h4>
-          <a href={link}>{source}</a> | {formatDate(date)}
+          <Link to={link}>{source} </Link>| {formatDate(date)}
         </h4>
         <h5>By {author}</h5>
         <LinesEllipsis
@@ -86,7 +87,8 @@ function LargeTeaser(props) {
     image = {},
     summary = '',
     source = '',
-    author = ''
+    author = '',
+    link = '#'
   } = props;
   return (
     <div>
@@ -98,7 +100,7 @@ function LargeTeaser(props) {
       </figure>
       <div className={styles.textContainer}>
         <h3>
-          <a href="#">
+          <Link to={link}>
             <LinesEllipsis
               text={title}
               maxLine="2"
@@ -106,7 +108,7 @@ function LargeTeaser(props) {
               trimRight
               basedOn="words"
             />
-          </a>
+          </Link>
         </h3>
         <LinesEllipsis
           text={summary}
@@ -128,9 +130,9 @@ function SmallSocialTeaser(data) {
     <div className={styles.social}>
       <h4>
         {formatDate(date)}
-        <a href="https://twitter.com" target="_blank">
+        <Link to={'https://twitter.com'} target="_blank">
           &nbsp;@{author}
-        </a>
+        </Link>
       </h4>
       {/* <div style={placeholderImage()} /> */}
       <LinesEllipsis
