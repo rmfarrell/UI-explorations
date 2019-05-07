@@ -2,12 +2,27 @@
   overflow: hidden;
 }
 
-.focused {
-  height: 100%;
-}
-
 .focused a {
   /* pointer-events: none; */
+}
+
+.focused {
+  background: var(--col-text);
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+}
+
+.focused h1 {
+  position: absolute;
+  top: 0;
+  color: white;
+  font: normal 3em var(--oswald);
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 100%;
 }
 
 .map {
