@@ -50,8 +50,6 @@ function AppRouter() {
 
 function Main(props) {
   const { children } = props;
-  // TODO: figure out whyyyy this renders so many times
-  console.log('Main rendered');
 
   const { dispatch } = useStoreon('deepdives');
   const [fetched, setFetched] = useState(false);

@@ -24,9 +24,6 @@ export default function(props) {
   );
 
   function applyFilters(types, search) {
-    if (!dataMem) {
-      console.log('datamem undefined');
-    }
     dataMem = dataMem || articlesToArray(articles);
     setData(filterByType(dataMem, types));
   }
