@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
 import styles from '../styles/Card.module.css';
+import { formatDate, placeholderImage } from '../lib/helpers';
 
-function Card({ data = {} }) {
+export default React.memo(function Card(props) {
   const {
-      title,
-      source,
-      author,
-      date,
-      country,
-      issues,
-      image,
-      type,
-      summary
-    } = data,
-    imgPlaceholder = {
-      background: `${image.color}`,
-      height: '0',
-      paddingBottom: `${image.ratio}%`
-    };
+      date = '',
+      title = '',
+      image = {
+        color: '#333',
+        ratio: 60
+      },
+      summary = '',
+      source = '',
+      author = '',
+      link = '#',
+      type = '',
+      document_type = ''
+    } = props,
+    cardType = document_type || type;
+
   return (
     <div className={styles.root}>
-      <h3>{type}</h3>
-      <div style={imgPlaceholder} className={styles.imgContainer} />
-      <h3>{issues.join(', ')}</h3>
+      <h3>{cardType}</h3>
+      <div style={placeholderImage()} className={styles.imgContainer} />
+      {/* <h3>{issues.join(', ')}</h3> */}
       <h2>{title}</h2>
       <h4>
-        {date} | {source}
+        {formatDate(date)} | {source}
       </h4>
       <p>{summary}</p>
     </div>
   );
-}
-
-export default Card;
+});

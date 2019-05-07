@@ -14,7 +14,8 @@
 }
 
 .root h3 {
-  font-family: var(--oswald);
+  font: bold 1.5em var(--oswald);
+  text-transform: uppercase;
 }
 
 .root .imgContainer {

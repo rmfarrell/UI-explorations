@@ -12,3 +12,12 @@ export function placeholderImage(color = '#888', ratio = 60) {
     paddingBottom: `${ratio}%`
   };
 }
+
+export function articlesToArray(articles = {}) {
+  return Object.keys(articles).map(id => {
+    // console.log(articles[id]);
+    // const out = Object.assign(articles[id], { id });
+    // console.log(out);
+    return Object.assign(articles[id], { id });
+  });
+}

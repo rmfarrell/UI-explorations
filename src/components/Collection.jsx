@@ -6,14 +6,14 @@ const masonryOptions = {
   // transitionDuration: 0
 };
 
-export default function({ teasers = [] }) {
+export default React.memo(function({ articles = [] }) {
   return (
     <div className="App constrain">
       <Masonry options={masonryOptions}>
-        {teasers.map(t => {
-          return <Card data={t} key={t.id} />;
+        {articles.map(data => {
+          return <Card {...data} key={data.id} />;
         })}
       </Masonry>
     </div>
   );
-}
+});

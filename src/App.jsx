@@ -25,7 +25,6 @@ import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import DeepDivesByCountry from './pages/DeepDivesByCountry.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
-import CountryDropdown from './components/CountryDropdown.jsx';
 
 function AppRouter() {
   return (
