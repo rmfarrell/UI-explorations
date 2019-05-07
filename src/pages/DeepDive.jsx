@@ -11,7 +11,7 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 
-export default function(props) {
+export default React.memo(function(props) {
   const {
       match: {
         params: { id, article }
@@ -129,7 +129,7 @@ export default function(props) {
       );
     }
   }
-}
+});
 
 function error() {
   return '';
