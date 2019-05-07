@@ -21,7 +21,6 @@ function CustomArticle(props) {
       />
     );
   }
-  console.log(match);
   return (
     <article className={styles.root}>
       {img()}

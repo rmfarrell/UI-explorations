@@ -28,7 +28,7 @@ function data(store) {
   });
 
   store.on('@dispatch', ({}, b) => {
-    console.log(b);
+    console.info(b);
   });
 
   store.on('articles/add', ({ articles }, { data, type }) => {
