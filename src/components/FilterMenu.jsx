@@ -14,7 +14,7 @@ export default function(props) {
   }, [types, search]);
 
   return (
-    <div className={styles.root}>
+    <div className={[styles.root, 'constrain'].join(' ')}>
       <form onSubmit={textSearch}>
         <input
           type="text"
@@ -24,9 +24,11 @@ export default function(props) {
           value={text}
         />
         {search && (
-          <input type="button" role="button" onClick={clearSearch} value="x" />
+          <button role="button" onClick={clearSearch}>
+            &times;
+          </button>
         )}
-        {search !== text ? <input type="submit" value="search" /> : ''}
+        {search !== text ? <input type="submit" value="SEARCH" /> : ''}
       </form>
       <ul>
         <li>
