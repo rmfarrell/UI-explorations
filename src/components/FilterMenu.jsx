@@ -6,7 +6,8 @@ export default function(props) {
   const { onChange = () => {} } = props,
     [types, setTypes] = useState([]),
     [search, setSearch] = useState(''),
-    isAll = !search && !types.length;
+    [text, setText] = useState(''),
+    isAll = !types.length;
 
   useEffect(() => {
     onChange(types, search);
@@ -14,6 +15,19 @@ export default function(props) {
 
   return (
     <div className={styles.root}>
+      <form onSubmit={textSearch}>
+        <input
+          type="text"
+          name="text"
+          placeholder="All Items"
+          onChange={e => setText(e.target.value)}
+          value={text}
+        />
+        {search && (
+          <input type="button" role="button" onClick={clearSearch} value="x" />
+        )}
+        {search !== text ? <input type="submit" value="search" /> : ''}
+      </form>
       <ul>
         <li>
           <button
@@ -36,6 +50,16 @@ export default function(props) {
       </ul>
     </div>
   );
+
+  function textSearch(e) {
+    e.preventDefault();
+    setSearch(text);
+  }
+
+  function clearSearch() {
+    setSearch('');
+    setText('');
+  }
 
   function update() {
     onChange(types, search);

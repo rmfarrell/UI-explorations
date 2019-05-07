@@ -24,20 +24,28 @@ export default function(props) {
   );
 
   function applyFilters(types, search) {
+    console.log(search);
     dataMem = dataMem || memoizeData(articles);
-    setData(filterByType(dataMem, types));
-  }
-
-  function filterByType(items = [], types) {
-    if (!types.length) return items;
-    return items.filter(item => {
-      return types.includes(item.document_type);
-    });
+    setData(filterByType(filterByText(dataMem, search), types));
   }
 }
 
 function memoizeData(items = []) {
   return articlesToArray(items).sort((a, b) => {
     return b.date - a.date;
+  });
+}
+
+function filterByType(items = [], types) {
+  if (!types.length) return items;
+  return items.filter(item => {
+    return types.includes(item.document_type);
+  });
+}
+
+function filterByText(items = [], text) {
+  if (!text) return items;
+  return items.filter(({ title }) => {
+    return title.includes(text);
   });
 }
