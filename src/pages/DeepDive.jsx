@@ -14,7 +14,7 @@ import List from '../components/List.jsx';
 export default React.memo(function(props) {
   const {
       match: {
-        params: { id, article }
+        params: { id }
       }
     } = props,
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
