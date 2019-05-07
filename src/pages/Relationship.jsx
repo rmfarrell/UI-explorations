@@ -73,7 +73,7 @@ export default function(props) {
   }
 
   return (
-    <React.Fragment>
+    <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
         <CountryDropdown
           className={['big', styles.dropdown].join(' ')}
@@ -100,7 +100,7 @@ export default function(props) {
           </div>
         );
       })}
-    </React.Fragment>
+    </article>
   );
 
   /**

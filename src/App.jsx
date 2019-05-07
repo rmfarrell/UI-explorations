@@ -26,6 +26,7 @@ import DeepDivesByCountry from './pages/DeepDivesByCountry.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
+import Modal from './components/Modal.jsx';
 
 function AppRouter() {
   return (
@@ -49,6 +50,33 @@ function AppRouter() {
             render={() => (
               <Empty>
                 <h1>Help Page</h1>
+              </Empty>
+            )}
+          />
+          <Route
+            path="/static1"
+            exact
+            render={() => (
+              <Empty>
+                <h1>Static Page One</h1>
+              </Empty>
+            )}
+          />
+          <Route
+            path="/static2"
+            exact
+            render={() => (
+              <Empty>
+                <h1>Static Page Two</h1>
+              </Empty>
+            )}
+          />
+          <Route
+            path="/static3"
+            exact
+            render={() => (
+              <Empty>
+                <h1>Static Page Three</h1>
               </Empty>
             )}
           />
@@ -95,31 +123,54 @@ function Main(props) {
 
   return (
     <div className={styles.root}>
-      <nav>
-        <ul className="constrain">
-          <li>
-            <NavLink to="/relationship" activeClassName={styles.active}>
-              Relationships
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/deep-dives" activeClassName={styles.active}>
-              Deep Dives
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/explore" activeClassName={styles.active}>
-              Explore
-            </NavLink>
-          </li>
-          <li className={styles.helpLink}>
-            <NavLink to="/help" activeClassName={styles.active}>
-              Help
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
+      <header>
+        <nav>
+          <ul className="constrain">
+            <li>
+              <NavLink to="/relationship" activeClassName={styles.active}>
+                Relationships
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/deep-dives" activeClassName={styles.active}>
+                Deep Dives
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/explore" activeClassName={styles.active}>
+                Explore
+              </NavLink>
+            </li>
+            <li className={styles.helpLink}>
+              <NavLink to="/help" activeClassName={styles.active}>
+                Help
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </header>
       {fetched ? children : loading()}
+      <footer>
+        <nav>
+          <ul className="constrain">
+            <li>
+              <NavLink to="/static1" activeClassName={styles.active}>
+                Static page
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/static2" activeClassName={styles.active}>
+                Static page
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/static3" activeClassName={styles.active}>
+                Static page
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </footer>
     </div>
   );
 }

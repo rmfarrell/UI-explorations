@@ -57,7 +57,7 @@ export default function(props) {
   }
 
   return (
-    <React.Fragment>
+    <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
         <h1>Deep Dives: {COUNTRIES[id]}</h1>
       </header>
@@ -80,7 +80,7 @@ export default function(props) {
           </div>
         );
       })}
-    </React.Fragment>
+    </article>
   );
 
   /**

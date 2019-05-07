@@ -66,7 +66,7 @@ export default React.memo(function(props) {
     rows = makeGrid(tiles);
 
   return (
-    <React.Fragment>
+    <article>
       {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
@@ -86,7 +86,7 @@ export default React.memo(function(props) {
           </div>
         );
       })}
-    </React.Fragment>
+    </article>
   );
 
   function hideModal() {}
