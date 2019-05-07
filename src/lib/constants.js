@@ -35,7 +35,8 @@ export const TYPES = [
   'Data',
   'Article',
   'Opinion',
-  'Analysis'
+  'Analysis',
+  'Policy Document'
 ];
 
 // TK
