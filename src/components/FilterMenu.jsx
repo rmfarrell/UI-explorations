@@ -10,7 +10,7 @@ export default function(props) {
     isAll = !types.length;
 
   useEffect(() => {
-    onChange(types, search);
+    onChange(types, search.toLowerCase());
   }, [types, search]);
 
   return (
@@ -61,10 +61,6 @@ export default function(props) {
   function clearSearch() {
     setSearch('');
     setText('');
-  }
-
-  function update() {
-    onChange(types, search);
   }
 
   function clearFilters() {

@@ -25,6 +25,7 @@ import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import DeepDivesByCountry from './pages/DeepDivesByCountry.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
+import Empty from './components/Empty.jsx';
 
 function AppRouter() {
   return (
@@ -42,6 +43,15 @@ function AppRouter() {
           <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
+          <Route
+            path="/help"
+            exact
+            render={() => (
+              <Empty>
+                <h1>Help Page (TK)</h1>
+              </Empty>
+            )}
+          />
         </Main>
       </Router>
     </StoreContext.Provider>
@@ -76,7 +86,11 @@ function Main(props) {
   }, [fetched]);
 
   function loading() {
-    return <div>Loading</div>;
+    return (
+      <Empty>
+        <h2>Loading...</h2>
+      </Empty>
+    );
   }
 
   return (
@@ -96,6 +110,11 @@ function Main(props) {
           <li>
             <NavLink to="/explore" activeClassName={styles.active}>
               Explore
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/help" activeClassName={styles.active}>
+              Help
             </NavLink>
           </li>
         </ul>

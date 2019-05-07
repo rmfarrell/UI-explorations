@@ -46,6 +46,6 @@ function filterByType(items = [], types) {
 function filterByText(items = [], text) {
   if (!text) return items;
   return items.filter(({ title }) => {
-    return title.includes(text);
+    return title.toLowerCase().includes(text);
   });
 }
