@@ -2,17 +2,14 @@ import React from 'react';
 import styles from '../styles/CustomArticle.module.css';
 import { placeholderImage } from '../lib/helpers';
 import Modal from './Modal.jsx';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, Route } from 'react-router-dom';
 
 export default withRouter(CustomArticle);
 
 function CustomArticle(props) {
   const {
     data,
-    modalIsVisible = false,
-    match: {
-      params: { id }
-    },
+    match,
     history: { push }
   } = props;
   const { title = '', short_description = '', content = '' } = data;
@@ -24,26 +21,34 @@ function CustomArticle(props) {
       />
     );
   }
+  console.log(match);
   return (
     <article className={styles.root}>
       {img()}
       <h1>
-        <Link to={`/deep-dives/${id}/article`}>{title}</Link>
+        <Link to={`${match.url}/article`}>{title}</Link>
       </h1>
       <p>
         {short_description} ...{' '}
-        <Link to={`/deep-dives/${id}/article`}>READ MORE &raquo;</Link>
+        <Link to={`${match.url}/article`}>READ MORE &raquo;</Link>
       </p>
-      <Modal isOpen={modalIsVisible} close={closeModal}>
+
+      <Route path={`${match.url}/article`} component={modal} />
+    </article>
+  );
+
+  function modal() {
+    return (
+      <Modal isOpen={true} close={closeModal}>
         {img()}
         <h1>{title}</h1>
         <p>{content}</p>
         <p>{content}</p>
       </Modal>
-    </article>
-  );
+    );
+  }
 
   function closeModal() {
-    push(`/deep-dives/${id}`);
+    push(`${match.url}`);
   }
 }

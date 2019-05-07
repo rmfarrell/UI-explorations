@@ -13,6 +13,7 @@ export default React.memo(function SingleItem(props) {
       : '#';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
+      {console.log('render called')}
       {children}
       {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && modifier === 'article' && (

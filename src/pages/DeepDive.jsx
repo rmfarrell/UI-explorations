@@ -17,7 +17,6 @@ export default React.memo(function(props) {
         params: { id, article }
       }
     } = props,
-    showArticle = Boolean(article),
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
     deepdive = id && deepdives[`DDV_${id}`];
   if (!deepdive) return error();
@@ -102,13 +101,7 @@ export default React.memo(function(props) {
 
     switch (category) {
       case 'Custom Article':
-        return (
-          <CustomArticle
-            data={custom_article}
-            modalIsVisible={showArticle}
-            hideModal={hideModal}
-          />
-        );
+        return <CustomArticle data={custom_article} hideModal={hideModal} />;
       case 'Map':
         return <Map />;
       case 'Featured':

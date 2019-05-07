@@ -9,14 +9,6 @@
   z-index: 80;
 }
 
-._open {
-  display: block;
-}
-
-._closed {
-  display: none;
-}
-
 .modal {
   background-color: white;
   top: 50%;
