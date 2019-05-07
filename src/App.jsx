@@ -48,7 +48,7 @@ function AppRouter() {
             exact
             render={() => (
               <Empty>
-                <h1>Help Page (TK)</h1>
+                <h1>Help Page</h1>
               </Empty>
             )}
           />
@@ -112,7 +112,7 @@ function Main(props) {
               Explore
             </NavLink>
           </li>
-          <li>
+          <li className={styles.helpLink}>
             <NavLink to="/help" activeClassName={styles.active}>
               Help
             </NavLink>

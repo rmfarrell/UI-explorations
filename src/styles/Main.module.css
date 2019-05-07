@@ -47,3 +47,8 @@
   font-style: normal;
   color: var(--col-orange);
 }
+
+.root li.helpLink {
+  align-self: flex-end;
+  margin-left: auto;
+}
