@@ -71,10 +71,10 @@ export default function(props) {
       {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
-            {items.map((data, idx) => {
+            {items.map(data => {
               return (
                 <div
-                  key={idx}
+                  key={data.cat}
                   className={[
                     tileClassName(size, data.width),
                     styles.tile

@@ -4,7 +4,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import { formatDate, placeholderImage } from '../lib/helpers';
 
 // TODO this could be merged with Card probably
-export default function SingleItem(props) {
+export default React.memo(function SingleItem(props) {
   const { data = {}, className = '', size = 0, children = [] } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
   const link =
@@ -26,7 +26,7 @@ export default function SingleItem(props) {
       )}
     </div>
   );
-}
+});
 
 function SmallTeaser({ date, title = '', link = '#' }) {
   return (
@@ -79,14 +79,15 @@ function MediumTeaser(props) {
   );
 }
 
-function LargeTeaser({
-  date = '',
-  title = '',
-  image = {},
-  summary = '',
-  source = '',
-  author = ''
-}) {
+function LargeTeaser(props) {
+  const {
+    date = '',
+    title = '',
+    image = {},
+    summary = '',
+    source = '',
+    author = ''
+  } = props;
   return (
     <div>
       <figure className={styles.imgContainer} style={placeholderImage()}>
