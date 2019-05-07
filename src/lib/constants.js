@@ -31,7 +31,6 @@ export const COUNTRIES = {
 
 export const TYPES = [
   'Deep Dive',
-  'Policy',
   'Data',
   'Article',
   'Opinion',

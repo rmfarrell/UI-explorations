@@ -24,7 +24,7 @@ export default function(props) {
   );
 
   function applyFilters(types, search) {
-    dataMem = dataMem || articlesToArray(articles);
+    dataMem = dataMem || memoizeData(articles);
     setData(filterByType(dataMem, types));
   }
 
@@ -34,4 +34,10 @@ export default function(props) {
       return types.includes(item.document_type);
     });
   }
+}
+
+function memoizeData(items = []) {
+  return articlesToArray(items).sort((a, b) => {
+    return b.date - a.date;
+  });
 }

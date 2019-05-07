@@ -1,6 +1,9 @@
 import createStore from 'storeon';
 import 'unfetch/polyfill';
 
+// For faking the date on deep dives :(
+let counter = 0;
+
 export default createStore([
   data,
   process.env.NODE_ENV !== 'production' && require('storeon/devtools')
@@ -84,7 +87,10 @@ function normalizeArticle(data, type) {
     case 'DDV':
       const { custom_article } = data;
 
-      out.date = new Date();
+      // fake date
+      const fakeDate = new Date();
+      fakeDate.setDate(fakeDate.getDate() - ++counter);
+      out.date = fakeDate;
       out.title = custom_article.title;
       out.summary = custom_article.short_description;
       out.source = custom_article.curator;
