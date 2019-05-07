@@ -36,7 +36,7 @@ function data(store) {
 
   store.on('articles/add', ({ articles, articlesArr }, { data, type }) => {
     for (let x in data) {
-      data[x] = normalizeArticle(data[x], type);
+      data[x] = normalizeArticle(data[x], type, x);
     }
     return {
       articles: Object.assign(articles, data)
@@ -44,7 +44,7 @@ function data(store) {
   });
 }
 
-function normalizeArticle(data, type) {
+function normalizeArticle(data, type, id) {
   const { relationships = {} } = data,
     { primary_country, countries = [] } = relationships;
   let out = {
@@ -53,6 +53,7 @@ function normalizeArticle(data, type) {
     summary: '',
     source: '',
     author: '',
+    link: '#',
     type: data.type,
     document_type: data.document_type,
     meta: {
@@ -95,6 +96,8 @@ function normalizeArticle(data, type) {
       out.summary = custom_article.short_description;
       out.source = custom_article.curator;
       out.author = data.author;
+      out.link = `/deep-dives/${id.split('_')[1]}`;
+
       return out;
     default:
       return data;

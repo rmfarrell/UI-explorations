@@ -22,7 +22,6 @@ export default function(props) {
   if (id.toLowerCase() === 'europe') {
     relationship = relationships['REL_GBR'];
   }
-  console.log(id);
   if (!relationship) return error(new Error(`no relationship found`));
   const {
       relationship_status,

@@ -8,22 +8,18 @@ import Link from './Link';
 export default React.memo(function SingleItem(props) {
   const { data = {}, className = '', size = 0, children = [] } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
-  const link =
-    data.document_type === 'Deep Dive'
-      ? `/deep-dives/${data.id.split('_')[1]}`
-      : '#';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
       {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && modifier === 'article' && (
-        <SmallTeaser link={link} {...data} />
+        <SmallTeaser link={data.link} {...data} />
       )}
       {size === 1 && modifier === 'article' && (
-        <MediumTeaser link={link} {...data} />
+        <MediumTeaser link={data.link} {...data} />
       )}
       {size === 2 && modifier === 'article' && (
-        <LargeTeaser link={link} {...data} />
+        <LargeTeaser link={data.link} {...data} />
       )}
     </div>
   );
