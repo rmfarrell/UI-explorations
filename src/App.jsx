@@ -84,18 +84,18 @@ function Main(props) {
       <nav>
         <ul className="constrain">
           <li>
-            <NavLink to="/explore" activeClassName={styles.active}>
-              Explore
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/relationship" activeClassName={styles.active}>
-              Relationship
+              Relationships
             </NavLink>
           </li>
           <li>
             <NavLink to="/deep-dives" activeClassName={styles.active}>
               Deep Dives
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/explore" activeClassName={styles.active}>
+              Explore
             </NavLink>
           </li>
         </ul>
