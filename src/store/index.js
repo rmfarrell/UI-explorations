@@ -42,6 +42,8 @@ function data(store) {
 }
 
 function normalizeArticle(data, type) {
+  const { relationships = {} } = data,
+    { primary_country, countries = [] } = relationships;
   let out = {
     date: '',
     title: '',
@@ -49,7 +51,10 @@ function normalizeArticle(data, type) {
     source: '',
     author: '',
     type: data.type,
-    document_type: data.document_type
+    document_type: data.document_type,
+    meta: {
+      countries: [primary_country, ...countries]
+    }
   };
   switch (type) {
     case 'EXR':

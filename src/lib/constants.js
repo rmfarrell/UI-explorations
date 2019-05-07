@@ -29,6 +29,15 @@ export const COUNTRIES = {
   SVK: 'Slovakia'
 };
 
+export const TYPES = [
+  'Deep Dive',
+  'Policy',
+  'Data',
+  'Article',
+  'Opinion',
+  'Analysis'
+];
+
 // TK
 export const ISSUES = [
   'Trade',

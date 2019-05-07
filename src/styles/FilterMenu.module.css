@@ -1,0 +1,44 @@
+.root {
+}
+
+.active {
+  background: var(--col-text);
+  color: white;
+}
+
+.root button:hover {
+  text-decoration: none;
+}
+
+.root ul {
+  font-size: 1.3em;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.root ul:first-child {
+  font-size: 1.75em;
+}
+
+.root button {
+  padding: 0.8em 1em;
+  margin: 0 0.8em 0.8em 0;
+  font-family: var(--oswald);
+  text-transform: uppercase;
+  color: var(--col-grey);
+}
+
+.root {
+  margin: 1em 0;
+  padding: 1em 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--col-light-grey);
+}
+
+.root h3 {
+  margin: 0.25em 0 0;
+  font-size: 1.5em;
+}

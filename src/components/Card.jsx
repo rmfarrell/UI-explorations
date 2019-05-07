@@ -23,7 +23,6 @@ export default React.memo(function Card(props) {
     <div className={styles.root}>
       <h3>{cardType}</h3>
       <div style={placeholderImage()} className={styles.imgContainer} />
-      {/* <h3>{issues.join(', ')}</h3> */}
       <h2>{title}</h2>
       <h4>
         {formatDate(date)} | {source}
