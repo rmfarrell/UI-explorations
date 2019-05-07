@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/FilterMenu.module.css';
 import { TYPES } from '../lib/constants';
 
 export default function(props) {
-  const {} = props,
+  const { onChange = () => {} } = props,
     [types, setTypes] = useState([]),
     [search, setSearch] = useState(''),
     isAll = !search && !types.length;
+
+  useEffect(() => {
+    onChange(types, search);
+  }, [types, search]);
 
   return (
     <div className={styles.root}>
@@ -33,17 +37,20 @@ export default function(props) {
     </div>
   );
 
+  function update() {
+    onChange(types, search);
+  }
+
   function clearFilters() {
     setSearch('');
     setTypes([]);
+    // update();
   }
 
   function toggleTypeFilter(type) {
     const topics = toggleInArray(types, type);
     setTypes(topics);
-    // this.setState({
-    //   filters: Object.assign(this.state.filters, { topics })
-    // });
+    // update();
   }
 }
 /*

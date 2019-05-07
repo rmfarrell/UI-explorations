@@ -16,8 +16,10 @@ export default function(props) {
 
   return (
     <div className={styles.root}>
-      <FilterMenu />
+      <FilterMenu onChange={updateFilters} />
       <Collection articles={data} />;
     </div>
   );
+
+  function updateFilters(types, search) {}
 }
