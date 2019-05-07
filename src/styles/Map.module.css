@@ -2,29 +2,6 @@
   overflow: hidden;
 }
 
-.focused a {
-  /* pointer-events: none; */
-}
-
-.focused {
-  background: var(--col-text);
-  height: 0;
-  padding-bottom: 100%;
-  position: relative;
-}
-
-.focused h1 {
-  position: absolute;
-  top: 0;
-  color: white;
-  font: normal 3em var(--oswald);
-  text-transform: uppercase;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: center;
-  width: 100%;
-}
-
 .map {
   font-size: 0;
   width: 100%;
@@ -55,4 +32,38 @@
   position: absolute;
   top: 0;
   color: white;
+}
+
+/* Focused state */
+.focused {
+  background: var(--col-text);
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  color: white;
+}
+
+.focused > div {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 100%;
+}
+
+.focused h1 {
+  top: 0;
+  font: normal 3em var(--oswald);
+  text-transform: uppercase;
+}
+
+.back {
+  color: inherit;
+  display: block;
+  font-size: 1.25em;
+  margin: 1em auto 0;
+}
+
+.back:hover {
+  text-decoration: underline;
 }

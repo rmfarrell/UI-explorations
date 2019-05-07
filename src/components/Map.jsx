@@ -1,7 +1,7 @@
 import React from 'react';
 import data from '../lib/map';
 import styles from '../styles/Map.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { COUNTRIES } from '../lib/constants';
 
 export default function(props) {
@@ -39,7 +39,12 @@ export default function(props) {
   function focused() {
     return (
       <div className={styles.focused}>
-        <h1>{COUNTRIES[focus]}</h1>
+        <div>
+          <h1>{COUNTRIES[focus]}</h1>
+          <Link to="/relationship" className={styles.back}>
+            &larr; All relationships
+          </Link>
+        </div>
       </div>
     );
   }
