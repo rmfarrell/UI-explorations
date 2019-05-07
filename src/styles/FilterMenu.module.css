@@ -64,6 +64,7 @@
   line-height: 2em;
   border: none;
   border-bottom: 1px solid var(--col-text);
+  background-color: transparent;
 }
 
 .root input[type='submit'],
