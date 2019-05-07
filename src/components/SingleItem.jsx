@@ -37,7 +37,7 @@ function SmallTeaser({ date, title = '', link = '#' }) {
         maxLine="3"
         ellipsis="..."
         trimRight
-        basedOn="letters"
+        basedOn="words"
         component="h3"
       />
     </a>
@@ -71,7 +71,7 @@ function MediumTeaser(props) {
           maxLine="6"
           ellipsis="..."
           trimRight
-          basedOn="letters"
+          basedOn="words"
           component="p"
         />
       </div>
@@ -103,7 +103,7 @@ function LargeTeaser({
               maxLine="2"
               ellipsis="..."
               trimRight
-              basedOn="letters"
+              basedOn="words"
             />
           </a>
         </h3>
@@ -112,7 +112,7 @@ function LargeTeaser({
           maxLine="4"
           ellipsis="..."
           trimRight
-          basedOn="letters"
+          basedOn="words"
           component="p"
         />
       </div>
@@ -137,7 +137,7 @@ function SmallSocialTeaser(data) {
         maxLine="3"
         ellipsis="..."
         trimRight
-        basedOn="letters"
+        basedOn="words"
         component="h3"
       >
         test
