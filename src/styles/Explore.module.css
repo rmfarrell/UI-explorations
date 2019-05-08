@@ -7,3 +7,7 @@
 .mapContainer {
   flex: 1 0 40em;
 }
+
+.textContainer {
+  width: 100%;
+}

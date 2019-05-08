@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/FilterMenu.module.css';
+import styles from '../styles/TextSearch.module.css';
 import { TYPES } from '../lib/constants';
 import { classNames, toggleInArray } from '../lib/helpers';
 
@@ -7,15 +7,15 @@ import { classNames, toggleInArray } from '../lib/helpers';
 // can pass as props
 export default function(props) {
   const {
-      onChange = () => {},
+      // onChange = () => {},
       className = '',
       setSearchFilter,
       setTypeFilters
     } = props,
-    [types, setTypes] = useState([]),
+    // [types, setTypes] = useState([]),
     [search, setSearch] = useState(''),
-    [text, setText] = useState(''),
-    isAll = !types.length;
+    [text, setText] = useState('');
+  // isAll = !types.length;
 
   return (
     <div className={classNames(styles.root, className)}>
@@ -34,7 +34,7 @@ export default function(props) {
         )}
         {search !== text ? <input type="submit" value="SEARCH" /> : ''}
       </form>
-      <ul>
+      {/* <ul>
         <li>
           <button
             onClick={clearFilters}
@@ -53,7 +53,7 @@ export default function(props) {
             </button>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 
@@ -69,15 +69,15 @@ export default function(props) {
     setSearchFilter('');
   }
 
-  function clearFilters() {
-    setSearch('');
-    setTypes([]);
-    setTypeFilters([]);
-  }
+  // function clearFilters() {
+  //   setSearch('');
+  //   setTypes([]);
+  //   setTypeFilters([]);
+  // }
 
-  function toggleTypeFilter(type) {
-    const topics = toggleInArray(types, type);
-    setTypes(topics);
-    setTypeFilters(topics);
-  }
+  // function toggleTypeFilter(type) {
+  //   const topics = toggleInArray(types, type);
+  //   setTypes(topics);
+  //   setTypeFilters(topics);
+  // }
 }

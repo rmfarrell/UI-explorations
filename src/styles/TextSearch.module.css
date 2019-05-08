@@ -61,6 +61,9 @@
   border: none;
   border-bottom: 1px solid var(--col-text);
   background-color: transparent;
+  width: 50%;
+  max-width: 60em;
+  min-width: 20em;
 }
 
 .root input[type='submit'],

@@ -12,7 +12,7 @@ import {
 
 // -- Modules
 import Collection from '../components/Collection.jsx';
-import FilterMenu from '../components/FilterMenu.jsx';
+import TextSearch from '../components/TextSearch.jsx';
 import Map from '../components/Map.jsx';
 import MapTile from '../components/MapTile.jsx';
 
@@ -41,15 +41,15 @@ export default function(props) {
   return (
     <article className={styles.root}>
       <div className={classNames(styles.menu, 'grid')}>
+        <div className={styles.textContainer}>
+          <TextSearch
+            onChange={applyFilters}
+            setSearchFilter={setSearchFilter}
+          />
+        </div>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
           <Map renderTile={renderTile} />
         </div>
-        <FilterMenu
-          onChange={applyFilters}
-          setSearchFilter={setSearchFilter}
-          setTypeFilters={setTypeFilters}
-          className="grid--item__two-thirds"
-        />
       </div>
       <Collection articles={data} />;
     </article>
@@ -73,7 +73,7 @@ export default function(props) {
         isLand
       >
         <span>
-          {countryCode} ({count})
+          {countryCode} ({count || 0})
         </span>
       </MapTile>
     );
