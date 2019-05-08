@@ -3,6 +3,7 @@ import data from '../lib/map';
 import styles from '../styles/Map.module.css';
 import { NavLink, Link } from 'react-router-dom';
 import { COUNTRIES } from '../lib/constants';
+import MapTile from './MapTile.jsx';
 
 export default function(props) {
   const { focus, linkPrefix = '/relationship/' } = props,
@@ -25,9 +26,9 @@ export default function(props) {
           {data.map(tiles => {
             return tiles.map((tile, idx) => {
               return (
-                <Tile key={idx} data={tile} linkPrefix={linkPrefix}>
+                <MapTile key={idx} data={tile} linkPrefix={linkPrefix}>
                   {tile && tile.country}
-                </Tile>
+                </MapTile>
               );
             });
           })}
@@ -68,27 +69,4 @@ export default function(props) {
     const out = `-${x * 40}%, -${y * 50}%`;
     return out;
   }
-}
-
-function Tile({ data, linkPrefix }) {
-  if (!data) {
-    return <div className={styles.sea} />;
-  }
-  const { weight, country } = data;
-  if (!weight) {
-    return (
-      <div className={styles.land}>
-        <span>{country}</span>
-      </div>
-    );
-  }
-  return (
-    <NavLink
-      to={`${linkPrefix}${country}`}
-      className={styles.eu}
-      style={{ backgroundColor: `hsl(3,${75 * (weight / 10)}%, 50%)` }}
-    >
-      <span>{country}</span>
-    </NavLink>
-  );
 }
