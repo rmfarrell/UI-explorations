@@ -61,9 +61,24 @@ export default function(props) {
           <Map renderTile={renderTile} />
         </div>
         <div className={classNames('grid--item__two-thirds')}>
-          {/* <Calendar onChange={fromUpdated} />
-          <Calendar onChange={toUpdated} /> */}
-
+          <div className={classNames(styles.filtersRow, styles.wide)}>
+            <div>
+              <label>From Date:</label>
+              <Dropdown
+                options={['', '', '']}
+                className={styles.dropdown}
+                placeholder="Select Date"
+              />
+            </div>
+            <div>
+              <label>To Date:</label>
+              <Dropdown
+                options={['', '', '']}
+                className={styles.dropdown}
+                placeholder="Select Date"
+              />
+            </div>
+          </div>
           <div className={classNames(styles.filtersRow, styles.wide)}>
             <div>
               <label>Entities</label>
