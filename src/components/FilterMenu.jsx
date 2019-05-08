@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/FilterMenu.module.css';
 import { TYPES } from '../lib/constants';
+import { classNames } from '../lib/helpers';
 
 export default function(props) {
-  const { onChange = () => {} } = props,
+  const { onChange = () => {}, className = '' } = props,
     [types, setTypes] = useState([]),
     [search, setSearch] = useState(''),
     [text, setText] = useState(''),
@@ -14,7 +15,7 @@ export default function(props) {
   }, [types, search]);
 
   return (
-    <div className={[styles.root].join(' ')}>
+    <div className={classNames(styles.root, className)}>
       <form onSubmit={textSearch}>
         <input
           type="text"

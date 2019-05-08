@@ -3,7 +3,11 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/Explore.module.css';
 
 // -- Libs
-import { articlesToArray, articleCountByCountry } from '../lib/helpers.js';
+import {
+  articlesToArray,
+  articleCountByCountry,
+  classNames
+} from '../lib/helpers.js';
 
 // -- Modules
 import Collection from '../components/Collection.jsx';
@@ -22,11 +26,14 @@ export default function(props) {
 
   return (
     <article className={styles.root}>
-      <div className={[styles.menu, 'constrain'].join(' ')}>
-        <div className={styles.mapContainer}>
+      <div className={classNames(styles.menu, 'grid')}>
+        <div className={classNames(styles.mapContainer, 'grid--item__third')}>
           <Map />
         </div>
-        <FilterMenu onChange={applyFilters} />
+        <FilterMenu
+          onChange={applyFilters}
+          className="grid--item__two-thirds"
+        />
       </div>
       <Collection articles={data} />;
     </article>

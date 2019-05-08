@@ -36,3 +36,7 @@ export function articleCountByCountry(acc, item) {
 export function isEU(countryCode = '') {
   return !!COUNTRIES[countryCode];
 }
+
+export function classNames(...names) {
+  return [...names].join(' ');
+}
