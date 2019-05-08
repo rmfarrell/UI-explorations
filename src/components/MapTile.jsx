@@ -3,7 +3,7 @@ import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function(props) {
-  const { text = '', weight = 0, link = '', children } = props;
+  const { text = '', weight = 0, link = '', renderTile, children } = props;
   if (!text) {
     return <div className={styles.sea} />;
   }

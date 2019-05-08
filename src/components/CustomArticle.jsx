@@ -32,7 +32,7 @@ function CustomArticle(props) {
         <Link to={`${match.url}/article`}>READ MORE &raquo;</Link>
       </p>
 
-      <Route path={`${match.url}/article`} component={modal} />
+      <Route path={`${match.url}/article`} exact component={modal} />
     </article>
   );
 

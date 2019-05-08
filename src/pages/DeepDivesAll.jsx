@@ -3,11 +3,13 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
+import { COUNTRIES } from '../lib/constants';
 
 // -- Modules
 import Map from '../components/Map.jsx';
 import Description from '../components/Description.jsx';
 import Collection from '../components/Collection.jsx';
+import DeepDive from './DeepDive.jsx';
 import { Route, Link } from 'react-router-dom';
 
 // TODO: Use hooks here
@@ -21,64 +23,57 @@ export default function(props) {
       });
 
   return (
-    <article>
-      <header className={[styles.header, 'constrain'].join(' ')}>
-        <h1>All Deep Dives</h1>
-      </header>
-      <div className={['grid', styles.headerRow].join(' ')}>
-        <div className={styles.mapContainer}>
-          <Route
-            path={`${match.path}`}
-            exact
-            render={() => <Map linkPrefix="/deep-dives/country/" size={0} />}
-          />
-          <Route
-            path={`${match.path}/country/:id`}
-            exact
-            render={route => (
-              <Map
-                linkPrefix="/deep-dives/country/"
-                indexUrl="/deep-dives"
-                size={0}
-                focus={route.match.params.id}
-              />
-            )}
-          />
-        </div>
-        <div className={styles.descriptionContainer}>
-          <Description />
-        </div>
-      </div>
-
+    <React.Fragment>
+      <Route path="/deep-dives/:id" component={DeepDive} />
+      <Route path={`${match.path}`} exact component={DeepDiveCollection} />
       <Route
-        path={`${match.path}`}
+        path="/deep-dives/country/:country"
         exact
-        render={() => (
-          <Collection
-            articles={deepdives}
-            showType={false}
-            className={styles.collection}
-          />
-        )}
+        component={DeepDiveCollection}
       />
-
-      <Route
-        path={`${match.path}/country/:id`}
-        exact
-        render={route => (
-          <Collection
-            articles={deepdives.filter(
-              filterByCountry.bind(this, route.match.params.id)
-            )}
-            showType={false}
-            className={styles.collection}
-          />
-        )}
-      />
-    </article>
+    </React.Fragment>
   );
 
-  function filterByCountry(id, { meta: { countries = [] } }) {
-    return countries.includes(id);
+  function DeepDiveCollection(props) {
+    const {
+      match: {
+        params: { country }
+      }
+    } = props;
+    const heading = country
+      ? `Deep Dives: ${COUNTRIES[country]}`
+      : 'All Deep Dives';
+    return (
+      <article>
+        <header className={[styles.header, 'constrain'].join(' ')}>
+          <h1>{heading}</h1>
+        </header>
+        <div className={['grid', styles.headerRow].join(' ')}>
+          <div className="grid--item__third">
+            <Map
+              linkPrefix="/deep-dives/country/"
+              indexUrl="/deep-dives"
+              size={0}
+              focus={country}
+            />
+          </div>
+          <div className="grid--item__two-thirds">
+            <Description />
+          </div>
+        </div>
+        <Collection
+          articles={deepdives.filter(filterByCountry.bind(this, country))}
+          showType={false}
+          className={styles.collection}
+        />
+      </article>
+    );
+  }
+
+  function filterByCountry(countryId, { meta: { countries = [] } }) {
+    if (!countryId) {
+      return true;
+    }
+    return countries.includes(countryId);
   }
 }

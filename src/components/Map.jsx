@@ -36,10 +36,9 @@ export default function(props) {
         >
           {data.map(tiles => {
             return tiles.map((tile, idx) => {
-              return renderTile ? (
-                renderTile()
-              ) : (
+              return (
                 <MapTile
+                  renderTile={renderTile}
                   key={idx}
                   text={tile && tile.country && text(tile.country)}
                   weight={tile && tile.weight}

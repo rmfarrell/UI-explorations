@@ -34,7 +34,6 @@ function AppRouter() {
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
           <Route path="/deep-dives" component={DeepDivesAll} />
-          <Route path="/deep-dives/:id" exact component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
           <Route
