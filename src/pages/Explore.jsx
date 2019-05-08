@@ -3,24 +3,33 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/Explore.module.css';
 
 // -- Libs
-import { articlesToArray } from '../lib/helpers.js';
+import { articlesToArray, articleCountByCountry } from '../lib/helpers.js';
 
 // -- Modules
 import Collection from '../components/Collection.jsx';
 import FilterMenu from '../components/FilterMenu.jsx';
+import Map from '../components/Map.jsx';
 
 let dataMem;
 
 export default function(props) {
   const {} = props;
   const { articles } = useStoreon('articles'),
-    [data, setData] = useState([]);
+    [data, setData] = useState([]),
+    countryCount = data.reduce(articleCountByCountry, {});
+
+  console.log(countryCount);
 
   return (
-    <div className={styles.root}>
-      <FilterMenu onChange={applyFilters} />
+    <article className={styles.root}>
+      <div className={[styles.menu, 'constrain'].join(' ')}>
+        <div className={styles.mapContainer}>
+          <Map />
+        </div>
+        <FilterMenu onChange={applyFilters} />
+      </div>
       <Collection articles={data} />;
-    </div>
+    </article>
   );
 
   function applyFilters(types, search) {

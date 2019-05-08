@@ -25,9 +25,8 @@ export function articlesToArray(articles = {}) {
 }
 
 export function articleCountByCountry(acc, item) {
-  const {
-    meta: { countries = [] }
-  } = item;
+  const { meta = {} } = item,
+    { countries = [] } = meta;
   countries.forEach(country => {
     acc[country] = acc[country] ? ++acc[country] : 1;
   });

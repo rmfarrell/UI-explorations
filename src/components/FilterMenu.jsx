@@ -14,7 +14,7 @@ export default function(props) {
   }, [types, search]);
 
   return (
-    <div className={[styles.root, 'constrain'].join(' ')}>
+    <div className={[styles.root].join(' ')}>
       <form onSubmit={textSearch}>
         <input
           type="text"

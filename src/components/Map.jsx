@@ -10,7 +10,7 @@ export default function(props) {
   const {
       focus,
       linkPrefix = '/relationship/',
-      size = 0,
+      size = 1,
       renderTile,
       indexUrl = ''
     } = props,
@@ -58,7 +58,7 @@ export default function(props) {
 
   function focused() {
     return (
-      <div className={styles.focused}>
+      <div className={[styles.focused, styles[`size-${size}`]].join(' ')}>
         <div>
           <h1>{COUNTRIES[focus]}</h1>
           <Link to={indexUrl} className={styles.back}>
