@@ -12,6 +12,7 @@
     "postcss-import": "^12.0.1",
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-calendar": "^2.18.1",
     "react-dom": "^16.8.4",
     "react-dropdown": "^1.6.4",
     "react-lines-ellipsis": "^0.14.1",

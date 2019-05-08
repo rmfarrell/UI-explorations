@@ -8,13 +8,16 @@ import {
   articleCountByCountry,
   classNames,
   toggleInArray
-} from '../lib/helpers.js';
+} from '../lib/helpers';
+import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 
 // -- Modules
 import Collection from '../components/Collection.jsx';
 import TextSearch from '../components/TextSearch.jsx';
 import Map from '../components/Map.jsx';
 import MapTile from '../components/MapTile.jsx';
+import Dropdown from 'react-dropdown';
+import Calendar from 'react-calendar';
 
 let all = [];
 export default function(props) {
@@ -23,8 +26,13 @@ export default function(props) {
     [data, setData] = useState([]),
     [countriesFilter, setCountriesFilter] = useState([]),
     [searchFilter, setSearchFilter] = useState([]),
-    [typeFilters, setTypeFilters] = useState([]),
-    articleCounts = data.reduce(articleCountByCountry, {});
+    [typeFilter, setTypeFilter] = useState(''),
+    [entityFilter, setEntityFilter] = useState(''),
+    [issueFilter, setIssueFilter] = useState(''),
+    [sortParam, setSortParam] = useState(''),
+    [topicFilter, setTopicFilter] = useState(''),
+    articleCounts = data.reduce(articleCountByCountry, {}),
+    typeOptions = [...TYPES, { value: '', label: 'All' }];
 
   useEffect(() => {
     all = articlesToArray(articles).sort((a, b) => {
@@ -36,7 +44,9 @@ export default function(props) {
 
   useEffect(() => {
     applyFilters();
-  }, [typeFilters, countriesFilter, searchFilter]);
+  }, [typeFilter, countriesFilter, searchFilter]);
+
+  const topics = {};
 
   return (
     <article className={styles.root}>
@@ -51,20 +61,84 @@ export default function(props) {
           <Map renderTile={renderTile} />
         </div>
         <div className={classNames('grid--item__two-thirds')}>
-          <p>test</p>
-          <p>test</p>
-          <p>test</p>
-          <p>test</p>
+          {/* <Calendar onChange={fromUpdated} />
+          <Calendar onChange={toUpdated} /> */}
+
+          <div className={classNames(styles.filtersRow, styles.wide)}>
+            <div>
+              <label>Entities</label>
+              <Dropdown
+                className={styles.dropdown}
+                options={ENTITIES}
+                value={entityFilter}
+                onChange={opt => setEntityFilter(opt.value)}
+                placeholder="All"
+              />
+            </div>
+            <div>
+              <label>Topics</label>
+              <Dropdown
+                className={styles.dropdown}
+                options={ISSUES}
+                value={topicFilter}
+                onChange={opt => setTopicFilter(opt.value)}
+                placeholder="All"
+              />
+            </div>
+          </div>
+
+          <div className={styles.filtersRow}>
+            <label>Issues</label>
+            <Dropdown
+              className={styles.dropdown}
+              options={ISSUES}
+              value={issueFilter}
+              onChange={opt => setIssueFilter(opt.value)}
+              placeholder="All"
+            />
+          </div>
+
+          <div className={styles.filtersRow}>
+            <label>Document Type</label>
+            <Dropdown
+              className={styles.dropdown}
+              options={typeOptions}
+              value={typeFilter}
+              onChange={opt => setTypeFilter(opt.value)}
+              placeholder="All"
+            />
+          </div>
+
+          <div className={classNames(styles.filtersRow, styles.wide)}>
+            <h4>{data.length} Items Found</h4>
+            <Dropdown
+              className={styles.dropdown}
+              options={['Date', 'Relvance']}
+              value={sortParam}
+              onChange={opt => setSortParam(opt.value)}
+              placeholder="Sort"
+            />
+          </div>
         </div>
       </div>
       <Collection articles={data} />;
     </article>
   );
 
+  function nothing() {}
+
+  function fromUpdated(val) {
+    console.log(val);
+  }
+
+  function toUpdated(val) {
+    console.log(val);
+  }
+
   function applyFilters() {
     let out = all;
     out = filterByText(out, searchFilter);
-    out = filterByType(out, typeFilters);
+    out = filterByType(out, typeFilter);
     out = filterByCountry(out, countriesFilter);
     setData(out);
   }
