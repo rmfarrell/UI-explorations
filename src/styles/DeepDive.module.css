@@ -11,14 +11,6 @@
   box-sizing: border-box;
 }
 
-.headerRow {
-  margin-bottom: 2em;
-}
-
-.collection {
-  /* box-sizing: border-box; */
-}
-
 .mapContainer {
   flex: 1 0 38em;
 }

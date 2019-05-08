@@ -3,6 +3,7 @@
   padding: 0 0 1em;
   box-sizing: border-box;
   margin-bottom: 2em;
+  overflow: hidden;
 }
 
 .root > * {
