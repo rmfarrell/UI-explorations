@@ -17,7 +17,7 @@ function CustomArticle(props) {
     return (
       <div
         className={styles.imgContainer}
-        style={placeholderImage('#ccc', 70)}
+        style={placeholderImage('#ccc', 50)}
       />
     );
   }

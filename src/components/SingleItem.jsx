@@ -6,20 +6,26 @@ import Link from './Link';
 
 // TODO this could be merged with Card probably
 export default React.memo(function SingleItem(props) {
-  const { data = {}, className = '', size = 0, children = [] } = props;
+  const {
+    data = {},
+    className = '',
+    size = 0,
+    children = [],
+    summaryLines = 4
+  } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
       {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && modifier === 'article' && (
-        <SmallTeaser link={data.link} {...data} />
+        <SmallTeaser link={data.link} {...data} summaryLines={summaryLines} />
       )}
       {size === 1 && modifier === 'article' && (
-        <MediumTeaser link={data.link} {...data} />
+        <MediumTeaser link={data.link} {...data} summaryLines={summaryLines} />
       )}
       {size === 2 && modifier === 'article' && (
-        <LargeTeaser link={data.link} {...data} />
+        <LargeTeaser link={data.link} {...data} summaryLines={summaryLines} />
       )}
     </div>
   );
@@ -84,7 +90,8 @@ function LargeTeaser(props) {
     summary = '',
     source = '',
     author = '',
-    link = '#'
+    link = '#',
+    summaryLines = 4
   } = props;
   return (
     <div>
@@ -106,14 +113,16 @@ function LargeTeaser(props) {
             />
           </Link>
         </h3>
-        <LinesEllipsis
-          text={summary}
-          maxLine="4"
-          ellipsis="..."
-          trimRight
-          basedOn="words"
-          component="p"
-        />
+        {summaryLines > 0 && (
+          <LinesEllipsis
+            text={summary}
+            maxLine={summaryLines}
+            ellipsis="..."
+            trimRight
+            basedOn="words"
+            component="p"
+          />
+        )}
       </div>
     </div>
   );

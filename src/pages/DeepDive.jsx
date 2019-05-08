@@ -79,7 +79,12 @@ export default React.memo(function(props) {
                     styles.tile
                   ].join(' ')}
                 >
-                  <Tile data={data} category={data.cat} width={data.width} />
+                  <Tile
+                    data={data}
+                    category={data.cat}
+                    width={data.width}
+                    row={idx}
+                  />
                 </div>
               );
             })}
@@ -96,8 +101,9 @@ export default React.memo(function(props) {
    *
    */
   function Tile(props) {
-    const { data, category, width } = props,
-      { content } = data;
+    const { data, category, width, row = 0 } = props,
+      { content } = data,
+      firstRow = row === 0;
 
     switch (category) {
       case 'Custom Article':
@@ -107,8 +113,9 @@ export default React.memo(function(props) {
       case 'Featured':
         return featured(data);
       default:
+        const perpage = row > 0 ? 4 : 3;
         return content.length > 1 ? (
-          <List items={content} groupSize={width}>
+          <List items={content} groupSize={width} perpage={perpage}>
             <h3>{pluralize(category)}</h3>
           </List>
         ) : (
@@ -118,7 +125,13 @@ export default React.memo(function(props) {
 
     function featured(data = {}) {
       return (
-        <SingleItem data={data} className="" size={width} type="article" />
+        <SingleItem
+          data={data}
+          className=""
+          size={firstRow ? 2 : width}
+          summaryLines={firstRow ? 0 : 4}
+          type="article"
+        />
       );
     }
   }
