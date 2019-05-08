@@ -3,6 +3,7 @@ import data from '../lib/map';
 import styles from '../styles/Map.module.css';
 import { NavLink, Link } from 'react-router-dom';
 import { COUNTRIES } from '../lib/constants';
+import { isEU } from '../lib/helpers';
 import MapTile from './MapTile.jsx';
 
 export default function(props) {
@@ -36,15 +37,16 @@ export default function(props) {
         >
           {data.map(tiles => {
             return tiles.map((tile, idx) => {
-              return (
+              return renderTile && tile && isEU(tile.country) ? (
+                renderTile.call(this, tile.country)
+              ) : (
                 <MapTile
-                  renderTile={renderTile}
                   key={idx}
-                  text={tile && tile.country && text(tile.country)}
+                  isLand={tile}
                   weight={tile && tile.weight}
                   link={`${linkPrefix}${tile && tile.country}`}
                 >
-                  {tile && tile.country}
+                  <span>{tile && tile.country}</span>
                 </MapTile>
               );
             });

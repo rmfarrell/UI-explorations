@@ -4,15 +4,16 @@ import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
 import { COUNTRIES } from '../lib/constants';
+import { articleCountByCountry } from '../lib/helpers';
 
 // -- Modules
 import Map from '../components/Map.jsx';
 import Description from '../components/Description.jsx';
 import Collection from '../components/Collection.jsx';
+import MapTile from '../components/MapTile.jsx';
 import DeepDive from './DeepDive.jsx';
 import { Route, Link } from 'react-router-dom';
 
-// TODO: Use hooks here
 export default function(props) {
   const { match } = props,
     { articles } = useStoreon('articles'),
@@ -20,7 +21,8 @@ export default function(props) {
       .filter(id => id.includes('DDV'))
       .map(deepdiveId => {
         return Object.assign(articles[deepdiveId], { id: deepdiveId });
-      });
+      }),
+    articleCounts = deepdives.reduce(articleCountByCountry, {});
 
   return (
     <React.Fragment>
@@ -55,6 +57,7 @@ export default function(props) {
               indexUrl="/deep-dives"
               size={0}
               focus={country}
+              renderTile={country ? null : renderTile}
             />
           </div>
           <div className="grid--item__two-thirds">
@@ -70,10 +73,26 @@ export default function(props) {
     );
   }
 
-  function filterByCountry(countryId, { meta: { countries = [] } }) {
-    if (!countryId) {
-      return true;
-    }
-    return countries.includes(countryId);
+  function renderTile(countryCode) {
+    const count = articleCounts[countryCode];
+    return (
+      <MapTile
+        weight={count * 2}
+        link={`/deep-dives/country/${countryCode}`}
+        key={countryCode}
+        isLand
+      >
+        <span>
+          {countryCode} ({count})
+        </span>
+      </MapTile>
+    );
   }
+}
+
+function filterByCountry(countryId, { meta: { countries = [] } }) {
+  if (!countryId) {
+    return true;
+  }
+  return countries.includes(countryId);
 }

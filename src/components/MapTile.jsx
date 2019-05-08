@@ -3,16 +3,12 @@ import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function(props) {
-  const { text = '', weight = 0, link = '', renderTile, children } = props;
-  if (!text) {
+  const { isLand = false, weight = 0, link = '', children } = props;
+  if (!isLand) {
     return <div className={styles.sea} />;
   }
   if (!weight) {
-    return (
-      <div className={styles.land}>
-        <span>{text}</span>
-      </div>
-    );
+    return <div className={styles.land}>{children}</div>;
   }
   return (
     <NavLink
@@ -20,7 +16,7 @@ export default function(props) {
       className={styles.eu}
       style={{ backgroundColor: `hsl(3,${75 * (weight / 10)}%, 50%)` }}
     >
-      <span>{text}</span>
+      {children}
     </NavLink>
   );
 }

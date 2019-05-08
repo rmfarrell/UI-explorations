@@ -1,3 +1,5 @@
+import { COUNTRIES } from './constants';
+
 export function formatDate(date = new Date()) {
   const dd = date.getDate(),
     mm = date.toLocaleString('en-us', { month: 'long' }),
@@ -20,4 +22,18 @@ export function articlesToArray(articles = {}) {
     // console.log(out);
     return Object.assign(articles[id], { id });
   });
+}
+
+export function articleCountByCountry(acc, item) {
+  const {
+    meta: { countries = [] }
+  } = item;
+  countries.forEach(country => {
+    acc[country] = acc[country] ? ++acc[country] : 1;
+  });
+  return acc;
+}
+
+export function isEU(countryCode = '') {
+  return !!COUNTRIES[countryCode];
 }
