@@ -6,11 +6,22 @@ import { COUNTRIES } from '../lib/constants';
 import MapTile from './MapTile.jsx';
 
 export default function(props) {
-  const { focus, linkPrefix = '/relationship/', size = 0 } = props,
+  const {
+      focus,
+      linkPrefix = '/relationship/',
+      size = 0,
+      renderTile,
+      indexUrl = ''
+    } = props,
     containerStyles = [styles.container, isFocused ? styles.focused : ''].join(
       ' '
     ),
     isFocused = !focus || focus.toLowerCase() === 'europe';
+
+  if (renderTile && typeof renderTile !== 'function') {
+    throw new Error('renderTile must be function which retuns a MapTile');
+  }
+
   function unfocused() {
     return (
       <div className={containerStyles}>
@@ -25,10 +36,12 @@ export default function(props) {
         >
           {data.map(tiles => {
             return tiles.map((tile, idx) => {
-              return (
+              return renderTile ? (
+                renderTile()
+              ) : (
                 <MapTile
                   key={idx}
-                  country={tile && tile.country}
+                  text={tile && tile.country && text(tile.country)}
                   weight={tile && tile.weight}
                   link={`${linkPrefix}${tile && tile.country}`}
                 >
@@ -47,8 +60,8 @@ export default function(props) {
       <div className={styles.focused}>
         <div>
           <h1>{COUNTRIES[focus]}</h1>
-          <Link to="/relationship" className={styles.back}>
-            &larr; All relationships
+          <Link to={indexUrl} className={styles.back}>
+            &larr; Back
           </Link>
         </div>
       </div>
@@ -56,6 +69,10 @@ export default function(props) {
   }
 
   return isFocused ? unfocused() : focused();
+
+  function text(countryCode = '') {
+    return size > 0 ? COUNTRIES[countryCode] : countryCode;
+  }
 
   function getFocus() {
     let x, y;

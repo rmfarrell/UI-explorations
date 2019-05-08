@@ -22,11 +22,9 @@ import {
 // -- Modules
 import DeepDive from './pages/DeepDive.jsx';
 import DeepDivesAll from './pages/DeepDivesAll.jsx';
-import DeepDivesByCountry from './pages/DeepDivesByCountry.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
-import Modal from './components/Modal.jsx';
 
 function AppRouter() {
   return (
@@ -35,13 +33,8 @@ function AppRouter() {
         <Main>
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
-          <Route path="/deep-dives" exact component={DeepDivesAll} />
-          <Route
-            path="/deep-dives/country/:id"
-            exact
-            component={DeepDivesByCountry}
-          />
-          <Route path="/deep-dives/:id" component={DeepDive} />
+          <Route path="/deep-dives" component={DeepDivesAll} />
+          <Route path="/deep-dives/:id" exact component={DeepDive} />
           <Route path="/relationship" exact component={Relationship} />
           <Route path="/relationship/:id" component={Relationship} />
           <Route

@@ -115,7 +115,7 @@ export default function(props) {
       case 'Relationship Status':
         return <RelationshipStatus />;
       case 'Map':
-        return <Map focus={id} />;
+        return <Map focus={id} indexUrl="/relationship" />;
       case 'Featured':
         return featured(data);
       default:
