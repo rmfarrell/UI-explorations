@@ -15,8 +15,8 @@ export default React.memo(function(props) {
       <Masonry options={masonryOptions} className={[styles.grid].join(' ')}>
         {articles.map(data => {
           return (
-            <div className="grid--item__third">
-              <Card {...data} key={data.id}>
+            <div className="grid--item__third" key={data.id}>
+              <Card {...data}>
                 {showType && (
                   <header>
                     <h3>{data.document_type || data.type}</h3>

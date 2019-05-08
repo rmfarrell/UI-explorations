@@ -71,10 +71,6 @@ export default function(props) {
 
   return isFocused ? unfocused() : focused();
 
-  function text(countryCode = '') {
-    return size > 0 ? COUNTRIES[countryCode] : countryCode;
-  }
-
   function getFocus() {
     let x, y;
     for (let i = 0; i < data.length; i++) {

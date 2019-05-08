@@ -12,9 +12,12 @@
 .map button {
   width: 10%;
   display: inline-block;
-  padding-bottom: 10%;
+  padding: 0 0 10% 0;
   position: relative;
   font-size: 1.5rem;
+  vertical-align: top;
+  white-space: normal;
+  text-align: left;
 }
 
 .land {
@@ -28,6 +31,7 @@
 .map span {
   position: absolute;
   top: 0;
+  left: 0;
   color: white;
 }
 

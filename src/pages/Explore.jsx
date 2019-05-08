@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useStoreon from 'storeon/react';
 import styles from '../styles/Explore.module.css';
 
@@ -6,32 +6,48 @@ import styles from '../styles/Explore.module.css';
 import {
   articlesToArray,
   articleCountByCountry,
-  classNames
+  classNames,
+  toggleInArray
 } from '../lib/helpers.js';
 
 // -- Modules
 import Collection from '../components/Collection.jsx';
 import FilterMenu from '../components/FilterMenu.jsx';
 import Map from '../components/Map.jsx';
+import MapTile from '../components/MapTile.jsx';
 
-let dataMem;
-
+let all = [];
 export default function(props) {
   const {} = props;
   const { articles } = useStoreon('articles'),
     [data, setData] = useState([]),
-    countryCount = data.reduce(articleCountByCountry, {});
+    [countriesFilter, setCountriesFilter] = useState([]),
+    [searchFilter, setSearchFilter] = useState([]),
+    [typeFilters, setTypeFilters] = useState([]),
+    articleCounts = data.reduce(articleCountByCountry, {});
 
-  console.log(countryCount);
+  useEffect(() => {
+    all = articlesToArray(articles).sort((a, b) => {
+      return b.date - a.date;
+    });
+    setData(all);
+    console.log('used articles effect');
+  }, [articles]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [typeFilters, countriesFilter, searchFilter]);
 
   return (
     <article className={styles.root}>
       <div className={classNames(styles.menu, 'grid')}>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
-          <Map />
+          <Map renderTile={renderTile} />
         </div>
         <FilterMenu
           onChange={applyFilters}
+          setSearchFilter={setSearchFilter}
+          setTypeFilters={setTypeFilters}
           className="grid--item__two-thirds"
         />
       </div>
@@ -39,16 +55,44 @@ export default function(props) {
     </article>
   );
 
-  function applyFilters(types, search) {
-    console.log(search);
-    dataMem = dataMem || memoizeData(articles);
-    setData(filterByType(filterByText(dataMem, search), types));
+  function applyFilters() {
+    let out = all;
+    out = filterByText(out, searchFilter);
+    out = filterByType(out, typeFilters);
+    out = filterByCountry(out, countriesFilter);
+    setData(out);
+  }
+
+  function renderTile(countryCode) {
+    const count = articleCounts[countryCode];
+    return (
+      <MapTile
+        weight={count * 0.75}
+        onClick={onCountryClick.bind(this, countryCode)}
+        key={countryCode}
+        isLand
+      >
+        <span>
+          {countryCode} ({count})
+        </span>
+      </MapTile>
+    );
+  }
+
+  function onCountryClick(country) {
+    const c = toggleInArray(countriesFilter, country);
+    setCountriesFilter(c);
   }
 }
 
-function memoizeData(items = []) {
-  return articlesToArray(items).sort((a, b) => {
-    return b.date - a.date;
+function filterByCountry(items = [], targets) {
+  if (!targets.length) return items;
+  return items.filter(item => {
+    const {
+      meta: { countries = [] }
+    } = item;
+    console.log(countries.some(ct => countries.includes(ct)));
+    return countries.some(ct => targets.includes(ct));
   });
 }
 

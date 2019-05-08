@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/FilterMenu.module.css';
 import { TYPES } from '../lib/constants';
-import { classNames } from '../lib/helpers';
+import { classNames, toggleInArray } from '../lib/helpers';
 
+// TODO: probably don't need text/type
+// can pass as props
 export default function(props) {
-  const { onChange = () => {}, className = '' } = props,
+  const {
+      onChange = () => {},
+      className = '',
+      setSearchFilter,
+      setTypeFilters
+    } = props,
     [types, setTypes] = useState([]),
     [search, setSearch] = useState(''),
     [text, setText] = useState(''),
     isAll = !types.length;
-
-  useEffect(() => {
-    onChange(types, search.toLowerCase());
-  }, [types, search]);
 
   return (
     <div className={classNames(styles.root, className)}>
@@ -57,29 +60,24 @@ export default function(props) {
   function textSearch(e) {
     e.preventDefault();
     setSearch(text);
+    setSearchFilter(text);
   }
 
   function clearSearch() {
     setSearch('');
     setText('');
+    setSearchFilter('');
   }
 
   function clearFilters() {
     setSearch('');
     setTypes([]);
-    // update();
+    setTypeFilters([]);
   }
 
   function toggleTypeFilter(type) {
     const topics = toggleInArray(types, type);
     setTypes(topics);
-    // update();
+    setTypeFilters(topics);
   }
-}
-
-function toggleInArray(arr, str) {
-  if (arr.includes(str)) {
-    return arr.filter(item => item !== str);
-  }
-  return arr.concat(str);
 }

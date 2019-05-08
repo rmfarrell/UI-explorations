@@ -8,7 +8,8 @@ export default function(props) {
     weight = 0,
     link = '',
     children,
-    onClick = () => {}
+    onClick = () => {},
+    countryCode = ''
   } = props;
   if (!isLand) {
     return <div className={styles.sea} />;

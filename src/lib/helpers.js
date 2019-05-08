@@ -40,3 +40,10 @@ export function isEU(countryCode = '') {
 export function classNames(...names) {
   return [...names].join(' ');
 }
+
+export function toggleInArray(arr, str) {
+  if (arr.includes(str)) {
+    return arr.filter(item => item !== str);
+  }
+  return arr.concat(str);
+}
