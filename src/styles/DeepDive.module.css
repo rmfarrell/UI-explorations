@@ -12,3 +12,12 @@
   margin: 3em auto 0.5em;
   box-sizing: border-box;
 }
+
+.headerRow {
+  margin-bottom: 2em;
+}
+
+.collection {
+  padding: 0 0.75%;
+  box-sizing: border-box;
+}

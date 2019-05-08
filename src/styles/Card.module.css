@@ -2,7 +2,7 @@
   width: 31%;
   margin: 0 2% 3em 0;
   background: white;
-  padding: 1em 0;
+  padding: 0 0 1em;
 }
 
 .root > * {
@@ -18,7 +18,29 @@
   text-transform: uppercase;
 }
 
+.root header {
+  margin: 1em 0;
+}
+
 .root .imgContainer {
   padding: 0;
   margin: 0 0 1em;
+}
+
+.root h2 {
+  font-size: 1.6em;
+  line-height: 1.4em;
+  margin: 0 0 0.75em;
+}
+
+.root a {
+  color: var(--col-blue);
+}
+
+.root h2 a {
+  color: inherit;
+}
+
+.root h2 a:hover {
+  color: var(--col-blue);
 }

@@ -13,6 +13,7 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 import Description from '../components/Description.jsx';
+import Collection from '../components/Collection.jsx';
 
 // TODO: Use hooks here
 export default function(props) {
@@ -61,25 +62,19 @@ export default function(props) {
       <header className={[styles.header, 'constrain'].join(' ')}>
         <h1>All Deep Dives</h1>
       </header>
-      {rows.map(({ items, size }, idx) => {
-        return (
-          <div className="grid" key={idx}>
-            {items.map((data, idx) => {
-              return (
-                <div
-                  key={idx}
-                  className={[
-                    tileClassName(size, data.width),
-                    styles.tile
-                  ].join(' ')}
-                >
-                  <Tile data={data} category={data.cat} width={data.width} />
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
+      <div className={['grid', styles.headerRow].join(' ')}>
+        <div className="grid--item__third">
+          <Map linkPrefix="deep-dives/country/" />
+        </div>
+        <div className="grid--item__two-thirds">
+          <Description />
+        </div>
+      </div>
+      <Collection
+        articles={deepdives}
+        showType={false}
+        className={styles.collection}
+      />
     </article>
   );
 
