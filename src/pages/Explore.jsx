@@ -50,6 +50,12 @@ export default function(props) {
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
           <Map renderTile={renderTile} />
         </div>
+        <div className={classNames('grid--item__two-thirds')}>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+        </div>
       </div>
       <Collection articles={data} />;
     </article>
