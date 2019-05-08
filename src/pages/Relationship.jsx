@@ -8,7 +8,7 @@ import { COUNTRIES } from '../lib/constants';
 
 // -- Modules
 import CountryDropdown from '../components/CountryDropdown.jsx';
-import RelationshipStatus from '../components/RelationshipStatus.jsx';
+import Empty from '../components/Empty.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
@@ -118,7 +118,11 @@ export default function(props) {
 
     switch (category) {
       case 'Relationship Status':
-        return <RelationshipStatus />;
+        return (
+          <Empty className="emptyTile" style={{ background: 'white' }}>
+            <h4 className="placeholderEmpty">Relationship Status</h4>
+          </Empty>
+        );
       case 'Map':
         return <Map focus={id} indexUrl="/relationship" />;
       case 'Featured':

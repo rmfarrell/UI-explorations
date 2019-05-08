@@ -44,6 +44,14 @@ a {
   width: 100%;
 }
 
+h4.placeholderEmpty {
+  font: bold 4em var(--oswald);
+  text-transform: uppercase;
+  opacity: 0.25;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 /* Buttons */
 button {
   border: 0;

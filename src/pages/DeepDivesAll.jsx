@@ -12,6 +12,7 @@ import Description from '../components/Description.jsx';
 import Collection from '../components/Collection.jsx';
 import MapTile from '../components/MapTile.jsx';
 import DeepDive from './DeepDive.jsx';
+import Empty from '../components/Empty.jsx';
 import { Route, Link } from 'react-router-dom';
 
 export default function(props) {
@@ -61,7 +62,9 @@ export default function(props) {
             />
           </div>
           <div className="grid--item__two-thirds">
-            <Description />
+            <Empty className="emptyTile" style={{ background: 'white' }}>
+              <h4 className="placeholderEmpty">Description</h4>
+            </Empty>
           </div>
         </div>
         <Collection
