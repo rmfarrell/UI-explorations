@@ -3,11 +3,10 @@ import styles from '../styles/Map.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function(props) {
-  const { data, linkPrefix } = props;
-  if (!data) {
+  const { country = '', weight = 0, link = '', children } = props;
+  if (!country) {
     return <div className={styles.sea} />;
   }
-  const { weight, country } = data;
   if (!weight) {
     return (
       <div className={styles.land}>
@@ -17,7 +16,7 @@ export default function(props) {
   }
   return (
     <NavLink
-      to={`${linkPrefix}${country}`}
+      to={link}
       className={styles.eu}
       style={{ backgroundColor: `hsl(3,${75 * (weight / 10)}%, 50%)` }}
     >

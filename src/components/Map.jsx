@@ -6,7 +6,7 @@ import { COUNTRIES } from '../lib/constants';
 import MapTile from './MapTile.jsx';
 
 export default function(props) {
-  const { focus, linkPrefix = '/relationship/' } = props,
+  const { focus, linkPrefix = '/relationship/', size = 0 } = props,
     containerStyles = [styles.container, isFocused ? styles.focused : ''].join(
       ' '
     ),
@@ -26,7 +26,12 @@ export default function(props) {
           {data.map(tiles => {
             return tiles.map((tile, idx) => {
               return (
-                <MapTile key={idx} data={tile} linkPrefix={linkPrefix}>
+                <MapTile
+                  key={idx}
+                  country={tile && tile.country}
+                  weight={tile && tile.weight}
+                  link={`${linkPrefix}${tile && tile.country}`}
+                >
                   {tile && tile.country}
                 </MapTile>
               );
