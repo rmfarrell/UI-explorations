@@ -84,16 +84,21 @@ export default function(props) {
       {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
-            {items.map((data, idx) => {
+            {items.map(data => {
               return (
                 <div
-                  key={idx}
+                  key={data.id}
                   className={[
                     tileClassName(size, data.width),
                     styles.tile
                   ].join(' ')}
                 >
-                  <Tile data={data} category={data.cat} width={data.width} />
+                  <Tile
+                    data={data}
+                    category={data.cat}
+                    width={data.width}
+                    row={idx}
+                  />
                 </div>
               );
             })}
@@ -108,7 +113,7 @@ export default function(props) {
    *
    */
   function Tile(props) {
-    const { data, category, width } = props,
+    const { data, category, width, row = 0 } = props,
       { content } = data;
 
     switch (category) {
@@ -119,8 +124,9 @@ export default function(props) {
       case 'Featured':
         return featured(data);
       default:
+        const perpage = row > 0 ? 4 : 3;
         return content.length > 1 ? (
-          <List items={content} groupSize={width}>
+          <List items={content} groupSize={width} perpage={perpage}>
             <h3>{pluralize(category)}</h3>
           </List>
         ) : (
@@ -130,7 +136,12 @@ export default function(props) {
 
     function featured(data = {}) {
       return (
-        <SingleItem data={data} className="" size={width} type="article" />
+        <SingleItem
+          data={data}
+          className=""
+          size={row === 0 ? 2 : width}
+          type="article"
+        />
       );
     }
   }
