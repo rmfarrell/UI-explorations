@@ -1,16 +1,12 @@
 .root {
-  width: 31%;
-  margin: 0 2% 3em 0;
   background: white;
   padding: 0 0 1em;
+  box-sizing: border-box;
+  margin-bottom: 2em;
 }
 
 .root > * {
   padding: 0 3%;
-}
-
-.root:nth-child(3n + 3) {
-  margin-right: 0;
 }
 
 .root h3 {

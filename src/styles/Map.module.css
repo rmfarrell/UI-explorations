@@ -18,15 +18,11 @@
 }
 
 .land {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #999;
 }
 
 .sea {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.map .eu {
-  background-color: rgba(0, 0, 0, 1);
+  background-color: #ccc;
 }
 
 .map span {

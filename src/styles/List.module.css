@@ -11,6 +11,10 @@
   flex: 1;
 }
 
+.root > header {
+  padding: 1em 0 0 1em;
+}
+
 .itemList {
   list-style-type: none;
   margin: 0;
