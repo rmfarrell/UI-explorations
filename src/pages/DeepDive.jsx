@@ -10,6 +10,7 @@ import CustomArticle from '../components/CustomArticle.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
+import Link from '../components/Link.jsx';
 
 export default React.memo(function(props) {
   const {
@@ -20,7 +21,8 @@ export default React.memo(function(props) {
     { deepdives, articles } = useStoreon('deepdives', 'articles'),
     deepdive = id && deepdives[`DDV_${id}`];
   if (!deepdive) return error();
-  const {
+  const title = deepdive.custom_article.title,
+    {
       custom_article,
       articles: { featured, collection }
     } = deepdive,
@@ -67,6 +69,12 @@ export default React.memo(function(props) {
 
   return (
     <article>
+      <header className={[styles.header, 'constrain'].join(' ')}>
+        <h2>
+          <Link to="/deep-dives">&lt; Deep Dives</Link>
+        </h2>
+        <h1>{title}</h1>
+      </header>
       {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
