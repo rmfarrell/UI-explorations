@@ -15,6 +15,7 @@ export default function List({
   expand = false,
   items = []
 }) {
+  console.log(items);
   let slide = [],
     slides = [];
   items.forEach(item => {

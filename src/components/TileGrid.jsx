@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, renderComponent } from 'react';
 
 // -- Libs
 import { Grid, Row } from '../lib/grid';
 
 export default function(props) {
   const { children = [], featured = [], collection = [] } = props;
-  console.log(children[0]);
   // const tiles = children
   //     .map(() => {
   //       return {
@@ -34,9 +33,33 @@ export default function(props) {
 
   const adapter = gridAdapter(...children, ...featured, ...collection);
   const rows = makeGrid(adapter);
-  console.log(rows);
+  const firstRow = rows.slice(0, 1)[0];
+  const rest = rows.slice(1);
+
   return (
     <section>
+      <div className="grid">
+        {firstRow.items.map(item => {
+          return (
+            <div className={tileClassName(3, item.width)} key={item.key}>
+              {item.component}
+            </div>
+          );
+        })}
+      </div>
+      {rest.map(({ items, size }, idx) => {
+        return (
+          <div className="grid" key={idx}>
+            {items.map(item => {
+              return (
+                <div className={tileClassName(size, item.width)} key={item.key}>
+                  {item.component}
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
       {/* {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
@@ -115,14 +138,26 @@ function makeGrid(adapter) {
 }
 
 function gridAdapter(...components) {
-  const data = components.reduce((acc, { props, key }) => {
-    const { canExpand, width, featured } = props;
+  const data = components.reduce((acc, component) => {
+    const { props, key } = component;
+    const { canExpand, featured } = props;
+    const width = Number(props.width);
+
     if (!key) throw new Error('key is required in component');
     acc[key] = {
-      canExpand,
-      width: Number(width),
+      canExpand: !!canExpand,
+      width,
       featured,
-      key
+      key,
+      get component() {
+        if (width !== this.width) {
+          return React.cloneElement(component, {
+            width: this.width,
+            groupSize: this.width
+          });
+        }
+        return component;
+      }
     };
     return acc;
   }, {});
@@ -130,9 +165,16 @@ function gridAdapter(...components) {
   return {
     get gridData() {
       return Object.values(data);
-    },
-    get components() {
-      return [];
     }
   };
+}
+
+function tileClassName(rowSize = 4, width = 1) {
+  const isWide = width > 1;
+  if (rowSize === 3) {
+    return isWide ? 'grid--item__two-thirds' : 'grid--item__third';
+  }
+  if (rowSize === 4) {
+    return isWide ? 'grid--item__half' : 'grid--item__quarter';
+  }
 }

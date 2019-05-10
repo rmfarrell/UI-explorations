@@ -55,8 +55,7 @@ export default React.memo(function(props) {
   const collectionTiles = Object.keys(collectionData).map(cat => {
     const items = collectionData[cat],
       tileProps = { width: 1, canExpand: true, key: cat };
-
-    return items.length > 1 ? (
+    return items.length === 1 ? (
       <SingleItem
         {...tileProps}
         data={items[0]}
@@ -103,7 +102,7 @@ export default React.memo(function(props) {
         collection={collectionTiles}
         tiles={[...featured, ...collection]}
       >
-        <Map width="1" canExpand key="Map" />
+        <Map width={1} key="Map" />
         <CustomArticle
           key="CustomArticle"
           data={custom_article}
@@ -212,16 +211,6 @@ function makeGrid(tiles = []) {
   grid.balance();
 
   return grid.rows;
-}
-
-function tileClassName(rowSize = 4, width = 1) {
-  const isWide = width > 1;
-  if (rowSize === 3) {
-    return isWide ? 'grid--item__two-thirds' : 'grid--item__third';
-  }
-  if (rowSize === 4) {
-    return isWide ? 'grid--item__half' : 'grid--item__quarter';
-  }
 }
 
 function pluralize(category = '') {
