@@ -33,10 +33,8 @@ export default function(props) {
   //   .map(addWidths),
 
   const adapter = gridAdapter(...children, ...featured, ...collection);
-
-  console.log(adapter.gridData);
-  // const rows = makeGrid(adapter.gridData);
-  // console.log(rows);
+  const rows = makeGrid(adapter);
+  console.log(rows);
   return (
     <section>
       {/* {rows.map(({ items, size }, idx) => {
@@ -107,12 +105,11 @@ export default function(props) {
   // }
 }
 
-function makeGrid(tiles = []) {
+function makeGrid(adapter) {
   const grid = Grid(Row(3));
-  grid.add(tiles);
-  return [];
-  // grid.separateFeatured();
-  // grid.balance();
+  grid.add(adapter.gridData);
+  grid.separateFeatured();
+  grid.balance();
 
   return grid.rows;
 }
@@ -123,7 +120,7 @@ function gridAdapter(...components) {
     if (!key) throw new Error('key is required in component');
     acc[key] = {
       canExpand,
-      width,
+      width: Number(width),
       featured,
       key
     };
@@ -138,10 +135,4 @@ function gridAdapter(...components) {
       return [];
     }
   };
-}
-
-function addWidths(item) {
-  item.width = item.width || 1;
-  item.canExpand = item.width < 2;
-  return item;
 }

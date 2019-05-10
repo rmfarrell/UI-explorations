@@ -149,7 +149,7 @@ function Row(size = 4) {
       if (!item) {
         return;
       }
-      if (!item.width) {
+      if (!item.width || typeof item.width !== 'number') {
         throw new Error(
           `Cannot add item without width: ${JSON.stringify(item, null, '\t')}`
         );
