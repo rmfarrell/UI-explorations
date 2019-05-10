@@ -12,12 +12,15 @@ import Empty from '../components/Empty.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
+import Modal from '../components/Modal.jsx';
 
 // TODO: Use hooks here
-export default function(props) {
-  let relationship;
+export default React.memo(function(props) {
+  let relationship, modal;
   const id = props.match.params.id || 'Europe',
-    { relationships, articles } = useStoreon('relationships', 'articles');
+    { relationships, articles } = useStoreon('relationships', 'articles'),
+    [articleModal, setArticleModal] = useState('');
+
   relationship = id && relationships[`REL_${id.toUpperCase()}`];
   if (id.toLowerCase() === 'europe') {
     relationship = relationships['REL_GBR'];
@@ -68,8 +71,24 @@ export default function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
-  function onDropDownSelect({ value }) {
-    props.history.replace(`/relationship/${value}`);
+  useEffect(() => {
+    hashChangeHandler();
+    window && window.addEventListener('hashchange', hashChangeHandler, false);
+    modal = window.location.hash;
+    return () => {
+      window.removeEventListener('hashchange', hashChangeHandler);
+    };
+  }, [modal]);
+
+  function hashChangeHandler(e) {
+    const {
+      location: { hash = '' }
+    } = window;
+    setArticleModal(hash);
+  }
+
+  function closeModal() {
+    window.location.hash = '';
   }
 
   return (
@@ -87,7 +106,7 @@ export default function(props) {
             {items.map(data => {
               return (
                 <div
-                  key={data.id}
+                  key={data.cat}
                   className={[
                     tileClassName(size, data.width),
                     styles.tile
@@ -105,8 +124,17 @@ export default function(props) {
           </div>
         );
       })}
+      {articleModal && (
+        <Modal close={closeModal}>
+          <h1>test</h1>
+        </Modal>
+      )}
     </article>
   );
+
+  function onDropDownSelect({ value }) {
+    props.history.replace(`/relationship/${value}`);
+  }
 
   /**
    * Factory funciton for rendering Tiles
@@ -126,7 +154,7 @@ export default function(props) {
       case 'Map':
         return <Map focus={id} indexUrl="/relationship" />;
       case 'Featured':
-        return featured(data);
+        return single(data);
       default:
         const perpage = row > 0 ? 4 : 3;
         return content.length > 1 ? (
@@ -134,22 +162,23 @@ export default function(props) {
             <h3>{pluralize(category)}</h3>
           </List>
         ) : (
-          featured(content[0])
+          single(content[0])
         );
     }
 
-    function featured(data = {}) {
+    function single(data = {}) {
       return (
         <SingleItem
           data={data}
           className=""
           size={row === 0 ? 2 : width}
           type="article"
+          link={`#${data.id}`}
         />
       );
     }
   }
-}
+});
 
 function error(err) {
   console.error(err);

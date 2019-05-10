@@ -41,7 +41,7 @@ export default function List({
               {collection.map(item => {
                 return (
                   <li key={item.id}>
-                    <SingleItem data={item} size={0} />
+                    <SingleItem data={item} size={0} link={`#${item.id}`} />
                   </li>
                 );
               })}

@@ -53,7 +53,6 @@ function normalizeArticle(data, type, id) {
     summary: '',
     source: '',
     author: '',
-    link: '',
     type: data.type,
     document_type: data.document_type,
     meta: {

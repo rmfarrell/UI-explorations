@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/ListItem.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { formatDate, placeholderImage } from '../lib/helpers';
-import Link from './Link';
+import Link from './Link.jsx';
 
 // TODO this could be merged with Card probably
 export default React.memo(function SingleItem(props) {
@@ -11,27 +11,30 @@ export default React.memo(function SingleItem(props) {
     className = '',
     size = 0,
     children = [],
-    summaryLines = 4
+    summaryLines = 4,
+    link = ''
   } = props;
   const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
+  // console.log(link);
   return (
     <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
       {children}
       {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
       {size === 0 && modifier === 'article' && (
-        <SmallTeaser link={data.link} {...data} summaryLines={summaryLines} />
+        <SmallTeaser link={link} {...data} summaryLines={summaryLines} />
       )}
       {size === 1 && modifier === 'article' && (
-        <MediumTeaser link={data.link} {...data} summaryLines={summaryLines} />
+        <MediumTeaser link={link} {...data} summaryLines={summaryLines} />
       )}
       {size === 2 && modifier === 'article' && (
-        <LargeTeaser link={data.link} {...data} summaryLines={summaryLines} />
+        <LargeTeaser link={link} {...data} summaryLines={summaryLines} />
       )}
     </div>
   );
 });
 
-function SmallTeaser({ date, title = '', link = '#' }) {
+function SmallTeaser(props) {
+  const { date, title = '', link = '#' } = props;
   return (
     <Link to={link}>
       <h4>{formatDate(date)}</h4>
@@ -57,7 +60,6 @@ function MediumTeaser(props) {
     author = '',
     link = '#'
   } = props;
-
   return (
     <div>
       <div className={styles.imgContainer} style={placeholderImage()} />
