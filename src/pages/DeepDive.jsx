@@ -11,6 +11,7 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 import Link from '../components/Link.jsx';
+import TileGrid from '../components/TileGrid.jsx';
 
 export default React.memo(function(props) {
   const {
@@ -26,8 +27,8 @@ export default React.memo(function(props) {
       custom_article,
       articles: { featured, collection }
     } = deepdive,
+    // Filter out socials from filter :(
     featuredData = dereferenceArticles(
-      // Filter out socials from filter :(
       featured.filter(id => !id.includes('SOC')),
       articles
     ),
@@ -35,37 +36,59 @@ export default React.memo(function(props) {
       reduceArticleCollection,
       {}
     );
-  const tiles = [
-      // Map
-      {
-        cat: 'Map',
-        width: 1
-      },
-      // Custom article
-      Object.assign(custom_article, {
-        cat: 'Custom Article',
-        width: 1,
-        canExpand: true
-      })
-    ]
-      .concat(
-        ...featuredData.map(featured => {
-          return Object.assign(featured, {
-            cat: 'Featured',
-            width: 1,
-            canExpand: true,
-            featured: true
-          });
-        })
-      )
-      .concat(
-        Object.keys(collectionData).map(cat => ({
-          cat,
-          content: collectionData[cat]
-        }))
-      )
-      .map(addWidths),
-    rows = makeGrid(tiles);
+  const featuredTiles = featuredData.map((data, idx) => (
+    <SingleItem
+      key={`featured-${idx}`}
+      data={data}
+      className=""
+      size={1}
+      summaryLines={4}
+      width={1}
+      featured
+      canExpand
+      // size={firstRow ? 2 : width}
+      // summaryLines={firstRow ? 0 : 4}
+      // type="article"
+    />
+  ));
+
+  const collectionTiles = Object.keys(collectionData).map(cat => {
+    const items = collectionData[cat],
+      tileProps = { width: 1, canExpand: true, key: cat };
+
+    return items.length > 1 ? (
+      <SingleItem
+        {...tileProps}
+        data={items[0]}
+        size={1}
+        summaryLines={4}
+        width={1}
+        canExpand
+      />
+    ) : (
+      <List {...tileProps} items={items} groupSize={1} perpage={4} />
+    );
+  });
+  // const tiles = [
+  //     .concat(
+  //       ...featuredData.map(featured => {
+  //         return Object.assign(featured, {
+  //           cat: 'Featured',
+  //           width: 1,
+  //           canExpand: true,
+  //           featured: true
+  //         });
+  //       })
+  //     )
+  //     .concat(
+  //       Object.keys(collectionData).map(cat => ({
+  //         cat,
+  //         content: collectionData[cat]
+  //       }))
+  //     )
+  //     .map(addWidths),
+
+  // rows = makeGrid(tiles);
 
   return (
     <article>
@@ -75,7 +98,20 @@ export default React.memo(function(props) {
         </h2>
         <h1>{title}</h1>
       </header>
-      {rows.map(({ items, size }, idx) => {
+      <TileGrid
+        featured={featuredTiles}
+        collection={collectionTiles}
+        tiles={[...featured, ...collection]}
+      >
+        <Map width="1" canExpand key="Map" />
+        <CustomArticle
+          key="CustomArticle"
+          data={custom_article}
+          width="1"
+          canExpand
+        />
+      </TileGrid>
+      {/* {rows.map(({ items, size }, idx) => {
         return (
           <div className="grid" key={idx}>
             {items.map(data => {
@@ -98,11 +134,9 @@ export default React.memo(function(props) {
             })}
           </div>
         );
-      })}
+      })} */}
     </article>
   );
-
-  function hideModal() {}
 
   /**
    * Factory funciton for rendering Tiles
@@ -115,7 +149,7 @@ export default React.memo(function(props) {
 
     switch (category) {
       case 'Custom Article':
-        return <CustomArticle data={custom_article} hideModal={hideModal} />;
+        return <CustomArticle data={custom_article} />;
       case 'Map':
         return <Map />;
       case 'Featured':
