@@ -4,7 +4,7 @@ import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
 import { Grid, Row } from '../lib/grid';
-import { dereferenceArticles } from '../lib/helpers';
+import { dereferenceArticles, classNames } from '../lib/helpers';
 
 // -- Modules
 import CustomArticle from '../components/CustomArticle.jsx';
@@ -79,7 +79,7 @@ export default React.memo(function(props) {
       </header>
       {rows.map(({ items, size }, idx) => {
         return (
-          <div className="grid" key={idx}>
+          <div className={classNames('grid', 'constrain')} key={idx}>
             {items.map(data => {
               return (
                 <div

@@ -18,6 +18,7 @@ import {
   fetchExternalResources,
   fetchRelationships
 } from './lib/api';
+import { classNames } from './lib/helpers';
 
 // -- Modules
 import DeepDive from './pages/DeepDive.jsx';
@@ -115,56 +116,64 @@ function Main(props) {
 
   return (
     <div className={styles.root}>
-      <header>
-        <nav>
-          <ul className="constrain">
-            <li>
-              <NavLink to="/relationship" activeClassName={styles.active}>
-                Relationships
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/deep-dives" activeClassName={styles.active}>
-                Deep Dives
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/explore" activeClassName={styles.active}>
-                Explore
-              </NavLink>
-            </li>
-            <li className={styles.helpLink}>
-              <NavLink to="/help" activeClassName={styles.active}>
-                Help
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <header>{sectionsMenu()}</header>
       {fetched ? children : loading()}
-      <footer>
-        <nav>
-          <ul className="constrain">
-            <li>
-              <NavLink to="/static1" activeClassName={styles.active}>
-                Static page
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/static2" activeClassName={styles.active}>
-                Static page
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/static3" activeClassName={styles.active}>
-                Static page
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
-      </footer>
+      <footer>{pagesMenu()}</footer>
     </div>
   );
+
+  function sectionsMenu() {
+    return (
+      <nav>
+        <ul className={classNames('constrain', styles.sectionsMenu)}>
+          <li>
+            <NavLink to="/relationship" activeClassName={styles.active}>
+              R
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/deep-dives" activeClassName={styles.active}>
+              D
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/explore" activeClassName={styles.active}>
+              X
+            </NavLink>
+          </li>
+          <li className={styles.helpLink}>
+            <NavLink to="/help" activeClassName={styles.active}>
+              ?
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
+
+  function pagesMenu() {
+    return (
+      <nav>
+        <ul className="constrain">
+          <li>
+            <NavLink to="/static1" activeClassName={styles.active}>
+              Static page
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/static2" activeClassName={styles.active}>
+              Static page
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/static3" activeClassName={styles.active}>
+              Static page
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
 }
 
 export default AppRouter;

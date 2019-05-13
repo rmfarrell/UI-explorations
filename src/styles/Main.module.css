@@ -6,8 +6,6 @@
 }
 
 .root nav {
-  background: var(--col-text);
-  color: var(--col-grey);
 }
 
 .root > article {
@@ -22,7 +20,14 @@
   font-size: 1.2em;
 }
 
-.root nav a {
+/* Footer menu */
+
+.root footer {
+  background: var(--col-text);
+  color: var(--col-grey);
+}
+
+.root footer a {
   color: inherit;
   display: block;
   transition: all 0.3s;
@@ -30,22 +35,22 @@
   box-sizing: border-box;
 }
 
-.root nav a.active {
+.root footer a.active {
   background: white;
   color: var(--col-text);
 }
 
-.root nav ul {
+.root footer ul {
   display: flex;
   margin: 0 auto;
   padding: 0 2%;
 }
 
-.root nav li > * {
+.root footer li > * {
   padding: 0.75em 1em;
 }
 
-.root nav li {
+.root footer li {
   font-size: 1.5rem;
   white-space: nowrap;
   margin: 0;
@@ -53,13 +58,41 @@
   align-items: center;
 }
 
-.root nav em {
+.root footer em {
   font-family: monospace;
   font-style: normal;
   color: var(--col-orange);
 }
 
-.root li.helpLink {
-  align-self: flex-end;
+/* Sections menu */
+.sectionsMenu {
+  display: flex;
+}
+
+.sectionsMenu li {
+  margin-left: 1em;
+}
+
+.sectionsMenu a {
+  display: block;
+  font: bold 2em var(--oswald);
+  padding: 0.1em;
+  width: 1.75em;
+  text-align: center;
+  color: var(--col-text);
+  border: 2px solid var(--col-text);
+  transition: all 0.3s;
+}
+
+.sectionsMenu a.active {
+  background: var(--col-text);
+  color: white;
+}
+
+.sectionsMenu .helpLink {
   margin-left: auto;
+}
+.helpLink a {
+  width: 1.6em;
+  border-radius: 50%;
 }
