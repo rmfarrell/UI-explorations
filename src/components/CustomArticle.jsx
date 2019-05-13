@@ -49,7 +49,7 @@ function CustomArticle(props) {
       <Modal isOpen={true} close={closeModal}>
         <article className={modalStyles.root}>
           {title && <h1>{title}</h1>}
-          <div className={modalStyles.columnLeft}>
+          <div className={modalStyles.columnAncillary}>
             <h3>{curator}</h3>
             <p>{short_description}</p>
             <div className={modalStyles.dateline}>{formatDate(new Date())}</div>
@@ -57,7 +57,7 @@ function CustomArticle(props) {
               Read More
             </a>
           </div>
-          <div className={modalStyles.columnRight}>
+          <div className={modalStyles.columnMain}>
             {img()}
             <p>{content}</p>
           </div>
