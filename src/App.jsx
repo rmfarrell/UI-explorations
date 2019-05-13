@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   NavLink,
-  withRouter
+  Link
 } from 'react-router-dom';
 import styles from './styles/Main.module.css';
 import store from './store/index.js';
@@ -116,11 +116,39 @@ function Main(props) {
 
   return (
     <div className={styles.root}>
-      <header>{sectionsMenu()}</header>
+      <header>
+        <div className={classNames(styles.topbar)}>
+          <h1 className="constrain">
+            <Link to="/">Transatlantic Periscope</Link>
+          </h1>
+          {tray()}
+        </div>
+        {sectionsMenu()}
+      </header>
       {fetched ? children : loading()}
       <footer>{pagesMenu()}</footer>
     </div>
   );
+
+  function tray() {
+    const [isTrayOpen, setIsTrayOpen] = useState(false);
+    return (
+      <div
+        className={classNames(styles.tray, isTrayOpen ? styles.trayOpen : '')}
+      >
+        <button
+          onClick={toggleTray}
+          className={classNames(styles.closeButton, styles.toggle)}
+        >
+          {isTrayOpen ? 'x' : '='}
+        </button>
+        {pagesMenu()}
+      </div>
+    );
+    function toggleTray() {
+      setIsTrayOpen(!isTrayOpen);
+    }
+  }
 
   function sectionsMenu() {
     return (
