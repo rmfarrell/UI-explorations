@@ -10,7 +10,7 @@ export default function() {
     hashChangeHandler();
     window && window.addEventListener('hashchange', hashChangeHandler, false);
     return () => {
-      window.removeEventListener('hashchange', hashChangeHandler);
+      window && window.removeEventListener('hashchange', hashChangeHandler);
     };
   }, [setModal]);
 
@@ -36,6 +36,8 @@ export default function() {
   }
 
   function closeModal() {
+    const scrollPosition = window.scrollY;
     window.location.hash = '';
+    window.scrollTo(window.scrollX, scrollPosition);
   }
 }
