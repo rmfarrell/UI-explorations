@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/CustomArticle.module.css';
-import { placeholderImage } from '../lib/helpers';
+import modalStyles from '../styles/ArticleModal.module.css';
+import { placeholderImage, classNames, formatDate } from '../lib/helpers';
 import Modal from './Modal.jsx';
 import { Link, withRouter, Route } from 'react-router-dom';
 
@@ -12,7 +13,13 @@ function CustomArticle(props) {
     match,
     history: { push }
   } = props;
-  const { title = '', short_description = '', content = '' } = data;
+  const {
+    title = '',
+    short_description = '',
+    content = '',
+    curator = ''
+  } = data;
+
   function img() {
     return (
       <div
@@ -37,12 +44,29 @@ function CustomArticle(props) {
   );
 
   function modal() {
+    console.log(data);
     return (
       <Modal isOpen={true} close={closeModal}>
-        {img()}
-        <h1>{title}</h1>
+        <article className={modalStyles.root}>
+          {title && <h1>{title}</h1>}
+          <div className={modalStyles.columnLeft}>
+            <h3>{curator}</h3>
+            <p>{short_description}</p>
+            <div className={modalStyles.dateline}>{formatDate(new Date())}</div>
+            <a className={classNames('button', modalStyles.readMore)}>
+              Read More
+            </a>
+          </div>
+          <div className={modalStyles.columnRight}>
+            {img()}
+            <p>{content}</p>
+          </div>
+        </article>
+
+        {/* {img()}
+        <h1 className={modalStyles.}>{title}</h1>
         <p>{content}</p>
-        <p>{content}</p>
+        <p>{content}</p> */}
       </Modal>
     );
   }

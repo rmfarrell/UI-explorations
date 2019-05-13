@@ -105,8 +105,6 @@ export default React.memo(function(props) {
     </article>
   );
 
-  function hideModal() {}
-
   /**
    * Factory funciton for rendering Tiles
    *
@@ -118,7 +116,7 @@ export default React.memo(function(props) {
 
     switch (category) {
       case 'Custom Article':
-        return <CustomArticle data={custom_article} hideModal={hideModal} />;
+        return <CustomArticle data={custom_article} />;
       case 'Map':
         return <Map />;
       case 'Featured':

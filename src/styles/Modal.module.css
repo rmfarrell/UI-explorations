@@ -37,6 +37,8 @@
 .closeBtn {
   transition: color 0.25s;
   font-size: 4rem;
+  align-self: flex-end;
+  margin-left: auto;
 }
 
 .closeBtn:hover {
