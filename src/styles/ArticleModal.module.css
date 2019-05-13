@@ -11,13 +11,10 @@
   margin: 0 0 1.2em;
 }
 
-.columnLeft {
-  flex: 0 0 35%;
-  padding-top: 6em;
-}
-
+.columnLeft,
 .columnRight {
-  flex: 0 0 60%;
+  flex: 1 100%;
+  margin: 0 0 4em;
 }
 
 .columnRight p {
@@ -34,4 +31,15 @@
 .dateline {
   font-size: 1.25em;
   margin: 0 0 2em;
+}
+
+@media (min-width: 600px) {
+  .columnLeft {
+    flex: 0 0 35%;
+    padding-top: 6em;
+  }
+
+  .columnRight {
+    flex: 0 0 60%;
+  }
 }
