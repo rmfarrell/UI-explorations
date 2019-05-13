@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useStoreon from 'storeon/react';
 import Modal from './Modal.jsx';
-import { dereferenceArticle } from '../lib/helpers';
+import {
+  dereferenceArticle,
+  placeholderImage,
+  formatDate,
+  classNames
+} from '../lib/helpers';
 import styles from '../styles/ArticleModal.module.css';
-console.log(styles);
 
 export default function() {
   const [modal, setModal] = useState({}),
@@ -34,7 +38,6 @@ export default function() {
 
     if (hash) {
       article = getArticle(hash.split('#')[1]);
-      console.log(article);
       modal.headline = headline(article.document_type || article.type);
       modal.content = content(article);
     }
@@ -46,18 +49,48 @@ export default function() {
   }
 
   function content(article) {
-    const { title = '' } = article;
+    const {
+      title = '',
+      summary = '',
+      date = '',
+      source = '',
+      author = ''
+    } = article;
     return (
       <article className={styles.root}>
-        {title && <h1>title</h1>}
-        <div className={styles.columnLeft}>1</div>
-        <div className={styles.columnRight}>2</div>
+        {title && <h1>{title}</h1>}
+        <div className={styles.columnLeft}>
+          {article.channel ? (
+            channel(article.channel)
+          ) : (
+            <h3>{author || source}</h3>
+          )}
+          <div className={styles.dateline}>{formatDate(date)}</div>
+          <a className={classNames('button', styles.readMore)}>Read More</a>
+        </div>
+        <div className={styles.columnRight}>
+          <div style={placeholderImage()} />
+          <p>{summary}</p>
+        </div>
       </article>
     );
   }
 
   function getArticle(id) {
     return dereferenceArticle(articles, id)[0];
+  }
+
+  function channel(articleChannel) {
+    const { title = '', description = '' } = articleChannel;
+    console.log(articleChannel);
+    return (
+      <div className={styles.channel}>
+        <h3>
+          <a>{title}</a>
+        </h3>
+        <p>{description}</p>
+      </div>
+    );
   }
 
   function closeModal() {

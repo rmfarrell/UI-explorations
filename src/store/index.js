@@ -74,6 +74,7 @@ function normalizeArticle(data, type, id) {
       out.summary = data.item.description;
       out.source = data.channel.title;
       out.author = data.item.author;
+      out.channel = data.channel;
       return out;
 
     case 'SOC':

@@ -57,7 +57,8 @@ body.modal-is-open {
 }
 
 /* Buttons */
-button {
+button,
+.button {
   border: 0;
   cursor: pointer;
 }
@@ -69,6 +70,12 @@ button:disabled:hover {
 }
 button:hover {
   text-decoration: underline;
+}
+
+.button {
+  display: inline-block;
+  background-color: var(--col-grey);
+  padding: 0.75em 0.5em;
 }
 
 /* Forms */
