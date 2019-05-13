@@ -1,4 +1,4 @@
-.root {
+.shade {
   border: 1px solid;
   position: fixed;
   top: 0;
@@ -19,7 +19,8 @@
   height: 75em;
   max-height: 90vh;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  z-index: 120;
 }
 
 .body {

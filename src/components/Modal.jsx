@@ -18,14 +18,17 @@ export default function(props) {
   });
 
   return (
-    <div className={[styles.root, openClass].join(' ')} onClick={close}>
+    <React.Fragment>
+      <div className={[styles.shade, openClass].join(' ')} onClick={close} />
       <aside className={[styles.modal, 'modal'].join(' ')}>
         <div className={styles.top}>
           {headline && headline}
-          <button className={styles.closeBtn}>&times;</button>
+          <button className={styles.closeBtn} onClick={close}>
+            &times;
+          </button>
         </div>
         <div className={styles.body}>{children}</div>
       </aside>
-    </div>
+    </React.Fragment>
   );
 }

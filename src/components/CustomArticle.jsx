@@ -44,7 +44,6 @@ function CustomArticle(props) {
   );
 
   function modal() {
-    console.log(data);
     return (
       <Modal isOpen={true} close={closeModal}>
         <article className={modalStyles.root}>
@@ -62,16 +61,12 @@ function CustomArticle(props) {
             <p>{content}</p>
           </div>
         </article>
-
-        {/* {img()}
-        <h1 className={modalStyles.}>{title}</h1>
-        <p>{content}</p>
-        <p>{content}</p> */}
       </Modal>
     );
   }
 
   function closeModal() {
+    console.log('test');
     push(`${match.url}`);
   }
 }
