@@ -4,6 +4,7 @@ import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
 import { Grid, Row } from '../lib/grid';
+import { dereferenceArticles } from '../lib/helpers';
 
 // -- Modules
 import CustomArticle from '../components/CustomArticle.jsx';
@@ -28,10 +29,10 @@ export default React.memo(function(props) {
     } = deepdive,
     featuredData = dereferenceArticles(
       // Filter out socials from filter :(
-      featured.filter(id => !id.includes('SOC')),
-      articles
+      articles,
+      featured.filter(id => !id.includes('SOC'))
     ),
-    collectionData = dereferenceArticles(collection, articles).reduce(
+    collectionData = dereferenceArticles(articles, collection).reduce(
       reduceArticleCollection,
       {}
     );
@@ -147,16 +148,6 @@ export default React.memo(function(props) {
 
 function error() {
   return '';
-}
-
-function dereferenceArticles(ids = [], collection = {}) {
-  return ids.map(id => {
-    const out = collection[id];
-    if (!out) {
-      throw new Error(`Could not find article ${id}`);
-    }
-    return Object.assign(out, { id });
-  });
 }
 
 function reduceArticleCollection(acc, item) {

@@ -5,6 +5,7 @@ import styles from '../styles/DeepDive.module.css';
 // -- Libs
 import { Grid, Row } from '../lib/grid';
 import { COUNTRIES } from '../lib/constants';
+import { dereferenceArticles } from '../lib/helpers';
 
 // -- Modules
 import CountryDropdown from '../components/CountryDropdown.jsx';
@@ -12,14 +13,13 @@ import Empty from '../components/Empty.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
-import Modal from '../components/Modal.jsx';
+import ArticleModal from '../components/ArticleModal.jsx';
 
 // TODO: Use hooks here
 export default React.memo(function(props) {
   let relationship, modal;
   const id = props.match.params.id || 'Europe',
-    { relationships, articles } = useStoreon('relationships', 'articles'),
-    [articleModal, setArticleModal] = useState('');
+    { relationships, articles } = useStoreon('relationships', 'articles');
 
   relationship = id && relationships[`REL_${id.toUpperCase()}`];
   if (id.toLowerCase() === 'europe') {
@@ -32,10 +32,10 @@ export default React.memo(function(props) {
     } = relationship,
     featuredData = dereferenceArticles(
       // Filter out socials from filter :(
-      featured.filter(id => !id.includes('SOC')),
-      articles
+      articles,
+      featured.filter(id => !id.includes('SOC'))
     ),
-    collectionData = dereferenceArticles(collection, articles).reduce(
+    collectionData = dereferenceArticles(articles, collection).reduce(
       reduceArticleCollection,
       {}
     );
@@ -71,26 +71,6 @@ export default React.memo(function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
-  useEffect(() => {
-    hashChangeHandler();
-    window && window.addEventListener('hashchange', hashChangeHandler, false);
-    modal = window.location.hash;
-    return () => {
-      window.removeEventListener('hashchange', hashChangeHandler);
-    };
-  }, [modal]);
-
-  function hashChangeHandler(e) {
-    const {
-      location: { hash = '' }
-    } = window;
-    setArticleModal(hash);
-  }
-
-  function closeModal() {
-    window.location.hash = '';
-  }
-
   return (
     <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
@@ -124,11 +104,7 @@ export default React.memo(function(props) {
           </div>
         );
       })}
-      {articleModal && (
-        <Modal close={closeModal}>
-          <h1>test</h1>
-        </Modal>
-      )}
+      <ArticleModal />
     </article>
   );
 
@@ -183,16 +159,6 @@ export default React.memo(function(props) {
 function error(err) {
   console.error(err);
   return '';
-}
-
-function dereferenceArticles(ids = [], collection = {}) {
-  return ids.map(id => {
-    const out = collection[id];
-    if (!out) {
-      throw new Error(`Could not find article ${id}`);
-    }
-    return Object.assign(out, { id });
-  });
 }
 
 function reduceArticleCollection(acc, item) {

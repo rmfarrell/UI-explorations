@@ -47,3 +47,17 @@ export function toggleInArray(arr, str) {
   }
   return arr.concat(str);
 }
+
+export function dereferenceArticle(collection = {}, ...ids) {
+  return ids.map(id => {
+    const out = collection[id];
+    if (!out) {
+      throw new Error(`Could not find article ${id}`);
+    }
+    return Object.assign(out, { id });
+  });
+}
+
+export function dereferenceArticles(collection = {}, ids = []) {
+  return dereferenceArticle(collection, ...ids);
+}
