@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 2.5%;
+}
+
+.root h1 {
+  flex: 1 100%;
+}
+
+.columnLeft {
+  flex: 0 0 35%;
+}
+
+.columnRight {
+  flex: 0 0 60%;
+}

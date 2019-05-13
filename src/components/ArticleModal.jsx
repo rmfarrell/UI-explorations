@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useStoreon from 'storeon/react';
 import Modal from './Modal.jsx';
-
 import { dereferenceArticle } from '../lib/helpers';
+import styles from '../styles/ArticleModal.module.css';
+console.log(styles);
 
 export default function() {
   const [modal, setModal] = useState({}),
@@ -18,7 +19,7 @@ export default function() {
 
   return Object.keys(modal).length ? (
     <Modal close={closeModal} headline={modal.headline}>
-      <h1>{modal.content}</h1>
+      {modal.content && modal.content}
     </Modal>
   ) : (
     ''
@@ -34,10 +35,25 @@ export default function() {
     if (hash) {
       article = getArticle(hash.split('#')[1]);
       console.log(article);
-      modal.headline = <h2>{article.document_type || article.type}</h2>;
-      modal.content = 'content';
+      modal.headline = headline(article.document_type || article.type);
+      modal.content = content(article);
     }
     setModal(modal);
+  }
+
+  function headline(content = '') {
+    return <h2 className={styles.modalHeadline}>{content}</h2>;
+  }
+
+  function content(article) {
+    const { title = '' } = article;
+    return (
+      <article className={styles.root}>
+        {title && <h1>title</h1>}
+        <div className={styles.columnLeft}>1</div>
+        <div className={styles.columnRight}>2</div>
+      </article>
+    );
   }
 
   function getArticle(id) {

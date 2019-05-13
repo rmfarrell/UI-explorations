@@ -15,7 +15,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 60em;
+  max-width: 80em;
   height: 70em;
   max-height: 90vh;
   overflow: hidden;
@@ -30,8 +30,9 @@
 .top {
   font-size: 4rem;
   display: flex;
-  justify-content: flex-end;
-  padding: 0.1em;
+  justify-content: space-between;
+  padding: 0.1em 0.25em;
+  align-items: center;
 }
 
 .closeBtn {
@@ -41,4 +42,10 @@
 .closeBtn:hover {
   text-decoration: none;
   color: var(--col-grey);
+}
+
+.top h2 {
+  font: bold 0.8em/1em var(--oswald);
+  text-transform: uppercase;
+  margin: 0;
 }
