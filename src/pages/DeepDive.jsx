@@ -12,6 +12,7 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 import Link from '../components/Link.jsx';
+import ArticleModal from '../components/ArticleModal.jsx';
 
 export default React.memo(function(props) {
   const {
@@ -100,6 +101,7 @@ export default React.memo(function(props) {
           </div>
         );
       })}
+      <ArticleModal />
     </article>
   );
 
