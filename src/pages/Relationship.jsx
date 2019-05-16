@@ -14,11 +14,12 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 import ArticleModal from '../components/ArticleModal.jsx';
+import Link from '../components/Link.jsx';
 
 // TODO: Use hooks here
-export default React.memo(function(props) {
+export default function(props) {
   let relationship, modal;
-  const id = props.match.params.id || 'Europe',
+  const { id = 'europe' } = props,
     { relationships, articles } = useStoreon('relationships', 'articles');
 
   relationship = id && relationships[`REL_${id.toUpperCase()}`];
@@ -71,6 +72,12 @@ export default React.memo(function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
+  useEffect(() => {
+    return () => {
+      console.log('relationship got unmounted');
+    };
+  });
+
   return (
     <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
@@ -80,6 +87,9 @@ export default React.memo(function(props) {
           onChange={onDropDownSelect}
         />
       </header>
+      <Link to="/relationship/DEU">GERMANY</Link>
+      <Link to="/relationship">ALL</Link>
+      {props.children}
       {rows.map(({ items, size }, idx) => {
         return (
           <div className={classNames('grid', 'constrain')} key={idx}>
@@ -154,7 +164,7 @@ export default React.memo(function(props) {
       );
     }
   }
-});
+}
 
 function error(err) {
   console.error(err);

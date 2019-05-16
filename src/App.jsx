@@ -26,17 +26,22 @@ import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
+import Map from './components/Map.jsx';
 
 function AppRouter() {
   return (
     <StoreContext.Provider value={store}>
       <Router>
         <Main>
+          <Route path="/" children={() => <Map />} />
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
           <Route path="/deep-dives" component={DeepDivesAll} />
-          <Route path="/relationship" exact component={Relationship} />
-          <Route path="/relationship/:id" component={Relationship} />
+          <Route path="/relationship" exact render={() => <Relationship />} />
+          <Route
+            path="/relationship/:id"
+            render={({ match }) => <Relationship id={match.params.id} />}
+          />
           <Route
             path="/help"
             exact
