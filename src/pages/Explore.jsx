@@ -58,7 +58,7 @@ export default function(props) {
           />
         </div>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
-          <Map renderTile={renderTile} />
+          {/* <Map renderTile={renderTile} /> */}
         </div>
         <div className={classNames('grid--item__two-thirds')}>
           <div className={classNames(styles.filtersRow, styles.wide)}>

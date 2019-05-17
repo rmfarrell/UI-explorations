@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import data from '../lib/map';
 import styles from '../styles/Map.module.css';
 import { TweenRex } from '@tweenrex/core';
@@ -19,13 +19,17 @@ import {
 import MapTile from './MapTile.jsx';
 import europe from '../lib/europe_map';
 
+const animationTime = 2000;
+let start;
+
 export default function(props) {
   const {
       focus,
       linkPrefix = '/relationship/',
       size = 1,
       renderTile,
-      indexUrl = ''
+      indexUrl = '',
+      params = {}
     } = props,
     containerStyles = [styles.container, isFocused ? styles.focused : ''].join(
       ' '
@@ -38,36 +42,12 @@ export default function(props) {
 
   useEffect(() => {
     if (!window) return;
-    return;
-    let start;
-    let animend = 2000;
-    // const geo = Germany().paths.geo,
-    //   square = Germany().paths.square,
-    //   alt = Germany().paths.alt;
-
-    Object.keys(europe).forEach(k => {
-      if (!europe[k].d) return;
-      const target = document.querySelector(`#${k}`);
-      const d = target.getAttribute('d');
-      const combinedVectors = splitPathString(d);
-      const aSquare = [[0, 0], [100, 0], [100, 100], [0, 100]];
-
-      var interpolator = combine(combinedVectors, aSquare, { single: true });
-
-      requestAnimationFrame(time => draw(time, interpolator, target));
-    });
-
-    function draw(time, interpolator, target) {
-      start = start || time;
-      const progress = time - start,
-        interpolatorProgress = progress / animend;
-
-      target.setAttribute('d', interpolator(interpolatorProgress));
-      if (progress < animend) {
-        requestAnimationFrame(t => draw(t, interpolator, target));
-      }
-    }
-  });
+    start = 0;
+    setTimeout(zoomToCountry, 500);
+    return () => {
+      console.log('did this shit get unmounted???');
+    };
+  }, [params.country]);
 
   function unfocused() {
     return (
@@ -102,6 +82,57 @@ export default function(props) {
     );
   }
 
+  function zoomToCountry() {
+    let start;
+
+    Object.keys(europe).forEach(k => {
+      const target = document.querySelector(`#${k}`);
+      if (!europe[k].d) {
+        target.style = { display: 'none' };
+        return;
+      }
+      if (!target) {
+        console.warn(`no target`);
+        return;
+      }
+      const d = target.getAttribute('d');
+      const combinedVectors = splitPathString(europe[k].d);
+      var interpolator = separate(d, combinedVectors.slice(0, 30), {
+        single: true
+      });
+
+      // target.setAttribute('d', interpolator(0.75));
+
+      requestAnimationFrame(time => draw(time, interpolator, target));
+    });
+  }
+
+  function zoomToTiles() {
+    let start;
+
+    Object.keys(europe).forEach(k => {
+      if (!europe[k].d) return;
+      const target = document.querySelector(`#${k}`);
+      const d = target.getAttribute('d');
+      const combinedVectors = splitPathString(d);
+      const aSquare = [[0, 0], [100, 0], [100, 100], [0, 100]];
+
+      var interpolator = combine(combinedVectors, aSquare, { single: true });
+
+      requestAnimationFrame(time => draw(time, interpolator, target));
+    });
+  }
+
+  function draw(time, interpolator, target) {
+    start = start || time;
+    const progress = time - start,
+      interpolatorProgress = progress / animationTime;
+    target.setAttribute('d', interpolator(interpolatorProgress));
+    if (progress < animationTime) {
+      requestAnimationFrame(t => draw(t, interpolator, target));
+    }
+  }
+
   function focused() {
     return (
       <div className={classNames(styles.focused, styles[`size-${size}`])}>
@@ -116,12 +147,30 @@ export default function(props) {
           xmlns="http://www.w3.org/2000/svg"
         >
           {Object.keys(europe).map(k => {
-            return <path d={europe[k].d} id={k} key={k} />;
+            return tileCoordToSvg(k);
           })}
           {/* <path d={europe.IT.d} id="IT" /> */}
         </svg>
       </div>
     );
+  }
+
+  function tileCoordToSvg(id) {
+    const { tile } = europe[id];
+    if (!tile) return '';
+    const multiplier = 50;
+    const [c1, c2] = tile,
+      x = c2 * multiplier,
+      y = c1 * multiplier,
+      d = toPathString([
+        [x, y],
+        [x + multiplier, y],
+        [x + multiplier, y + multiplier],
+        [x, y + multiplier]
+      ]),
+      fill = isEU(id) ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.2)';
+
+    return <path d={d} id={id} key={id} fill={fill} />;
   }
 
   return focused();

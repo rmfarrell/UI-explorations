@@ -19,11 +19,11 @@ import Link from '../components/Link.jsx';
 // TODO: Use hooks here
 export default function(props) {
   let relationship, modal;
-  const { id = 'europe' } = props,
+  const { country = 'europe' } = props,
     { relationships, articles } = useStoreon('relationships', 'articles');
 
-  relationship = id && relationships[`REL_${id.toUpperCase()}`];
-  if (id.toLowerCase() === 'europe') {
+  relationship = country && relationships[`REL_${country.toUpperCase()}`];
+  if (country.toLowerCase() === 'europe') {
     relationship = relationships['REL_GBR'];
   }
   if (!relationship) return error(new Error(`no relationship found`));
@@ -34,7 +34,7 @@ export default function(props) {
     featuredData = dereferenceArticles(
       // Filter out socials from filter :(
       articles,
-      featured.filter(id => !id.includes('SOC'))
+      featured.filter(country => !country.includes('SOC'))
     ),
     collectionData = dereferenceArticles(articles, collection).reduce(
       reduceArticleCollection,
@@ -83,7 +83,7 @@ export default function(props) {
       <header className={[styles.header, 'constrain'].join(' ')}>
         <CountryDropdown
           className={['big', styles.dropdown].join(' ')}
-          initialValue={id}
+          initialValue={country}
           onChange={onDropDownSelect}
         />
       </header>
@@ -138,7 +138,7 @@ export default function(props) {
           </Empty>
         );
       case 'Map':
-        return <Map focus={id} indexUrl="/relationship" />;
+        return <Map indexUrl="/relationship" />;
       case 'Featured':
         return single(data);
       default:

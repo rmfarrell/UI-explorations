@@ -27,6 +27,7 @@ export default function(props) {
 
   return (
     <React.Fragment>
+      {props.children}
       <Route path="/deep-dives/:id" component={DeepDive} />
       <Route path={`${match.path}`} exact component={DeepDiveCollection} />
       <Route
@@ -53,13 +54,13 @@ export default function(props) {
         </header>
         <div className={['grid', styles.headerRow].join(' ')}>
           <div className="grid--item__third">
-            <Map
+            {/* <Map
               linkPrefix="/deep-dives/country/"
               indexUrl="/deep-dives"
               size={0}
               focus={country}
               renderTile={country ? null : renderTile}
-            />
+            /> */}
           </div>
           <div className="grid--item__two-thirds">
             <Empty className="emptyTile" style={{ background: 'white' }}>
