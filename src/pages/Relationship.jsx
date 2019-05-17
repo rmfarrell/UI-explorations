@@ -42,10 +42,10 @@ export default function(props) {
     );
   const tiles = [
       // Map
-      {
-        cat: 'Map',
-        width: 1
-      },
+      // {
+      //   cat: 'Map',
+      //   width: 1
+      // },
       // Custom article
       Object.assign(relationship_status, {
         cat: 'Relationship Status',
