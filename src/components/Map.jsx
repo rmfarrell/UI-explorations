@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import data from '../lib/map';
 import styles from '../styles/Map.module.css';
 import { TweenRex } from '@tweenrex/core';
 // import { interpolate } from 'polymorph-js';
+import { Transition } from 'react-transition-group';
 import { NavLink, Link } from 'react-router-dom';
 import { COUNTRIES } from '../lib/constants';
 import { isEU, classNames } from '../lib/helpers';
@@ -19,76 +20,35 @@ import {
 import MapTile from './MapTile.jsx';
 import europe from '../lib/europe_map';
 
-const animationTime = 2000;
-let start;
-
 export default function(props) {
+  let start;
   const {
       focus,
       linkPrefix = '/relationship/',
       size = 1,
       renderTile,
+      mapFills,
+      tileClickHandler = () => {},
       indexUrl = '',
-      params = {}
+      match
     } = props,
-    containerStyles = [styles.container, isFocused ? styles.focused : ''].join(
-      ' '
-    ),
-    isFocused = !focus || focus.toLowerCase() === 'europe';
+    svg = useRef(null),
+    animationTime = 900;
 
+  const country = match && match.params.country;
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
 
-  useEffect(() => {
+  function zoomToCountry(animate = false) {
     if (!window) return;
-    start = 0;
-    setTimeout(zoomToCountry, 500);
-    return () => {
-      console.log('did this shit get unmounted???');
-    };
-  }, [params.country]);
-
-  function unfocused() {
-    return (
-      <div className={containerStyles}>
-        <div
-          className={styles.map}
-          style={
-            focus && {
-              transform: `translate(${getFocus()}) scale(5)`,
-              transformOrigin: '0 0'
-            }
-          }
-        >
-          {data.map(tiles => {
-            return tiles.map((tile, idx) => {
-              return renderTile && tile && isEU(tile.country) ? (
-                renderTile.call(this, tile.country)
-              ) : (
-                <MapTile
-                  key={idx}
-                  isLand={tile}
-                  weight={tile && tile.weight}
-                  link={`${linkPrefix}${tile && tile.country}`}
-                >
-                  <span>{tile && tile.country}</span>
-                </MapTile>
-              );
-            });
-          })}
-        </div>
-      </div>
-    );
-  }
-
-  function zoomToCountry() {
+    console.log('test');
     let start;
 
     Object.keys(europe).forEach(k => {
       const target = document.querySelector(`#${k}`);
       if (!europe[k].d) {
-        target.style = { display: 'none' };
+        // target.style = { display: 'none' };
         return;
       }
       if (!target) {
@@ -100,25 +60,25 @@ export default function(props) {
       var interpolator = separate(d, combinedVectors.slice(0, 30), {
         single: true
       });
-
-      // target.setAttribute('d', interpolator(0.75));
-
-      requestAnimationFrame(time => draw(time, interpolator, target));
+      if (animate) {
+        requestAnimationFrame(time => draw(time, interpolator, target));
+      } else {
+        target.setAttribute('d', interpolator(1));
+      }
     });
   }
 
   function zoomToTiles() {
-    let start;
-
     Object.keys(europe).forEach(k => {
       if (!europe[k].d) return;
       const target = document.querySelector(`#${k}`);
+      if (!target) return;
       const d = target.getAttribute('d');
       const combinedVectors = splitPathString(d);
-      const aSquare = [[0, 0], [100, 0], [100, 100], [0, 100]];
-
-      var interpolator = combine(combinedVectors, aSquare, { single: true });
-
+      const aSquare = dFromTileData(k);
+      const interpolator = combine(combinedVectors.slice(0, 30), aSquare, {
+        single: true
+      });
       requestAnimationFrame(time => draw(time, interpolator, target));
     });
   }
@@ -133,12 +93,28 @@ export default function(props) {
     }
   }
 
-  function focused() {
+  function Svg(props) {
+    const { children, animate = false } = props;
+    useEffect(() => {
+      console.log(country);
+      // start = 0;
+      // // transition animations
+      if (!animate) return;
+      if (country) {
+        zoomToCountry(true);
+      } else {
+        zoomToTiles(true);
+      }
+      // isNew = false;
+      // // svg.current.style.display = 'block';
+      // previousCountry.current = country;
+    }, [country]);
     return (
-      <div className={classNames(styles.focused, styles[`size-${size}`])}>
+      <div className={classNames(styles.root, styles[`size-${size}`])}>
         <svg
+          ref={svg}
           // fill="transparent"
-          height="900"
+          // height="900"
           // stroke="white"
           strokeWidth="1"
           version="1.2"
@@ -146,18 +122,19 @@ export default function(props) {
           width="1000"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {Object.keys(europe).map(k => {
-            return tileCoordToSvg(k);
-          })}
-          {/* <path d={europe.IT.d} id="IT" /> */}
+          {children}
         </svg>
       </div>
     );
   }
 
-  function tileCoordToSvg(id) {
+  function dFromTileData(id) {
+    if (!id) throw new Error(`Expected id as string received ${id}`);
     const { tile } = europe[id];
-    if (!tile) return '';
+    if (!tile) {
+      console.warn(`${id} has no tile data`);
+      return '';
+    }
     const multiplier = 50;
     const [c1, c2] = tile,
       x = c2 * multiplier,
@@ -167,13 +144,94 @@ export default function(props) {
         [x + multiplier, y],
         [x + multiplier, y + multiplier],
         [x, y + multiplier]
-      ]),
-      fill = isEU(id) ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.2)';
-
-    return <path d={d} id={id} key={id} fill={fill} />;
+      ]);
+    return d;
   }
 
-  return focused();
+  function tileCoordToSvg(id) {
+    let fill = '';
+    const { tile } = europe[id];
+    if (!tile) return '';
+
+    if (isEU(id)) {
+      fill = mapFills ? mapFills.call(this, id) : 'rgba(0,0,0,0.8)';
+    } else {
+      fill = 'rgba(0,0,0,0.2)';
+    }
+
+    return (
+      <Tile
+        fill={fill}
+        clickHandler={tileClickHandler.bind(this, id)}
+        d={dFromTileData(id)}
+        id={id}
+        key={id}
+      />
+    );
+  }
+
+  function Geography(props) {
+    const { id = '', fill = '', d = '' } = props;
+    return <path d={d} id={id} fill={fill} />;
+  }
+
+  function Tile(props) {
+    const { id = '', fill = '', clickHandler = () => {}, d = '' } = props;
+    return (
+      <a onClick={clickHandler}>
+        <path d={d} id={id} fill={fill} />;
+      </a>
+    );
+  }
+
+  return (
+    <div
+      className={classNames(
+        styles.root,
+        styles[`size-${size}`],
+        country && styles.focused
+      )}
+    >
+      <Transition in={!!country} timeout={animationTime}>
+        {state => {
+          switch (state) {
+            case 'entered':
+              return zoomedIn(false);
+            case 'entering':
+              return zoomedOut(true);
+            case 'exiting':
+              return zoomedIn(true);
+            case 'exited':
+              return zoomedOut(false);
+            default:
+              return null;
+          }
+        }}
+      </Transition>
+    </div>
+  );
+
+  function zoomedOut(animate = false) {
+    return (
+      <Svg animate={animate}>
+        {Object.keys(europe).map(k => {
+          return tileCoordToSvg(k);
+        })}
+      </Svg>
+    );
+  }
+
+  function zoomedIn(animate = false) {
+    return (
+      <Svg animate={animate}>
+        {Object.keys(europe).map(k => {
+          return (
+            <Geography id={k} fill="rgba(0,0,0,0.75)" d={europe[k].d} key={k} />
+          );
+        })}
+      </Svg>
+    );
+  }
 
   function getFocus() {
     let x, y;
@@ -191,5 +249,32 @@ export default function(props) {
     }
     const out = `-${x * 40}%, -${y * 50}%`;
     return out;
+  }
+
+  function Svg(props) {
+    const { children, animate = false } = props;
+    useEffect(() => {
+      if (!animate) return;
+      if (country) {
+        zoomToCountry(true);
+      } else {
+        zoomToTiles(true);
+      }
+    }, [country, animate]);
+    return (
+      <svg
+        ref={svg}
+        // fill="transparent"
+        // height="900"
+        // stroke="white"
+        strokeWidth="1"
+        version="1.2"
+        viewBox="0 0 1000 900"
+        width="1000"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {children}
+      </svg>
+    );
   }
 }

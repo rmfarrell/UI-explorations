@@ -41,13 +41,17 @@ function AppRouter() {
     <StoreContext.Provider value={store}>
       <Router>
         <Main>
-          <Route
+          {/* <Route
             path={collectionPages}
             render={({ match }) => <Map params={match.params} />}
-          />
+          /> */}
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
-          <Route path="/deep-dives" component={DeepDivesAll} />
+          <Route
+            path={['/deep-dives']}
+            render={({ match }) => <DeepDivesAll match={match} />}
+          />
+          <Route path="/deep-dives/:id" component={DeepDive} />
           <Route path="/relationship" exact render={() => <Relationship />} />
           <Route
             path="/relationship/:country"

@@ -41,11 +41,6 @@
 
 /* Focused state */
 .focused {
-  background: var(--col-text);
-  height: 0;
-  padding-bottom: 100%;
-  position: relative;
-  color: white;
 }
 
 .focused > div {
@@ -71,4 +66,16 @@
 
 .back:hover {
   text-decoration: underline;
+}
+
+.root {
+  background: var(--col-text);
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  color: white;
+}
+
+.root svg {
+  width: 200%;
 }
