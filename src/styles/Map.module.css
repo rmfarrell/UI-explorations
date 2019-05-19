@@ -78,8 +78,9 @@
 }
 
 .root svg {
-  width: 100%;
+  width: 99%;
   position: absolute;
+  left: 1%;
   top: 50%;
   transition: transform 1s;
 }

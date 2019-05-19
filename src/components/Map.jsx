@@ -97,10 +97,11 @@ export default function(props) {
       console.warn(`${id} has no tile data`);
       return '';
     }
-    const multiplier = 100;
+    const gap = 10;
+    const multiplier = 90;
     const [c1, c2] = tile,
-      x = c2 * multiplier,
-      y = c1 * multiplier,
+      x = c2 * multiplier + 10 * c2,
+      y = c1 * multiplier + 10 * c1,
       d = toPathString([
         [x, y],
         [x + multiplier, y],
