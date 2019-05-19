@@ -135,7 +135,7 @@ export default function(props) {
       console.warn(`${id} has no tile data`);
       return '';
     }
-    const multiplier = 50;
+    const multiplier = 100;
     const [c1, c2] = tile,
       x = c2 * multiplier,
       y = c1 * multiplier,
@@ -270,7 +270,6 @@ export default function(props) {
         strokeWidth="1"
         version="1.2"
         viewBox="0 0 1000 900"
-        width="1000"
         xmlns="http://www.w3.org/2000/svg"
       >
         {children}

@@ -4,7 +4,7 @@ import styles from '../styles/DeepDive.module.css';
 
 // -- Libs
 import { COUNTRIES } from '../lib/constants';
-import { articleCountByCountry } from '../lib/helpers';
+import { articleCountByCountry, classNames } from '../lib/helpers';
 
 // -- Modules
 import Map from '../components/Map.jsx';
@@ -49,9 +49,11 @@ export default withRouter(function(props) {
         <Route
           path={`${match.url}/country/:country`}
           children={({ match }) => (
-            <Empty className="emptyTile" style={{ background: 'white' }}>
-              <h4 className="placeholderEmpty">Description</h4>
-            </Empty>
+            <div className="grid--item__two-thirds">
+              <Empty style={{ background: 'white' }}>
+                <h4 className="placeholderEmpty">Description</h4>
+              </Empty>
+            </div>
           )}
         />
       </div>
