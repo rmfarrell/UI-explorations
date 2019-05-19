@@ -74,11 +74,22 @@
   padding-bottom: 100%;
   position: relative;
   color: white;
+  overflow: hidden;
 }
 
 .root svg {
   width: 100%;
   position: absolute;
   top: 50%;
+  transition: transform 1s;
+}
+
+.entering,
+.entered {
+  transform: translateY(-50%) scale(3.5);
+}
+
+.exiting,
+.exited {
   transform: translateY(-50%);
 }

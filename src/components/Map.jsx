@@ -32,7 +32,6 @@ export default function(props) {
       indexUrl = '',
       match
     } = props,
-    svg = useRef(null),
     animationTime = 900;
 
   const country = match && match.params.country;
@@ -40,13 +39,11 @@ export default function(props) {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
 
-  function zoomToCountry(animate = false) {
+  function zoomToCountry(animate = false, svg) {
     if (!window) return;
-    console.log('test');
-    let start;
 
     Object.keys(europe).forEach(k => {
-      const target = document.querySelector(`#${k}`);
+      const target = svg.querySelector(`#${k}`);
       if (!europe[k].d) {
         // target.style = { display: 'none' };
         return;
@@ -68,10 +65,10 @@ export default function(props) {
     });
   }
 
-  function zoomToTiles() {
+  function zoomToTiles(svg) {
     Object.keys(europe).forEach(k => {
       if (!europe[k].d) return;
-      const target = document.querySelector(`#${k}`);
+      const target = svg.querySelector(`#${k}`);
       if (!target) return;
       const d = target.getAttribute('d');
       const combinedVectors = splitPathString(d);
@@ -91,41 +88,6 @@ export default function(props) {
     if (progress < animationTime) {
       requestAnimationFrame(t => draw(t, interpolator, target));
     }
-  }
-
-  function Svg(props) {
-    const { children, animate = false } = props;
-    useEffect(() => {
-      console.log(country);
-      // start = 0;
-      // // transition animations
-      if (!animate) return;
-      if (country) {
-        zoomToCountry(true);
-      } else {
-        zoomToTiles(true);
-      }
-      // isNew = false;
-      // // svg.current.style.display = 'block';
-      // previousCountry.current = country;
-    }, [country]);
-    return (
-      <div className={classNames(styles.root, styles[`size-${size}`])}>
-        <svg
-          ref={svg}
-          // fill="transparent"
-          // height="900"
-          // stroke="white"
-          strokeWidth="1"
-          version="1.2"
-          viewBox="0 0 1000 900"
-          width="1000"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {children}
-        </svg>
-      </div>
-    );
   }
 
   function dFromTileData(id) {
@@ -152,8 +114,9 @@ export default function(props) {
     let fill = '';
     const { tile } = europe[id];
     if (!tile) return '';
+    const _isEu = isEU(id);
 
-    if (isEU(id)) {
+    if (_isEu) {
       fill = mapFills ? mapFills.call(this, id) : 'rgba(0,0,0,0.8)';
     } else {
       fill = 'rgba(0,0,0,0.2)';
@@ -162,7 +125,7 @@ export default function(props) {
     return (
       <Tile
         fill={fill}
-        clickHandler={tileClickHandler.bind(this, id)}
+        clickHandler={_isEu ? tileClickHandler.bind(this, id) : () => {}}
         d={dFromTileData(id)}
         id={id}
         key={id}
@@ -196,13 +159,13 @@ export default function(props) {
         {state => {
           switch (state) {
             case 'entered':
-              return zoomedIn(false);
+              return zoomedIn(false, state);
             case 'entering':
-              return zoomedOut(true);
+              return zoomedOut(true, state);
             case 'exiting':
-              return zoomedIn(true);
+              return zoomedIn(true, state);
             case 'exited':
-              return zoomedOut(false);
+              return zoomedOut(false, state);
             default:
               return null;
           }
@@ -211,9 +174,9 @@ export default function(props) {
     </div>
   );
 
-  function zoomedOut(animate = false) {
+  function zoomedOut(animate = false, state = '') {
     return (
-      <Svg animate={animate}>
+      <Svg animate={animate} state={state}>
         {Object.keys(europe).map(k => {
           return tileCoordToSvg(k);
         })}
@@ -221,13 +184,13 @@ export default function(props) {
     );
   }
 
-  function zoomedIn(animate = false) {
+  function zoomedIn(animate = false, state = '') {
+    // TODO: for now always zoom in on italy
     return (
-      <Svg animate={animate}>
+      <Svg animate={animate} state={state}>
         {Object.keys(europe).map(k => {
-          return (
-            <Geography id={k} fill="rgba(0,0,0,0.75)" d={europe[k].d} key={k} />
-          );
+          const fill = k === 'ITA' ? 'white' : 'rgba(0,0,0,0.75)';
+          return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
         })}
       </Svg>
     );
@@ -252,22 +215,38 @@ export default function(props) {
   }
 
   function Svg(props) {
-    const { children, animate = false } = props;
+    const { children, animate = false, state } = props;
     useEffect(() => {
       if (!animate) return;
       if (country) {
-        zoomToCountry(true);
+        zoomToCountry(true, svg.current);
       } else {
-        zoomToTiles(true);
+        zoomToTiles(svg.current);
       }
     }, [country, animate]);
+
+    const svg = useRef(null);
+    // For now, it always zooms on italy
+    const { scale, translate } = europe['ITA'].zoom;
+    const style = ['entering', 'entered'].includes(state)
+      ? {
+          transform: `translate(${translate
+            .map(val => `${val}%`)
+            .join(', ')}) scale(${scale})`
+        }
+      : {};
+    const strokeWidth = country ? 0.5 : 0;
+
     return (
       <svg
+        className={styles[state]}
         ref={svg}
+        style={style}
         // fill="transparent"
         // height="900"
-        // stroke="white"
-        strokeWidth="1"
+        stroke="rgba(255,255,255,0.2)"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
         version="1.2"
         viewBox="0 0 1000 900"
         xmlns="http://www.w3.org/2000/svg"
