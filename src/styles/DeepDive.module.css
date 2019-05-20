@@ -23,3 +23,13 @@
 .mapContainer {
   flex: 1 0 38em;
 }
+
+.zoomOutButton {
+  position: absolute;
+  right: 0;
+  color: white;
+  z-index: 10;
+  border: 1px solid white;
+  padding: 0.25em;
+  margin: 0.5em;
+}

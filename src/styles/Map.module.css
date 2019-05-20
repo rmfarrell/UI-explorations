@@ -87,7 +87,7 @@
 
 .entering,
 .entered {
-  transition: transform 1s 0.5s ease-in;
+  transition: transform 0.7s 0.5s ease-in;
   transform: translateY(-50%) scale(3.5);
 }
 

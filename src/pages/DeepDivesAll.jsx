@@ -38,11 +38,6 @@ export default withRouter(function(props) {
           path={`${match.url}/country/:country`}
           children={({ match }) => (
             <div className="grid--item__third">
-              {match && (
-                <Link to={'/deep-dives'} className={styles.zoomOutButton}>
-                  All
-                </Link>
-              )}
               <Map
                 match={match}
                 mapFills={id => {
@@ -54,7 +49,13 @@ export default withRouter(function(props) {
                   articleCounts[id] && history.push(`/deep-dives/country/${id}`)
                 }
                 label={id => id}
-              />
+              >
+                {match && (
+                  <Link to={'/deep-dives'} className={styles.zoomOutButton}>
+                    <i className={classNames('material-icons')}>zoom_out_map</i>
+                  </Link>
+                )}
+              </Map>
             </div>
           )}
         />

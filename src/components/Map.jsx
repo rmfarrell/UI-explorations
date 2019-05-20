@@ -30,14 +30,13 @@ export default function(props) {
   let start;
   const {
       focus,
-      linkPrefix = '/relationship/',
       size = 1,
       renderTile,
       mapFills,
       tileClickHandler = () => {},
-      indexUrl = '',
       match,
-      label
+      label,
+      children
     } = props,
     animationTime = 900;
 
@@ -174,6 +173,7 @@ export default function(props) {
         country && styles.focused
       )}
     >
+      {children}
       <Transition in={!!country} timeout={animationTime}>
         {state => {
           switch (state) {
