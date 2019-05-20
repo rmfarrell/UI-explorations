@@ -30,7 +30,8 @@ export default function(props) {
       mapFills,
       tileClickHandler = () => {},
       indexUrl = '',
-      match
+      match,
+      label
     } = props,
     animationTime = 900;
 
@@ -39,10 +40,10 @@ export default function(props) {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
 
-  function zoomToCountry(animate = false, svg) {
+  function zoomToCountry(svg) {
     if (!window) return;
 
-    Object.keys(europe).forEach(k => {
+    Object.keys(europe).forEach((k, i) => {
       const target = svg.querySelector(`#${k}`);
       if (!europe[k].d) {
         // target.style = { display: 'none' };
@@ -57,11 +58,7 @@ export default function(props) {
       var interpolator = separate(d, combinedVectors.slice(0, 30), {
         single: true
       });
-      if (animate) {
-        requestAnimationFrame(time => draw(time, interpolator, target));
-      } else {
-        target.setAttribute('d', interpolator(1));
-      }
+      requestAnimationFrame(time => draw(time, interpolator, target));
     });
   }
 
@@ -130,6 +127,7 @@ export default function(props) {
         d={dFromTileData(id)}
         id={id}
         key={id}
+        tile={tile}
       />
     );
   }
@@ -140,10 +138,24 @@ export default function(props) {
   }
 
   function Tile(props) {
-    const { id = '', fill = '', clickHandler = () => {}, d = '' } = props;
+    const { id = '', fill = '', clickHandler = () => {}, d = '', tile } = props;
+    const [y, x] = tile;
     return (
+      // TODO: use xhref for accessibility
       <a onClick={clickHandler}>
-        <path d={d} id={id} fill={fill} />;
+        <g>
+          <path d={d} id={id} fill={fill} />;
+          {country || (
+            <text
+              x={`${x * 10 + 0.5}%`}
+              y={y * 100 + 55}
+              fontSize="28"
+              fill="white"
+            >
+              {label ? label(id) : id}
+            </text>
+          )}
+        </g>
       </a>
     );
   }
@@ -190,7 +202,7 @@ export default function(props) {
     return (
       <Svg animate={animate} state={state}>
         {Object.keys(europe).map(k => {
-          const fill = k === 'ITA' ? 'white' : 'rgba(0,0,0,0.75)';
+          const fill = k === 'ITA' ? 'white' : 'rgba(10,10,0,0.35)';
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
         })}
       </Svg>
@@ -220,7 +232,7 @@ export default function(props) {
     useEffect(() => {
       if (!animate) return;
       if (country) {
-        zoomToCountry(true, svg.current);
+        zoomToCountry(svg.current);
       } else {
         zoomToTiles(svg.current);
       }

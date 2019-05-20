@@ -23,7 +23,11 @@ export default withRouter(function(props) {
       .map(deepdiveId => {
         return Object.assign(articles[deepdiveId], { id: deepdiveId });
       }),
-    articleCounts = deepdives.reduce(articleCountByCountry, {});
+    articleCounts = deepdives.reduce(articleCountByCountry, {}),
+    articleCountsMax = Object.values(articleCounts).reduce((item, acc) =>
+      item > acc ? item : acc
+    );
+  console.log(articleCountsMax);
 
   return (
     <React.Fragment>
@@ -38,10 +42,16 @@ export default withRouter(function(props) {
               {match && <Link to={'/deep-dives'}>All</Link>}
               <Map
                 match={match}
-                mapFills={id => 'red'}
+                mapFills={id => {
+                  const count = articleCounts[id] || 0;
+                  const red = 100 * (count / articleCountsMax);
+                  console.log(red);
+                  return `rgb(${red + 100},0,0)`;
+                }}
                 tileClickHandler={id =>
-                  history.push(`/deep-dives/country/${id}`)
+                  articleCounts[id] && history.push(`/deep-dives/country/${id}`)
                 }
+                label={id => id}
               />
             </div>
           )}
