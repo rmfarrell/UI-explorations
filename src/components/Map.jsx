@@ -117,7 +117,7 @@ export default function(props) {
     if (_isEu) {
       fill = mapFills ? mapFills.call(this, id) : 'rgba(0,0,0,0.8)';
     } else {
-      fill = 'rgba(0,0,0,0.2)';
+      fill = 'rgba(0,0,0,0.5)';
     }
 
     return (
@@ -202,7 +202,7 @@ export default function(props) {
     return (
       <Svg animate={animate} state={state}>
         {Object.keys(europe).map(k => {
-          const fill = k === 'ITA' ? 'white' : 'rgba(10,10,0,0.35)';
+          const fill = k === 'ITA' ? 'white' : 'rgba(10,10,0,0.75)';
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
         })}
       </Svg>

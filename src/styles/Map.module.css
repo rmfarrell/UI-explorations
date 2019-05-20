@@ -69,7 +69,8 @@
 }
 
 .root {
-  background: var(--col-text);
+  background: var(--col-blue);
+  box-shadow: inset 0 0 12em rgba(0, 0, 0, 0.25);
   height: 0;
   padding-bottom: 100%;
   position: relative;
@@ -82,15 +83,16 @@
   position: absolute;
   left: 1.5%;
   top: 50%;
-  transition: transform 1s;
 }
 
 .entering,
 .entered {
+  transition: transform 1s 0.5s ease-in;
   transform: translateY(-50%) scale(3.5);
 }
 
 .exiting,
 .exited {
   transform: translateY(-50%);
+  transition: transform 0.7s;
 }

@@ -27,7 +27,6 @@ export default withRouter(function(props) {
     articleCountsMax = Object.values(articleCounts).reduce((item, acc) =>
       item > acc ? item : acc
     );
-  console.log(articleCountsMax);
 
   return (
     <React.Fragment>
@@ -39,14 +38,18 @@ export default withRouter(function(props) {
           path={`${match.url}/country/:country`}
           children={({ match }) => (
             <div className="grid--item__third">
-              {match && <Link to={'/deep-dives'}>All</Link>}
+              {match && (
+                <Link to={'/deep-dives'} className={styles.zoomOutButton}>
+                  All
+                </Link>
+              )}
               <Map
                 match={match}
                 mapFills={id => {
                   const count = articleCounts[id] || 0;
                   const red = 100 * (count / articleCountsMax);
-                  console.log(red);
-                  return `rgb(${red + 100},0,0)`;
+                  console.log(id, red);
+                  return `rgb(${red + 50},50,50)`;
                 }}
                 tileClickHandler={id =>
                   articleCounts[id] && history.push(`/deep-dives/country/${id}`)
