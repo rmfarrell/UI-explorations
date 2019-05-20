@@ -47,9 +47,8 @@ export default withRouter(function(props) {
                 match={match}
                 mapFills={id => {
                   const count = articleCounts[id] || 0;
-                  const red = 100 * (count / articleCountsMax);
-                  console.log(id, red);
-                  return `rgb(${red + 50},50,50)`;
+                  const saturation = 100 * (count / articleCountsMax);
+                  return `hsl(346, ${saturation}%, 50%)`;
                 }}
                 tileClickHandler={id =>
                   articleCounts[id] && history.push(`/deep-dives/country/${id}`)

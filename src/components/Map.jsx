@@ -20,6 +20,12 @@ import {
 import MapTile from './MapTile.jsx';
 import europe from '../lib/europe_map';
 
+// Color options
+const geographyFill = 'rgba(20,10,0,0.5)',
+  geographyActiveFill = '#ff003b',
+  geographyStroke = 'rgba(255,255,255,0.2)',
+  tileFill = 'rgba(0,0,0,0.25)';
+
 export default function(props) {
   let start;
   const {
@@ -117,7 +123,7 @@ export default function(props) {
     if (_isEu) {
       fill = mapFills ? mapFills.call(this, id) : 'rgba(0,0,0,0.8)';
     } else {
-      fill = 'rgba(0,0,0,0.5)';
+      fill = tileFill;
     }
 
     return (
@@ -202,7 +208,7 @@ export default function(props) {
     return (
       <Svg animate={animate} state={state}>
         {Object.keys(europe).map(k => {
-          const fill = k === 'ITA' ? 'white' : 'rgba(10,10,0,0.75)';
+          const fill = k === 'ITA' ? geographyActiveFill : geographyFill;
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
         })}
       </Svg>
@@ -257,7 +263,7 @@ export default function(props) {
         style={style}
         // fill="transparent"
         // height="900"
-        stroke="rgba(255,255,255,0.2)"
+        stroke={geographyStroke}
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         version="1.2"
