@@ -8,12 +8,9 @@ import { articleCountByCountry, classNames } from '../lib/helpers';
 
 // -- Modules
 import Map from '../components/Map.jsx';
-import Description from '../components/Description.jsx';
 import Collection from '../components/Collection.jsx';
-import MapTile from '../components/MapTile.jsx';
-import DeepDive from './DeepDive.jsx';
 import Empty from '../components/Empty.jsx';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 export default withRouter(function(props) {
   const { match, history } = props,
@@ -68,21 +65,6 @@ export default withRouter(function(props) {
       />
     </article>
   );
-  function DeepDiveCollection(props) {
-    const { country = '' } = props;
-    const heading = country
-      ? `Deep Dives: ${COUNTRIES[country]}`
-      : 'All Deep Dives';
-    return (
-      <div>
-        <Collection
-          articles={deepdives.filter(filterByCountry.bind(this, country))}
-          showType={false}
-          className={styles.collection}
-        />
-      </div>
-    );
-  }
 });
 
 function filterByCountry(countryId, { meta: { countries = [] } }) {
