@@ -39,10 +39,10 @@ export default React.memo(function(props) {
     );
   const tiles = [
       // Map
-      // {
-      //   cat: 'Map',
-      //   width: 1
-      // },
+      {
+        cat: 'Map',
+        width: 1
+      },
       // Custom article
       Object.assign(custom_article, {
         cat: 'Custom Article',

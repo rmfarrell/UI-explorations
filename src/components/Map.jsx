@@ -34,13 +34,12 @@ export default function(props) {
       renderTile,
       mapFills,
       tileClickHandler = () => {},
-      match,
+      country = '',
       label,
       children
     } = props,
     animationTime = 900;
 
-  const country = match && match.params.country;
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
   }

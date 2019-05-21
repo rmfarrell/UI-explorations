@@ -27,101 +27,60 @@ export default withRouter(function(props) {
     articleCountsMax = Object.values(articleCounts).reduce((item, acc) =>
       item > acc ? item : acc
     );
+  const country = match.params.country;
 
   return (
-    <React.Fragment>
+    <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
-        <h1>Figure out how the heading goes here</h1>
+        <h1>Deep Dives {country && `: ${COUNTRIES[match.params.country]}`}</h1>
       </header>
       <div className="grid">
-        <Route
-          path={`${match.url}/country/:country`}
-          children={({ match }) => (
-            <div className="grid--item__third">
-              <Map
-                match={match}
-                mapFills={id => {
-                  const count = articleCounts[id] || 0;
-                  const saturation = 100 * (count / articleCountsMax);
-                  return `hsl(346, ${saturation}%, 50%)`;
-                }}
-                tileClickHandler={id =>
-                  articleCounts[id] && history.push(`/deep-dives/country/${id}`)
-                }
-                label={id => id}
-              >
-                {match && (
-                  <Link to={'/deep-dives'} className={styles.zoomOutButton}>
-                    <i className={classNames('material-icons')}>zoom_out_map</i>
-                  </Link>
-                )}
-              </Map>
-            </div>
-          )}
-        />
-        <Route
-          path={`${match.url}/country/:country`}
-          children={({ match }) => (
-            <div className="grid--item__two-thirds">
-              <Empty style={{ background: 'white' }}>
-                <h4 className="placeholderEmpty">Description</h4>
-              </Empty>
-            </div>
-          )}
-        />
+        <div className="grid--item__third">
+          <Map
+            country={country}
+            mapFills={id => {
+              const count = articleCounts[id] || 0;
+              const saturation = 100 * (count / articleCountsMax);
+              return `hsl(346, ${saturation}%, 50%)`;
+            }}
+            tileClickHandler={id =>
+              articleCounts[id] && history.push(`/deep-dives/country/${id}`)
+            }
+            label={id => id}
+          >
+            {country && (
+              <Link to={'/deep-dives'} className={styles.zoomOutButton}>
+                <i className={classNames('material-icons')}>zoom_out_map</i>
+              </Link>
+            )}
+          </Map>
+        </div>
+        <div className="grid--item__two-thirds">
+          <Empty style={{ background: 'white' }}>
+            <h4 className="placeholderEmpty">Description</h4>
+          </Empty>
+        </div>
       </div>
-      <Route
-        path={`${match.url}/country/:country`}
-        exact
-        component={DeepDiveCollection}
+      <Collection
+        articles={deepdives.filter(filterByCountry.bind(this, country))}
+        showType={false}
+        className={styles.collection}
       />
-      <Route path={`${match.url}`} exact component={DeepDiveCollection} />
-    </React.Fragment>
+    </article>
   );
   function DeepDiveCollection(props) {
-    const {
-      match: {
-        params: { country }
-      }
-    } = props;
+    const { country = '' } = props;
     const heading = country
       ? `Deep Dives: ${COUNTRIES[country]}`
       : 'All Deep Dives';
     return (
-      <article>
-        <div className={['grid', styles.headerRow].join(' ')}>
-          <div className="grid--item__third">
-            {/* <Map
-              linkPrefix="/deep-dives/country/"
-              indexUrl="/deep-dives"
-              size={0}
-              focus={country}
-              renderTile={country ? null : renderTile}
-            /> */}
-          </div>
-        </div>
+      <div>
         <Collection
           articles={deepdives.filter(filterByCountry.bind(this, country))}
           showType={false}
           className={styles.collection}
         />
-      </article>
-    );
-  }
-
-  function renderTile(countryCode) {
-    const count = articleCounts[countryCode];
-    return (
-      <MapTile
-        weight={count * 2}
-        link={`/deep-dives/country/${countryCode}`}
-        key={countryCode}
-        isLand
-      >
-        <span>
-          {countryCode} ({count})
-        </span>
-      </MapTile>
+      </div>
     );
   }
 });
