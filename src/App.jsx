@@ -43,7 +43,6 @@ function AppRouter() {
         <Main>
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
-          {/* <Route path="/deep-dives/:id" exact component={DeepDive} /> */}
           <Route
             path={'/deep-dives'}
             render={({ match }) => {
@@ -53,16 +52,24 @@ function AppRouter() {
                   <Route
                     path={['/deep-dives', '/deep-dives/country/:country']}
                     exact
-                    render={({ match }) => <DeepDivesAll match={match} />}
+                    render={({ match, history }) => (
+                      <DeepDivesAll history={history} match={match} />
+                    )}
                   />
                 </React.Fragment>
               );
             }}
           />
-          <Route path="/relationship" exact render={() => <Relationship />} />
           <Route
-            path="/relationship/:country"
-            render={({ match }) => <Relationship id={match.params.country} />}
+            path={['/relationship', '/relationship/:country']}
+            exact
+            render={({ match, history }) => (
+              <Relationship
+                match={match}
+                history={history}
+                country={match && match.params.country}
+              />
+            )}
           />
           <Route
             path="/help"

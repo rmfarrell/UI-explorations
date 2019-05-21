@@ -14,16 +14,17 @@ import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import List from '../components/List.jsx';
 import ArticleModal from '../components/ArticleModal.jsx';
-import Link from '../components/Link.jsx';
+import { Link } from 'react-router-dom';
 
 // TODO: Use hooks here
 export default function(props) {
   let relationship, modal;
-  const { country = 'europe' } = props,
+  const { country = '', history = {}, match } = props,
     { relationships, articles } = useStoreon('relationships', 'articles');
 
   relationship = country && relationships[`REL_${country.toUpperCase()}`];
-  if (country.toLowerCase() === 'europe') {
+  // TODO: temporary hack
+  if (!country) {
     relationship = relationships['REL_GBR'];
   }
   if (!relationship) return error(new Error(`no relationship found`));
@@ -72,12 +73,37 @@ export default function(props) {
       .map(addWidths),
     rows = makeGrid(tiles);
 
-  useEffect(() => {
-    return () => {
-      console.log('relationship got unmounted');
-    };
-  });
-
+  return (
+    <article>
+      <header className={[styles.header, 'constrain'].join(' ')}>
+        <CountryDropdown
+          className="big"
+          initialValue={country || 'Europe'}
+          onChange={onDropDownSelect}
+        />
+      </header>
+      <div className={classNames('grid', 'constrain')}>
+        <div className="grid--item__third">
+          <Map
+            country={country}
+            // mapFills={id => {
+            //   // const count = articleCounts[id] || 0;
+            //   // const saturation = 100 * (count / articleCountsMax);
+            //   // return `hsl(346, ${saturation}%, 50%)`;
+            // }}
+            tileClickHandler={id => history.push(`/relationship/${id}`)}
+          >
+            {country && (
+              <Link to={'/relationship'} className={styles.zoomOutButton}>
+                <i className="material-icons">zoom_out_map</i>
+              </Link>
+            )}
+          </Map>
+        </div>
+      </div>
+    </article>
+  );
+  /*
   return (
     <article>
       <header className={[styles.header, 'constrain'].join(' ')}>
@@ -117,6 +143,7 @@ export default function(props) {
       <ArticleModal />
     </article>
   );
+  */
 
   function onDropDownSelect({ value }) {
     props.history.replace(`/relationship/${value}`);

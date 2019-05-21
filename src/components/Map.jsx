@@ -20,26 +20,23 @@ import {
 import MapTile from './MapTile.jsx';
 import europe from '../lib/europe_map';
 
-// Color options
-const geographyFill = 'rgba(20,10,0,0.5)',
-  geographyActiveFill = '#ff003b',
-  geographyStroke = 'rgba(255,255,255,0.2)',
-  tileFill = 'rgba(0,0,0,0.25)',
-  euTileFill = '#ff003b';
-
 export default function(props) {
   let start;
   const {
-      focus,
-      size = 1,
-      renderTile,
-      mapFills,
-      tileClickHandler = () => {},
-      country = '',
-      label,
-      children
-    } = props,
-    animationTime = 900;
+    size = 1,
+    renderTile,
+    mapFills,
+    tileClickHandler = () => {},
+    country = '',
+    label,
+    children,
+    geographyFill = 'rgba(20,10,0,0.5)',
+    geographyActiveFill = '#ff003b',
+    geographyStroke = 'rgba(255,255,255,0.2)',
+    tileFill = 'rgba(0,0,0,0.25)',
+    euTileFill = '#ff003b',
+    animationTime = 900
+  } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
@@ -195,7 +192,7 @@ export default function(props) {
 
   function zoomedOut(animate = false, state = '') {
     return (
-      <Svg animate={animate} state={state}>
+      <Svg state={state}>
         {Object.keys(europe).map(k => {
           return tileCoordToSvg(k);
         })}
@@ -206,7 +203,7 @@ export default function(props) {
   function zoomedIn(animate = false, state = '') {
     // TODO: for now always zoom in on italy
     return (
-      <Svg animate={animate} state={state}>
+      <Svg state={state}>
         {Object.keys(europe).map(k => {
           const fill = k === 'ITA' ? geographyActiveFill : geographyFill;
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
@@ -215,54 +212,33 @@ export default function(props) {
     );
   }
 
-  function getFocus() {
-    let x, y;
-    for (let i = 0; i < data.length; i++) {
-      const containsCountry = data[i].some(col => {
-        return col && col.country === focus;
-      });
-      if (containsCountry) {
-        y = i;
-        x = data[i].findIndex(tile => {
-          return tile && tile.country === focus;
-        });
-        break;
-      }
-    }
-    const out = `-${x * 40}%, -${y * 50}%`;
-    return out;
-  }
-
   function Svg(props) {
-    const { children, animate = false, state } = props;
-    useEffect(() => {
-      if (!animate) return;
-      if (country) {
-        zoomToCountry(svg.current);
-      } else {
-        zoomToTiles(svg.current);
-      }
-    }, [country, animate]);
-
-    const svg = useRef(null);
+    const { children, state = '' } = props;
     // For now, it always zooms on italy
     const { scale, translate } = europe['ITA'].zoom;
-    const style = ['entering', 'entered'].includes(state)
-      ? {
-          transform: `translate(${translate
-            .map(val => `${val}%`)
-            .join(', ')}) scale(${scale})`
-        }
-      : {};
+    const svg = useRef(null);
     const strokeWidth = country ? 0.5 : 0;
+    const zoomedInTransform = `translate(${translate
+      .map(val => `${val}%`)
+      .join(', ')}) scale(${scale})`;
+    const transform = zoomedInTransform;
+
+    useEffect(() => {
+      if (state === 'entering') {
+        zoomToCountry(svg.current);
+        svg.current.style.transform = zoomedInTransform;
+      }
+      if (state === 'exiting') {
+        zoomToTiles(svg.current);
+        svg.current.style.transform = '';
+      }
+    }, [state]);
 
     return (
       <svg
         className={styles[state]}
         ref={svg}
-        style={style}
-        // fill="transparent"
-        // height="900"
+        style={['exiting', 'entered'].includes(state) ? { transform } : {}}
         stroke={geographyStroke}
         strokeWidth={strokeWidth}
         strokeLinecap="round"

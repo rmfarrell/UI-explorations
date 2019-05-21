@@ -10,9 +10,9 @@ import { articleCountByCountry, classNames } from '../lib/helpers';
 import Map from '../components/Map.jsx';
 import Collection from '../components/Collection.jsx';
 import Empty from '../components/Empty.jsx';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default withRouter(function(props) {
+export default function(props) {
   const { match, history } = props,
     { articles } = useStoreon('articles'),
     deepdives = Object.keys(articles)
@@ -65,7 +65,7 @@ export default withRouter(function(props) {
       />
     </article>
   );
-});
+}
 
 function filterByCountry(countryId, { meta: { countries = [] } }) {
   if (!countryId) {

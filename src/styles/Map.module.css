@@ -83,16 +83,16 @@
   position: absolute;
   left: 1.5%;
   top: 50%;
+  transform: translateY(-50%);
 }
 
 .entering,
 .entered {
-  transition: transform 0.7s 0.5s ease-in;
-  transform: translateY(-50%) scale(3.5);
+  transition: transform 0.7s 0.2s ease-in;
 }
 
 .exiting,
 .exited {
   transform: translateY(-50%);
-  transition: transform 0.7s;
+  transition: transform 0.7s 0.2s ease-out;
 }
