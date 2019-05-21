@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useStoreon from 'storeon/react';
-import styles from '../styles/DeepDive.module.css';
+import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
 import { Grid, Row } from '../lib/grid';
@@ -41,8 +41,8 @@ export default React.memo(function(props) {
     [firstFeatured] = featuredData.splice(0, 1);
 
   return (
-    <article>
-      <header className={[styles.header, 'constrain'].join(' ')}>
+    <article className={styles.root}>
+      <header className="constrain">
         <h2>
           <Link to="/deep-dives">&lt; Deep Dives</Link>
         </h2>
@@ -50,7 +50,9 @@ export default React.memo(function(props) {
       </header>
       <div className={classNames('grid', 'constrain')}>
         <div className="grid--item__third">
-          <Map tileClickHandler={id => history.push(`/deep-dives/${id}`)} />
+          <Map
+            tileClickHandler={id => history.push(`/deep-dives/country/${id}`)}
+          />
         </div>
         <div
           className={

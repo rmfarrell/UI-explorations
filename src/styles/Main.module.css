@@ -20,6 +20,7 @@
 /* Footer menu */
 
 .root footer {
+  margin-top: 6em;
   background: var(--col-text);
   color: var(--col-grey);
 }

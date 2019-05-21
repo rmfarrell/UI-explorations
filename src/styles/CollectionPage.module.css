@@ -1,27 +1,20 @@
-.tile header {
-}
-
 .tile header h3 {
   font: bold 1.5em var(--oswald);
   text-transform: uppercase;
 }
 
-.header {
+.root > header {
   margin: 3em auto 0.5em;
   padding-left: 4%;
   padding-right: 2%;
 }
 
-.header a {
+.root > header a {
   color: inherit;
 }
 
-.header a:hover {
+.root > header a:hover {
   color: var(--col-blue);
-}
-
-.mapContainer {
-  flex: 1 0 38em;
 }
 
 .zoomOutButton {

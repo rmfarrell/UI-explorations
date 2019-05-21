@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useStoreon from 'storeon/react';
-import styles from '../styles/DeepDive.module.css';
+import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
 import { COUNTRIES } from '../lib/constants';
@@ -27,8 +27,8 @@ export default function(props) {
   const country = match.params.country;
 
   return (
-    <article>
-      <header className={[styles.header, 'constrain'].join(' ')}>
+    <article className={styles.root}>
+      <header className="constrain">
         <h1>Deep Dives {country && `: ${COUNTRIES[match.params.country]}`}</h1>
       </header>
       <div className="grid">
