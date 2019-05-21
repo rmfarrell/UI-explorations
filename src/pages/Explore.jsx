@@ -58,7 +58,20 @@ export default function(props) {
           />
         </div>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
-          {/* <Map renderTile={renderTile} /> */}
+          {/* const count = articleCounts[countryCode];
+    return (
+      <MapTile
+        weight={count * 0.75}
+        onClick={onCountryClick.bind(this, countryCode)}
+        key={countryCode}
+        isLand
+      >
+        <span>
+          {countryCode} ({count || 0})
+        </span>
+      </MapTile>
+    ); */}
+          <Map />
         </div>
         <div className={classNames('grid--item__two-thirds')}>
           <div className={classNames(styles.filtersRow, styles.wide)}>

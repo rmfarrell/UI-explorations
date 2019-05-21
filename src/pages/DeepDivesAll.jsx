@@ -20,11 +20,16 @@ export default function(props) {
       .map(deepdiveId => {
         return Object.assign(articles[deepdiveId], { id: deepdiveId });
       }),
+    [filtered, setFiltered] = useState([]),
     articleCounts = deepdives.reduce(articleCountByCountry, {}),
     articleCountsMax = Object.values(articleCounts).reduce((item, acc) =>
       item > acc ? item : acc
-    );
-  const country = match.params.country;
+    ),
+    country = match.params.country;
+
+  useEffect(() => {
+    setFiltered(deepdives.filter(filterByCountry.bind(this, country)));
+  }, [country]);
 
   return (
     <article className={styles.root}>
@@ -59,7 +64,7 @@ export default function(props) {
         </div>
       </div>
       <Collection
-        articles={deepdives.filter(filterByCountry.bind(this, country))}
+        articles={filtered}
         showType={false}
         className={styles.collection}
       />
