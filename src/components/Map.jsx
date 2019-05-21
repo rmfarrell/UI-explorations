@@ -24,7 +24,8 @@ import europe from '../lib/europe_map';
 const geographyFill = 'rgba(20,10,0,0.5)',
   geographyActiveFill = '#ff003b',
   geographyStroke = 'rgba(255,255,255,0.2)',
-  tileFill = 'rgba(0,0,0,0.25)';
+  tileFill = 'rgba(0,0,0,0.25)',
+  euTileFill = '#ff003b';
 
 export default function(props) {
   let start;
@@ -119,7 +120,7 @@ export default function(props) {
     const _isEu = isEU(id);
 
     if (_isEu) {
-      fill = mapFills ? mapFills.call(this, id) : 'rgba(0,0,0,0.8)';
+      fill = mapFills ? mapFills.call(this, id) : euTileFill;
     } else {
       fill = tileFill;
     }

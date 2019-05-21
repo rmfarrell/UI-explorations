@@ -16,6 +16,7 @@ import ArticleModal from '../components/ArticleModal.jsx';
 
 export default React.memo(function(props) {
   const {
+      history,
       match: {
         params: { id }
       }
@@ -118,7 +119,16 @@ export default React.memo(function(props) {
       case 'Custom Article':
         return <CustomArticle data={custom_article} />;
       case 'Map':
-        return <Map />;
+        return (
+          <Map
+            // mapFills={id => {
+            //   const count = articleCounts[id] || 0;
+            //   const saturation = 100 * (count / articleCountsMax);
+            //   return `hsl(346, ${saturation}%, 50%)`;
+            // }}
+            tileClickHandler={id => history.push(`/deep-dives/country/${id}`)}
+          />
+        );
       case 'Featured':
         return featured(data);
       default:
