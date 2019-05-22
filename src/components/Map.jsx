@@ -9,7 +9,7 @@ import {
   combine,
   interpolate
 } from 'flubber';
-import europe from '../lib/europe_map';
+import { data as europe } from '../lib/europe_map';
 
 export default function(props) {
   let start;
