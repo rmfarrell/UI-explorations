@@ -7,7 +7,8 @@ import {
   articlesToArray,
   articleCountByCountry,
   classNames,
-  toggleInArray
+  toggleInArray,
+  maxCount
 } from '../lib/helpers';
 import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 
@@ -39,7 +40,6 @@ export default function(props) {
       return b.date - a.date;
     });
     setData(all);
-    console.log('used articles effect');
   }, [articles]);
 
   useEffect(() => {
@@ -58,20 +58,17 @@ export default function(props) {
           />
         </div>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
-          {/* const count = articleCounts[countryCode];
-    return (
-      <MapTile
-        weight={count * 0.75}
-        onClick={onCountryClick.bind(this, countryCode)}
-        key={countryCode}
-        isLand
-      >
-        <span>
-          {countryCode} ({count || 0})
-        </span>
-      </MapTile>
-    ); */}
-          <Map />
+          {Object.keys(articleCounts).length && (
+            <Map
+              mapFills={id => {
+                const count = articleCounts[id] || 0;
+                const max = articleCounts ? maxCount(articleCounts) : 0;
+                const saturation = 100 * (count / max);
+                return `hsl(346, ${saturation}%, 50%)`;
+              }}
+              tileClickHandler={onCountryClick}
+            />
+          )}
         </div>
         <div className={classNames('grid--item__two-thirds')}>
           <div className={classNames(styles.filtersRow, styles.wide)}>
@@ -199,7 +196,6 @@ function filterByCountry(items = [], targets) {
     const {
       meta: { countries = [] }
     } = item;
-    console.log(countries.some(ct => countries.includes(ct)));
     return countries.some(ct => targets.includes(ct));
   });
 }

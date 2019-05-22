@@ -88,7 +88,7 @@
 
 .entering,
 .entered {
-  transition: transform 0.7s ease-in;
+  transition: transform 0.7s 0.2s ease-in;
 }
 
 .exiting,

@@ -8,6 +8,7 @@
     "d3": "^5.9.2",
     "flubber": "^0.4.2",
     "http2": "^3.3.7",
+    "lodash": "^4.17.11",
     "lorem-ipsum": "^2.0.0",
     "normalize.css": "^8.0.1",
     "polymorph-js": "^0.2.4",

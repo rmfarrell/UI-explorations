@@ -38,8 +38,6 @@ export default function(props) {
     animationTime = 900
   } = props;
 
-  console.log(tileClickHandler);
-
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
