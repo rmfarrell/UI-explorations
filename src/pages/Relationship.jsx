@@ -3,7 +3,6 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
-import { COUNTRIES } from '../lib/constants';
 import { dereferenceArticles, classNames } from '../lib/helpers';
 
 // -- Modules

@@ -3,14 +3,12 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
-import { Grid, Row } from '../lib/grid';
 import { dereferenceArticles, classNames } from '../lib/helpers';
 
 // -- Modules
 import CustomArticle from '../components/CustomArticle.jsx';
 import Map from '../components/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
-import List from '../components/List.jsx';
 import Link from '../components/Link.jsx';
 import ArticlesGrid from '../components/ArticlesGrid.jsx';
 
