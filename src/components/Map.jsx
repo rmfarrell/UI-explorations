@@ -2,8 +2,17 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
 import { isEU, classNames } from '../lib/helpers';
-import { toPathString, splitPathString, separate, combine } from 'flubber';
-import europe from '../lib/europe_map';
+import {
+  toPathString,
+  splitPathString,
+  separate,
+  combine,
+  interpolate
+} from 'flubber';
+import { data as europe } from '../lib/europe_map';
+
+import MapIslands from './MapIslands.jsx';
+import { CSSTransition } from 'react-transition-group';
 
 export default function(props) {
   let start;
@@ -57,6 +66,7 @@ export default function(props) {
       const d = target.getAttribute('d');
       const combinedVectors = splitPathString(d);
       const aSquare = dFromTileData(k);
+      if (!aSquare) return;
       const interpolator = combine(combinedVectors.slice(0, 30), aSquare, {
         single: true
       });
@@ -81,11 +91,12 @@ export default function(props) {
       console.warn(`${id} has no tile data`);
       return '';
     }
-    const gap = 10;
-    const multiplier = 90;
+    const gap = 11;
+    const multiplier = 109;
+    const topOffset = 50;
     const [c1, c2] = tile,
-      x = c2 * multiplier + 10 * c2,
-      y = c1 * multiplier + 10 * c1,
+      x = c2 * multiplier + gap * c2,
+      y = c1 * multiplier + gap * c1 + topOffset,
       d = toPathString([
         [x, y],
         [x + multiplier, y],
@@ -123,6 +134,7 @@ export default function(props) {
     const { id = '', fill = '', d = '' } = props;
     return <path d={d} id={id} fill={fill} />;
   }
+  // 37 45 56
 
   function Tile(props) {
     const { id = '', fill = '', clickHandler = () => {}, d = '', tile } = props;
@@ -134,9 +146,9 @@ export default function(props) {
           <path d={d} id={id} fill={fill} />;
           {country || (
             <text
-              x={`${x * 10 + 0.5}%`}
-              y={y * 100 + 55}
-              fontSize="28"
+              x={`${x * 10 + 1}%`}
+              y={`${y * 10 + 9.5}%`}
+              fontSize="40"
               fill="white"
             >
               {label ? label(id) : id}
@@ -177,7 +189,7 @@ export default function(props) {
 
   function zoomedOut(animate = false, state = '') {
     return (
-      <Svg state={state}>
+      <Svg state={state} country={country}>
         {Object.keys(europe).map(k => {
           return tileCoordToSvg(k);
         })}
@@ -188,7 +200,7 @@ export default function(props) {
   function zoomedIn(animate = false, state = '') {
     // TODO: for now always zoom in on italy
     return (
-      <Svg state={state}>
+      <Svg state={state} country={country}>
         {Object.keys(europe).map(k => {
           const fill = k === 'ITA' ? geographyActiveFill : geographyFill;
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
@@ -198,41 +210,60 @@ export default function(props) {
   }
 
   function Svg(props) {
-    const { children, state = '' } = props;
+    const { children, state = '', country = '' } = props;
     // For now, it always zooms on italy
     const { scale, translate } = europe['ITA'].zoom;
-    const svg = useRef(null);
+    const primay = useRef(null);
+    const secondary = useRef(null);
     const strokeWidth = country ? 0.5 : 0;
     const zoomedInTransform = `translate(${translate
       .map(val => `${val}%`)
       .join(', ')}) scale(${scale})`;
     const transform = zoomedInTransform;
+    const [isCountry, setIsCountry] = useState(false);
 
     useEffect(() => {
+      setIsCountry(['entering', 'entered'].includes(state));
       if (state === 'entering') {
-        zoomToCountry(svg.current);
-        // svg.current.style.transform = zoomedInTransform;
+        zoomToCountry(primay.current);
+        // primay.current.style.transform = zoomedInTransform;
       }
       if (state === 'exiting') {
-        zoomToTiles(svg.current);
-        // svg.current.style.transform = '';
+        zoomToTiles(primay.current);
+        // primay.current.style.transform = '';
       }
     }, [state]);
 
     return (
-      <svg
-        className={styles[state]}
-        ref={svg}
-        // style={['exiting', 'entered'].includes(state) ? { transform } : {}}
-        stroke={geographyStroke}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        version="1.2"
-        viewBox="0 0 1000 900"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {children}
-      </svg>
+      <React.Fragment>
+        <CSSTransition
+          in={isCountry}
+          timeout={300}
+          unmountOnExit
+          appear
+          classNames="fade"
+        >
+          <MapIslands
+            className={styles.islands}
+            highlight={country ? 'ITA' : null}
+            highlightColor={geographyActiveFill}
+            defaultColor={geographyFill}
+          />
+        </CSSTransition>
+        <svg
+          className={styles[state]}
+          ref={primay}
+          // style={['exiting', 'entered'].includes(state) ? { transform } : {}}
+          stroke={geographyStroke}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          version="1.2"
+          viewBox="0 0 1201 1201"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {children}
+        </svg>
+      </React.Fragment>
     );
   }
 }
