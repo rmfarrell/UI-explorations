@@ -2,7 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
 import { isEU, classNames } from '../lib/helpers';
-import { toPathString, splitPathString, separate, combine } from 'flubber';
+import {
+  toPathString,
+  splitPathString,
+  separate,
+  combine,
+  interpolate
+} from 'flubber';
 import europe from '../lib/europe_map';
 
 export default function(props) {
@@ -57,6 +63,7 @@ export default function(props) {
       const d = target.getAttribute('d');
       const combinedVectors = splitPathString(d);
       const aSquare = dFromTileData(k);
+      if (!aSquare) return;
       const interpolator = combine(combinedVectors.slice(0, 30), aSquare, {
         single: true
       });

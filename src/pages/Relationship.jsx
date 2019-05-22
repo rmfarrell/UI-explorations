@@ -13,6 +13,8 @@ import SingleItem from '../components/SingleItem.jsx';
 import ArticlesGrid from '../components/ArticlesGrid.jsx';
 import { Link } from 'react-router-dom';
 
+import { Europe } from '../Icons.jsx';
+
 // TODO: Use hooks here
 export default function(props) {
   let relationship;
@@ -42,6 +44,7 @@ export default function(props) {
 
   return (
     <article className={styles.root}>
+      <Europe />
       <header className="constrain">
         <CountryDropdown
           className="big"
