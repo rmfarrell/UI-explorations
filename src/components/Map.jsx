@@ -81,11 +81,11 @@ export default function(props) {
       console.warn(`${id} has no tile data`);
       return '';
     }
-    const gap = 10;
-    const multiplier = 90;
+    const gap = 11;
+    const multiplier = 109;
     const [c1, c2] = tile,
-      x = c2 * multiplier + 10 * c2,
-      y = c1 * multiplier + 10 * c1,
+      x = c2 * multiplier + gap * c2,
+      y = c1 * multiplier + gap * c1,
       d = toPathString([
         [x, y],
         [x + multiplier, y],
@@ -123,6 +123,7 @@ export default function(props) {
     const { id = '', fill = '', d = '' } = props;
     return <path d={d} id={id} fill={fill} />;
   }
+  // 37 45 56
 
   function Tile(props) {
     const { id = '', fill = '', clickHandler = () => {}, d = '', tile } = props;
@@ -134,9 +135,9 @@ export default function(props) {
           <path d={d} id={id} fill={fill} />;
           {country || (
             <text
-              x={`${x * 10 + 0.5}%`}
-              y={y * 100 + 55}
-              fontSize="28"
+              x={`${x * 10 + 1}%`}
+              y={`${y * 10 + 5.5}%`}
+              fontSize="40"
               fill="white"
             >
               {label ? label(id) : id}
@@ -228,7 +229,7 @@ export default function(props) {
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         version="1.2"
-        viewBox="0 0 1000 900"
+        viewBox="0 0 1201 1201"
         xmlns="http://www.w3.org/2000/svg"
       >
         {children}
