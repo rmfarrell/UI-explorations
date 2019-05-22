@@ -189,8 +189,9 @@ function Main(props) {
 
   function sectionsMenu() {
     return (
-      <nav>
-        <ul className={classNames('constrain', styles.sectionsMenu)}>
+      <nav className={classNames(styles.sectionsMenu, 'constrain')}>
+        <p>View</p>
+        <ul>
           <li>
             <NavLink to="/relationship" activeClassName={styles.active}>
               <RelationshipIcon />

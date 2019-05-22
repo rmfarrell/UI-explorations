@@ -65,11 +65,24 @@
 /* Sections menu */
 .sectionsMenu {
   display: flex;
-  margin-top: 6em;
+  margin-top: 8em;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.sectionsMenu > p {
+  display: block;
+  font: 1.5em var(--oswald);
+  text-transform: uppercase;
+  margin: 0 0.75em 0 0;
+}
+
+.sectionsMenu ul {
+  display: flex;
+  width: 100%;
 }
 
 .sectionsMenu li {
-  margin-left: 1em;
+  margin-left: 0;
 }
 
 .sectionsMenu a {
