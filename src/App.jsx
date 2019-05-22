@@ -11,7 +11,7 @@ import store from './store/index.js';
 import useStoreon from 'storeon/react';
 
 // -- Icons
-import { RelationshipIcon } from './Icons.jsx';
+import { RelationshipIcon, DeepDiveIcon, ExploreIcon } from './Icons.jsx';
 
 // -- Libs
 import {
@@ -197,18 +197,13 @@ function Main(props) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/relationship" activeClassName={styles.active}>
-              R
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/deep-dives" activeClassName={styles.active}>
-              D
+              <DeepDiveIcon />
             </NavLink>
           </li>
           <li>
             <NavLink to="/explore" activeClassName={styles.active}>
-              X
+              <ExploreIcon />
             </NavLink>
           </li>
           <li className={styles.helpLink}>

@@ -14,3 +14,30 @@ export function RelationshipIcon() {
     </svg>
   );
 }
+
+export function DeepDiveIcon() {
+  return (
+    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
+      <path
+        class="st0"
+        d="M0 0v16h28V0H0zm27 7.5h-5.84v1H27V15H14.5v-2.81h-1V15H1V8.5h5.84v-1H1V1h12.5v2.81h1V1H27v6.5z"
+      />
+      <path
+        class="st0"
+        d="M8.84 5.81v4.39h10.33V5.81H8.84zm9.32 3.38H9.84V6.81h8.33v2.38z"
+      />
+    </svg>
+  );
+}
+
+export function ExploreIcon() {
+  return (
+    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
+      <path class="st0" d="M0 0v16h28V0H0zm27 15H1V1h26v14z" />
+      <path
+        class="st0"
+        d="M5.5 12.21l.79.79H7.5v-1h-.79L6 11.29V4.71L6.71 4h.79V3H6.29l-.79.79L4.71 3H3.5v1h.79l.71.71v6.58l-.71.71H3.5v1h1.21z"
+      />
+    </svg>
+  );
+}
