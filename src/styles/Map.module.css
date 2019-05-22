@@ -86,6 +86,20 @@
   transform: translateY(-50%);
 }
 
+.islands {
+  transition: opacity 1s;
+}
+/*
+
+.islands.hidden {
+  pointer-events: none;
+  opacity: 0;
+} */
+
+.fade-enter {
+  background: red;
+}
+
 /* .entering,
 .entered {
   transition: transform 0.7s 0.2s ease-in;

@@ -1,0 +1,10 @@
+.fade-enter-done {
+  opacity: 1;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+.fade-exit {
+  border: 1px solid red;
+}
