@@ -2,13 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
 import { isEU, classNames } from '../lib/helpers';
-import {
-  toPathString,
-  splitPathString,
-  separate,
-  combine,
-  interpolate
-} from 'flubber';
+import { toPathString, interpolate } from 'flubber';
 import { data as europe } from '../lib/europe_map';
 
 import MapIslands from './MapIslands.jsx';
@@ -41,19 +35,9 @@ export default function(props) {
 
     Object.keys(europe).forEach((k, i) => {
       const target = svg.querySelector(`#${k}`);
-      if (!europe[k].d) {
-        // target.style = { display: 'none' };
-        return;
-      }
-      if (!target) {
-        console.warn(`no target`);
-        return;
-      }
+      if (!europe[k].d || !target) return;
       const d = target.getAttribute('d');
-      const combinedVectors = splitPathString(europe[k].d);
-      var interpolator = separate(d, combinedVectors.slice(0, 30), {
-        single: true
-      });
+      const interpolator = interpolate(d, europe[k].d);
       requestAnimationFrame(time => draw(time, interpolator, target));
     });
   }
@@ -64,12 +48,10 @@ export default function(props) {
       const target = svg.querySelector(`#${k}`);
       if (!target) return;
       const d = target.getAttribute('d');
-      const combinedVectors = splitPathString(d);
+      // const combinedVectors = splitPathString(d);
       const aSquare = dFromTileData(k);
       if (!aSquare) return;
-      const interpolator = combine(combinedVectors.slice(0, 30), aSquare, {
-        single: true
-      });
+      const interpolator = interpolate(d, aSquare);
       requestAnimationFrame(time => draw(time, interpolator, target));
     });
   }
