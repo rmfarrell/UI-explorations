@@ -26,6 +26,15 @@ import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
+import Map from './components/Map.jsx';
+
+const collectionPages = [
+  '/relationship/:country',
+  '/deep-dives/country/:country',
+  '/deep-dives/:id',
+  '/relationship',
+  '/deep-dives'
+];
 
 function AppRouter() {
   return (
@@ -34,9 +43,34 @@ function AppRouter() {
         <Main>
           <Route path="/" exact component={Explore} />
           <Route path="/explore" exact component={Explore} />
-          <Route path="/deep-dives" component={DeepDivesAll} />
-          <Route path="/relationship" exact component={Relationship} />
-          <Route path="/relationship/:id" component={Relationship} />
+          <Route
+            path={'/deep-dives'}
+            render={({ match }) => {
+              return (
+                <React.Fragment>
+                  <Route path="/deep-dives/:id" component={DeepDive} />
+                  <Route
+                    path={['/deep-dives', '/deep-dives/country/:country']}
+                    exact
+                    render={({ match, history }) => (
+                      <DeepDivesAll history={history} match={match} />
+                    )}
+                  />
+                </React.Fragment>
+              );
+            }}
+          />
+          <Route
+            path={['/relationship', '/relationship/:country']}
+            exact
+            render={({ match, history }) => (
+              <Relationship
+                match={match}
+                history={history}
+                country={match && match.params.country}
+              />
+            )}
+          />
           <Route
             path="/help"
             exact

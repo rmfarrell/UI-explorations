@@ -13,7 +13,7 @@ export const COUNTRIES = {
   GBR: 'United Kingdom',
   GRC: 'Greece',
   HUN: 'Hungary',
-  CRO: 'Croatia',
+  HRV: 'Croatia',
   IRL: 'Ireland',
   ITA: 'Italy',
   LVA: 'Latvia',

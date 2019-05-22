@@ -11,7 +11,7 @@ const masonryOptions = {
 export default React.memo(function(props) {
   const { showType = true, articles = [], className = '' } = props;
   return (
-    <div className={[className].join(' ')}>
+    <div className={className}>
       <Masonry options={masonryOptions} className={[styles.grid].join(' ')}>
         {articles.map(data => {
           return (

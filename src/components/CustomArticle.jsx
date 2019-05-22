@@ -66,7 +66,6 @@ function CustomArticle(props) {
   }
 
   function closeModal() {
-    console.log('test');
     push(`${match.url}`);
   }
 }

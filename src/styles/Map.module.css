@@ -41,11 +41,6 @@
 
 /* Focused state */
 .focused {
-  background: var(--col-text);
-  height: 0;
-  padding-bottom: 100%;
-  position: relative;
-  color: white;
 }
 
 .focused > div {
@@ -71,4 +66,33 @@
 
 .back:hover {
   text-decoration: underline;
+}
+
+.root {
+  background: var(--col-grey);
+  box-shadow: inset 0 0 12em rgba(0, 0, 0, 0.25);
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+.root svg {
+  width: 98%;
+  position: absolute;
+  left: 1.5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.entering,
+.entered {
+  transition: transform 0.7s 0.2s ease-in;
+}
+
+.exiting,
+.exited {
+  transform: translateY(-50%);
+  transition: transform 0.7s 0.2s ease-out;
 }

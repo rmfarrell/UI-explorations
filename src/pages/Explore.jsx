@@ -7,7 +7,8 @@ import {
   articlesToArray,
   articleCountByCountry,
   classNames,
-  toggleInArray
+  toggleInArray,
+  maxCount
 } from '../lib/helpers';
 import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 
@@ -15,7 +16,6 @@ import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 import Collection from '../components/Collection.jsx';
 import TextSearch from '../components/TextSearch.jsx';
 import Map from '../components/Map.jsx';
-import MapTile from '../components/MapTile.jsx';
 import Dropdown from 'react-dropdown';
 import Calendar from 'react-calendar';
 
@@ -39,7 +39,6 @@ export default function(props) {
       return b.date - a.date;
     });
     setData(all);
-    console.log('used articles effect');
   }, [articles]);
 
   useEffect(() => {
@@ -58,7 +57,17 @@ export default function(props) {
           />
         </div>
         <div className={classNames(styles.mapContainer, 'grid--item__third')}>
-          <Map renderTile={renderTile} />
+          {Object.keys(articleCounts).length && (
+            <Map
+              mapFills={id => {
+                const count = articleCounts[id] || 0;
+                const max = articleCounts ? maxCount(articleCounts) : 0;
+                const saturation = 100 * (count / max);
+                return `hsl(346, ${saturation}%, 50%)`;
+              }}
+              tileClickHandler={onCountryClick}
+            />
+          )}
         </div>
         <div className={classNames('grid--item__two-thirds')}>
           <div className={classNames(styles.filtersRow, styles.wide)}>
@@ -158,22 +167,6 @@ export default function(props) {
     setData(out);
   }
 
-  function renderTile(countryCode) {
-    const count = articleCounts[countryCode];
-    return (
-      <MapTile
-        weight={count * 0.75}
-        onClick={onCountryClick.bind(this, countryCode)}
-        key={countryCode}
-        isLand
-      >
-        <span>
-          {countryCode} ({count || 0})
-        </span>
-      </MapTile>
-    );
-  }
-
   function onCountryClick(country) {
     const c = toggleInArray(countriesFilter, country);
     setCountriesFilter(c);
@@ -186,7 +179,6 @@ function filterByCountry(items = [], targets) {
     const {
       meta: { countries = [] }
     } = item;
-    console.log(countries.some(ct => countries.includes(ct)));
     return countries.some(ct => targets.includes(ct));
   });
 }

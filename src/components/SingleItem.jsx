@@ -152,16 +152,6 @@ function SmallSocialTeaser(data) {
       >
         test
       </LinesEllipsis>
-      {/* <p>
-        {elipse(summary, limit)} &nbsp;
-        <a
-          className={styles.readMore}
-          href="https://twitter.com"
-          target="_blank"
-        >
-          ({source})
-        </a>
-      </p> */}
     </div>
   );
 }
