@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@tweenrex/core": "^1.5.1",
     "change-case": "^3.1.0",
     "d3": "^5.9.2",
     "flubber": "^0.4.2",

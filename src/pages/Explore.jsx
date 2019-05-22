@@ -16,7 +16,6 @@ import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 import Collection from '../components/Collection.jsx';
 import TextSearch from '../components/TextSearch.jsx';
 import Map from '../components/Map.jsx';
-import MapTile from '../components/MapTile.jsx';
 import Dropdown from 'react-dropdown';
 import Calendar from 'react-calendar';
 
@@ -166,22 +165,6 @@ export default function(props) {
     out = filterByType(out, typeFilter);
     out = filterByCountry(out, countriesFilter);
     setData(out);
-  }
-
-  function renderTile(countryCode) {
-    const count = articleCounts[countryCode];
-    return (
-      <MapTile
-        weight={count * 0.75}
-        onClick={onCountryClick.bind(this, countryCode)}
-        key={countryCode}
-        isLand
-      >
-        <span>
-          {countryCode} ({count || 0})
-        </span>
-      </MapTile>
-    );
   }
 
   function onCountryClick(country) {

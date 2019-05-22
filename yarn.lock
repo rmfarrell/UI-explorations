@@ -897,10 +897,6 @@
     "@svgr/plugin-svgo" "^4.0.3"
     loader-utils "^1.1.0"
 
-"@tweenrex/core@^1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@tweenrex/core/-/core-1.5.1.tgz#40d81e451bad471dd046566d485af4e9204dc5c3"
-
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

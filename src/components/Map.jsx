@@ -1,23 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import data from '../lib/map';
 import styles from '../styles/Map.module.css';
-import { TweenRex } from '@tweenrex/core';
-// import { interpolate } from 'polymorph-js';
 import { Transition } from 'react-transition-group';
-import { NavLink, Link } from 'react-router-dom';
-import { COUNTRIES } from '../lib/constants';
 import { isEU, classNames } from '../lib/helpers';
-import {
-  toRect,
-  fromRect,
-  toPathString,
-  toCircle,
-  interpolate,
-  splitPathString,
-  separate,
-  combine
-} from 'flubber';
-import MapTile from './MapTile.jsx';
+import { toPathString, splitPathString, separate, combine } from 'flubber';
 import europe from '../lib/europe_map';
 
 export default function(props) {
