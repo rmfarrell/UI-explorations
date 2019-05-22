@@ -211,11 +211,11 @@ export default function(props) {
     useEffect(() => {
       if (state === 'entering') {
         zoomToCountry(svg.current);
-        svg.current.style.transform = zoomedInTransform;
+        // svg.current.style.transform = zoomedInTransform;
       }
       if (state === 'exiting') {
         zoomToTiles(svg.current);
-        svg.current.style.transform = '';
+        // svg.current.style.transform = '';
       }
     }, [state]);
 
@@ -223,7 +223,7 @@ export default function(props) {
       <svg
         className={styles[state]}
         ref={svg}
-        style={['exiting', 'entered'].includes(state) ? { transform } : {}}
+        // style={['exiting', 'entered'].includes(state) ? { transform } : {}}
         stroke={geographyStroke}
         strokeWidth={strokeWidth}
         strokeLinecap="round"

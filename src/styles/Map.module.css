@@ -86,7 +86,7 @@
   transform: translateY(-50%);
 }
 
-.entering,
+/* .entering,
 .entered {
   transition: transform 0.7s 0.2s ease-in;
 }
@@ -95,4 +95,4 @@
 .exited {
   transform: translateY(-50%);
   transition: transform 0.7s 0.2s ease-out;
-}
+} */
