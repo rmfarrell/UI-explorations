@@ -10,6 +10,9 @@ import styles from './styles/Main.module.css';
 import store from './store/index.js';
 import useStoreon from 'storeon/react';
 
+// -- Icons
+import { RelationshipIcon } from './Icons.jsx';
+
 // -- Libs
 import {
   fetchDeepDives,
@@ -188,6 +191,11 @@ function Main(props) {
     return (
       <nav>
         <ul className={classNames('constrain', styles.sectionsMenu)}>
+          <li>
+            <NavLink to="/relationship" activeClassName={styles.active}>
+              <RelationshipIcon />
+            </NavLink>
+          </li>
           <li>
             <NavLink to="/relationship" activeClassName={styles.active}>
               R
