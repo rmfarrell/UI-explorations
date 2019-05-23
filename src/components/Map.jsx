@@ -33,7 +33,7 @@ export default function(props) {
     // geographyActiveFill = '#ff003b',
     // tileFill = 'rgba(0,0,0,0.25)',
     // euTileFill = '#ff003b',
-    rows = 9,
+    rows = 10,
     columns = 10,
 
     geographyFill = tempDesaturate,
@@ -148,7 +148,7 @@ export default function(props) {
           {country || (
             <text
               x={`${x * 10 + 1}%`}
-              y={`${y * 10 + 9.5}%`}
+              y={`${y * 10 + 6}%`}
               fontSize="40"
               fill="white"
             >
@@ -281,7 +281,7 @@ export default function(props) {
 function dFromTileData(tile) {
   const gap = 11;
   const multiplier = 109;
-  const topOffset = 50;
+  const topOffset = 6;
   const [c1, c2] = tile,
     x = c2 * multiplier + gap * c2,
     y = c1 * multiplier + gap * c1 + topOffset,
