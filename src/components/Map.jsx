@@ -10,6 +10,10 @@ import { CSSTransition } from 'react-transition-group';
 
 const tempDesaturate = 'rgba(20,10,0,0.5)';
 
+// Temporarily expose animation vars on window
+window.speed = null;
+window.easing = null;
+
 export default function(props) {
   let start;
   const {
@@ -30,7 +34,7 @@ export default function(props) {
     geographyActiveFill = tempDesaturate,
     tileFill = tempDesaturate,
     euTileFill = tempDesaturate,
-    animationTime = 500
+    animationTime = window.speed || 500
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
@@ -51,7 +55,7 @@ export default function(props) {
       const geo = target.getAttribute('d');
       const interpolator = interpolate(geo, d);
 
-      animate(animationTime, easing.easeOutQuart, val => {
+      animate(animationTime, window.easing || easing.easeOutQuart, val => {
         target.setAttribute('d', interpolator(val));
       });
     });
@@ -68,7 +72,7 @@ export default function(props) {
       const aSquare = dFromTileData(tile);
       if (!aSquare) return;
       const interpolator = interpolate(geo, aSquare);
-      animate(animationTime, easing.easeOutQuart, val => {
+      animate(animationTime, window.easing || easing.easeOutQuart, val => {
         target.setAttribute('d', interpolator(val));
       });
     });
