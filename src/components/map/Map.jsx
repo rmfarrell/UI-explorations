@@ -13,13 +13,6 @@ import Islands from './Islands.jsx';
 import EmptyTiles from './EmptyTiles.jsx';
 import Tile from './Tile.jsx';
 
-// Temporarily expose animation vars on window
-window.speed = null;
-window.easing = null;
-const getEasingFunc = () => {
-  return window.easing ? easing[window.easing] : easing.easeOutQuart;
-};
-
 export default function(props) {
   let start;
   const {
@@ -38,7 +31,7 @@ export default function(props) {
     rows = 10,
     columns = 10,
     emptyTileFill = 'rgba(255, 255, 255, 0.3)',
-    animationTime = window.speed || 500
+    animationTime = 700
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
@@ -59,7 +52,7 @@ export default function(props) {
       const geo = target.getAttribute('d');
       const interpolator = interpolate(geo, d);
 
-      animate(animationTime, getEasingFunc(), val => {
+      animate(animationTime, easing.easeOutQuint, val => {
         target.setAttribute('d', interpolator(val));
       });
     });
@@ -76,7 +69,7 @@ export default function(props) {
       const aSquare = dFromTileData(tile);
       if (!aSquare) return;
       const interpolator = interpolate(geo, aSquare);
-      animate(animationTime, getEasingFunc(), val => {
+      animate(animationTime, easing.easeOutQuint, val => {
         target.setAttribute('d', interpolator(val));
       });
     });
