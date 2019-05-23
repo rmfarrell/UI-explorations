@@ -64,6 +64,7 @@ export default function(props) {
       const target = svg.querySelector(`#${k}`);
       if (!target) return;
       const geo = target.getAttribute('d');
+      if (!tile) return;
       const aSquare = dFromTileData(tile);
       if (!aSquare) return;
       const interpolator = interpolate(geo, aSquare);
@@ -73,7 +74,7 @@ export default function(props) {
     });
   }
 
-  function dFromTileData(tile = [0, 0]) {
+  function dFromTileData(tile) {
     const gap = 11;
     const multiplier = 109;
     const topOffset = 50;
