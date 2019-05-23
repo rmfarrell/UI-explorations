@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
-import { isEU, classNames, animate, easing } from '../../lib/helpers';
 import { toPathString, interpolate } from 'flubber';
-import { data as europe } from '../../lib/europe_map';
-
-import Islands from './Islands.jsx';
 import { CSSTransition } from 'react-transition-group';
+
+// -- Libs
+import { data as europe } from '../../lib/europe_map';
+import { isEU, classNames, animate, easing } from '../../lib/helpers';
+
+// -- Components
+import Islands from './Islands.jsx';
+import Tile from './Tile.jsx';
 
 // Temporarily expose animation vars on window
 window.speed = null;
@@ -119,11 +123,12 @@ export default function(props) {
     return (
       <Tile
         fill={fill}
-        clickHandler={_isEu ? tileClickHandler.bind(this, id) : () => {}}
+        clickHandler={_isEu ? tileClickHandler.bind(this, id) : null}
         d={dFromTileData(tile)}
         id={id}
         key={id}
         tile={tile}
+        showLabels={!country}
       />
     );
   }
@@ -133,29 +138,6 @@ export default function(props) {
     return <path d={d} id={id} fill={fill} />;
   }
   // 37 45 56
-
-  function Tile(props) {
-    const { id = '', fill = '', clickHandler = () => {}, d = '', tile } = props;
-    const [y, x] = tile;
-    return (
-      // TODO: use xhref for accessibility
-      <a onClick={clickHandler}>
-        <g>
-          <path d={d} id={id} fill={fill} />;
-          {country || (
-            <text
-              x={`${x * 10 + 1}%`}
-              y={`${y * 10 + 6}%`}
-              fontSize="40"
-              fill="white"
-            >
-              {label ? label(id) : id}
-            </text>
-          )}
-        </g>
-      </a>
-    );
-  }
 
   return (
     <div
