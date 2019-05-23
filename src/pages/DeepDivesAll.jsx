@@ -40,11 +40,11 @@ export default function(props) {
         <div className="grid--item__third">
           <Map
             country={country}
-            mapFills={id => {
-              const count = articleCounts[id] || 0;
-              const saturation = 100 * (count / articleCountsMax);
-              return `hsl(346, ${saturation}%, 50%)`;
-            }}
+            // mapFills={id => {
+            //   const count = articleCounts[id] || 0;
+            //   const saturation = 100 * (count / articleCountsMax);
+            //   return `hsl(346, ${saturation}%, 50%)`;
+            // }}
             tileClickHandler={id =>
               articleCounts[id] && history.push(`/deep-dives/country/${id}`)
             }

@@ -8,6 +8,8 @@ import { data as europe } from '../lib/europe_map';
 import MapIslands from './MapIslands.jsx';
 import { CSSTransition } from 'react-transition-group';
 
+const tempDesaturate = 'rgba(20,10,0,0.5)';
+
 export default function(props) {
   let start;
   const {
@@ -18,11 +20,16 @@ export default function(props) {
     country = '',
     label,
     children,
-    geographyFill = 'rgba(20,10,0,0.5)',
-    geographyActiveFill = '#ff003b',
     geographyStroke = 'rgba(255,255,255,0.2)',
-    tileFill = 'rgba(0,0,0,0.25)',
-    euTileFill = '#ff003b',
+    // geographyFill = 'rgba(20,10,0,0.5)',
+    // geographyActiveFill = '#ff003b',
+    // tileFill = 'rgba(0,0,0,0.25)',
+    // euTileFill = '#ff003b',
+
+    geographyFill = tempDesaturate,
+    geographyActiveFill = tempDesaturate,
+    tileFill = tempDesaturate,
+    euTileFill = tempDesaturate,
     animationTime = 500
   } = props;
 
@@ -214,7 +221,7 @@ export default function(props) {
       <React.Fragment>
         <CSSTransition
           in={isCountry}
-          timeout={100}
+          timeout={10}
           unmountOnExit
           appear
           classNames="fade"
