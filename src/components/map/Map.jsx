@@ -193,7 +193,6 @@ export default function(props) {
           in={showIslands}
           timeout={animationTime * 2}
           classNames="fade"
-          // mountOnEnter
         >
           <Islands
             className={classNames(styles.secondarySvg, styles.islands)}
