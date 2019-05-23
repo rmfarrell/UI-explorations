@@ -3,14 +3,14 @@
 }
 .fade-enter-active {
   opacity: 1;
-  transition: opacity 1.2s;
+  transition: opacity 0.3s;
 }
 .fade-exit {
   opacity: 1;
 }
 .fade-exit-active {
   opacity: 0;
-  transition: opacity 1.2s;
+  transition: opacity 0.3s;
 }
 .fade-exit-done {
   opacity: 0;
