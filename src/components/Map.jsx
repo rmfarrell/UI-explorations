@@ -7,6 +7,7 @@ import { data as europe } from '../lib/europe_map';
 
 import MapIslands from './MapIslands.jsx';
 import { CSSTransition } from 'react-transition-group';
+import { rgba } from 'style-value-types';
 
 const tempDesaturate = 'rgba(20,10,0,0.5)';
 
@@ -32,17 +33,42 @@ export default function(props) {
     // geographyActiveFill = '#ff003b',
     // tileFill = 'rgba(0,0,0,0.25)',
     // euTileFill = '#ff003b',
+    rows = 9,
+    columns = 10,
 
     geographyFill = tempDesaturate,
     geographyActiveFill = tempDesaturate,
     tileFill = tempDesaturate,
     euTileFill = tempDesaturate,
+    emptyTileFill = 'rgba(255, 255, 255, 0.3)',
     animationTime = window.speed || 500
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
+
+  const EmptyTiles = React.memo(props => {
+    const { rows, columns } = props;
+    let tiles = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < columns; col++) {
+        tiles.push({
+          fill: emptyTileFill,
+          d: dFromTileData([row, col]),
+          tile: [row, col]
+        });
+      }
+    }
+
+    return (
+      <g>
+        {tiles.map((props, i) => (
+          <Tile {...props} key={i} />
+        ))}
+      </g>
+    );
+  });
 
   function zoomToCountry(svg) {
     if (!window) return;
@@ -79,22 +105,6 @@ export default function(props) {
         target.setAttribute('d', interpolator(val));
       });
     });
-  }
-
-  function dFromTileData(tile) {
-    const gap = 11;
-    const multiplier = 109;
-    const topOffset = 50;
-    const [c1, c2] = tile,
-      x = c2 * multiplier + gap * c2,
-      y = c1 * multiplier + gap * c1 + topOffset,
-      d = toPathString([
-        [x, y],
-        [x + multiplier, y],
-        [x + multiplier, y + multiplier],
-        [x, y + multiplier]
-      ]);
-    return d;
   }
 
   function tileCoordToSvg(id) {
@@ -163,13 +173,13 @@ export default function(props) {
         {state => {
           switch (state) {
             case 'entered':
-              return zoomedIn(false, state);
+              return zoomedIn(state);
             case 'entering':
-              return zoomedOut(true, state);
+              return zoomedOut(state);
             case 'exiting':
-              return zoomedIn(true, state);
+              return zoomedIn(state);
             case 'exited':
-              return zoomedOut(false, state);
+              return zoomedOut(state);
             default:
               return null;
           }
@@ -178,7 +188,7 @@ export default function(props) {
     </div>
   );
 
-  function zoomedOut(animate = false, state = '') {
+  function zoomedOut(state = '') {
     return (
       <Svg state={state} country={country}>
         {Object.keys(europe).map(k => {
@@ -188,7 +198,7 @@ export default function(props) {
     );
   }
 
-  function zoomedIn(animate = false, state = '') {
+  function zoomedIn(state = '') {
     // TODO: for now always zoom in on italy
     return (
       <Svg state={state} country={country}>
@@ -252,9 +262,34 @@ export default function(props) {
           viewBox="0 0 1201 1201"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <CSSTransition
+            in={!isCountry}
+            timeout={10}
+            unmountOnExit
+            appear
+            classNames="fade"
+          >
+            <EmptyTiles rows={rows} columns={columns} />
+          </CSSTransition>
           {children}
         </svg>
       </React.Fragment>
     );
   }
+}
+
+function dFromTileData(tile) {
+  const gap = 11;
+  const multiplier = 109;
+  const topOffset = 50;
+  const [c1, c2] = tile,
+    x = c2 * multiplier + gap * c2,
+    y = c1 * multiplier + gap * c1 + topOffset,
+    d = toPathString([
+      [x, y],
+      [x + multiplier, y],
+      [x + multiplier, y + multiplier],
+      [x, y + multiplier]
+    ]);
+  return d;
 }
