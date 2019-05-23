@@ -6,5 +6,5 @@
   opacity: 0;
 }
 .fade-exit {
-  border: 1px solid red;
+  opacity: 0;
 }
