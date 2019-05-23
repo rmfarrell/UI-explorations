@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styles from '../styles/Map.module.css';
+import styles from '../../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
-import { isEU, classNames, animate, easing } from '../lib/helpers';
+import { isEU, classNames, animate, easing } from '../../lib/helpers';
 import { toPathString, interpolate } from 'flubber';
-import { data as europe } from '../lib/europe_map';
+import { data as europe } from '../../lib/europe_map';
 
-import MapIslands from './MapIslands.jsx';
+import Islands from './Islands.jsx';
 import { CSSTransition } from 'react-transition-group';
 
 // Temporarily expose animation vars on window
@@ -58,6 +58,7 @@ export default function(props) {
         version="1.2"
         viewBox="0 0 1201 1201"
         xmlns="http://www.w3.org/2000/svg"
+        className={styles.secondarySvg}
       >
         {tiles.map((props, i) => (
           <Tile {...props} key={i} />
@@ -215,7 +216,6 @@ export default function(props) {
     // For now, it always zooms on italy
     const { scale, translate } = europe['ITA'].zoom;
     const primay = useRef(null);
-    const secondary = useRef(null);
     const strokeWidth = country ? 0.5 : 0;
     const zoomedInTransform = `translate(${translate
       .map(val => `${val}%`)
@@ -243,12 +243,12 @@ export default function(props) {
       <React.Fragment>
         <CSSTransition
           in={showIslands}
-          timeout={animationTime / 2}
+          timeout={animationTime * 2}
           classNames="fade"
-          mountOnEnter
+          // mountOnEnter
         >
-          <MapIslands
-            className={styles.islands}
+          <Islands
+            className={classNames(styles.secondarySvg, styles.islands)}
             highlight={country ? 'ITA' : null}
             highlightColor={geographyActiveFill}
             defaultColor={geographyFill}
@@ -257,9 +257,9 @@ export default function(props) {
 
         <CSSTransition
           in={showGrid}
-          timeout={animationTime / 2}
+          timeout={animationTime * 2}
           classNames="fade"
-          mountOnEnter
+          // mountOnEnter
         >
           <EmptyTiles rows={rows} columns={columns} />
         </CSSTransition>

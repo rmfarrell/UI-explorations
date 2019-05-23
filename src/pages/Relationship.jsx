@@ -8,7 +8,7 @@ import { dereferenceArticles, classNames } from '../lib/helpers';
 // -- Modules
 import CountryDropdown from '../components/CountryDropdown.jsx';
 import Empty from '../components/Empty.jsx';
-import Map from '../components/Map.jsx';
+import Map from '../components/map/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import ArticlesGrid from '../components/ArticlesGrid.jsx';
 import { Link } from 'react-router-dom';

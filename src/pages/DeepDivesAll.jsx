@@ -7,7 +7,7 @@ import { COUNTRIES } from '../lib/constants';
 import { articleCountByCountry, classNames } from '../lib/helpers';
 
 // -- Modules
-import Map from '../components/Map.jsx';
+import Map from '../components/map/Map.jsx';
 import Collection from '../components/Collection.jsx';
 import Empty from '../components/Empty.jsx';
 import { Link } from 'react-router-dom';

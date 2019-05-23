@@ -15,7 +15,7 @@ import { TYPES, ISSUES, ENTITIES } from '../lib/constants';
 // -- Modules
 import Collection from '../components/Collection.jsx';
 import TextSearch from '../components/TextSearch.jsx';
-import Map from '../components/Map.jsx';
+import Map from '../components/map/Map.jsx';
 import Dropdown from 'react-dropdown';
 import Calendar from 'react-calendar';
 

@@ -7,7 +7,7 @@ import { dereferenceArticles, classNames } from '../lib/helpers';
 
 // -- Modules
 import CustomArticle from '../components/CustomArticle.jsx';
-import Map from '../components/Map.jsx';
+import Map from '../components/map/Map.jsx';
 import SingleItem from '../components/SingleItem.jsx';
 import Link from '../components/Link.jsx';
 import ArticlesGrid from '../components/ArticlesGrid.jsx';

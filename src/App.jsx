@@ -29,7 +29,6 @@ import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
-import Map from './components/Map.jsx';
 
 const collectionPages = [
   '/relationship/:country',

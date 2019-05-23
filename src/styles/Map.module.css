@@ -85,3 +85,8 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.secondarySvg {
+  opacity: 0;
+  pointer-events: none;
+}
