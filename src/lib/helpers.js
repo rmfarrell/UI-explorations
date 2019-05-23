@@ -1,6 +1,13 @@
 import { COUNTRIES } from './constants';
 import { memoize } from 'lodash';
 
+export const easing = {
+  easeOut: t => Math.pow(--t, 5) + 1,
+  easeOutQuart: t => {
+    return 1 - --t * t * t * t;
+  }
+};
+
 export const maxCount = memoize((counts = {}) => {
   return Object.values(counts).reduce((item, acc) => (item > acc ? item : acc));
 });
@@ -63,4 +70,28 @@ export function dereferenceArticle(collection = {}, ...ids) {
 
 export function dereferenceArticles(collection = {}, ids = []) {
   return dereferenceArticle(collection, ...ids);
+}
+
+export function animate(duration = 1000, easeFn, fn) {
+  if (!performance || !requestAnimationFrame) {
+    throw new Error(
+      'animate requires window.performance and window.requestAnimationFrame'
+    );
+  }
+  const start = performance.now();
+  const total = duration;
+  let elapsed;
+
+  function tick(now) {
+    elapsed = now - start;
+    const progress = getProgress();
+    fn(easeFn(progress));
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  function getProgress() {
+    return Math.max(Math.min(elapsed / total, 1), 0);
+  }
+
+  tick(start);
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
-import { isEU, classNames } from '../lib/helpers';
+import { isEU, classNames, animate, easing } from '../lib/helpers';
 import { toPathString, interpolate } from 'flubber';
 import { data as europe } from '../lib/europe_map';
 
@@ -23,7 +23,7 @@ export default function(props) {
     geographyStroke = 'rgba(255,255,255,0.2)',
     tileFill = 'rgba(0,0,0,0.25)',
     euTileFill = '#ff003b',
-    animationTime = 900
+    animationTime = 500
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
@@ -38,7 +38,10 @@ export default function(props) {
       if (!europe[k].d || !target) return;
       const d = target.getAttribute('d');
       const interpolator = interpolate(d, europe[k].d);
-      requestAnimationFrame(time => draw(time, interpolator, target));
+
+      animate(animationTime, easing.easeOutQuart, val => {
+        target.setAttribute('d', interpolator(val));
+      });
     });
   }
 
@@ -52,7 +55,9 @@ export default function(props) {
       const aSquare = dFromTileData(k);
       if (!aSquare) return;
       const interpolator = interpolate(d, aSquare);
-      requestAnimationFrame(time => draw(time, interpolator, target));
+      animate(animationTime, easing.easeOutQuart, val => {
+        target.setAttribute('d', interpolator(val));
+      });
     });
   }
 
