@@ -86,19 +86,12 @@
   transform: translateY(-50%);
 }
 
-.islands {
-  transition: opacity 1s;
-}
 /*
 
 .islands.hidden {
   pointer-events: none;
   opacity: 0;
 } */
-
-.fade-enter {
-  background: red;
-}
 
 /* .entering,
 .entered {

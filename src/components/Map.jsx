@@ -62,11 +62,15 @@ export default function(props) {
     }
 
     return (
-      <g>
+      <svg
+        version="1.2"
+        viewBox="0 0 1201 1201"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {tiles.map((props, i) => (
           <Tile {...props} key={i} />
         ))}
-      </g>
+      </svg>
     );
   });
 
@@ -212,6 +216,10 @@ export default function(props) {
 
   function Svg(props) {
     const { children, state = '', country = '' } = props;
+
+    // -- State
+    const [showGrid, setShowGrid] = useState(false);
+    const [showIslands, setShowIslands] = useState(false);
     // For now, it always zooms on italy
     const { scale, translate } = europe['ITA'].zoom;
     const primay = useRef(null);
@@ -221,10 +229,8 @@ export default function(props) {
       .map(val => `${val}%`)
       .join(', ')}) scale(${scale})`;
     const transform = zoomedInTransform;
-    const [isCountry, setIsCountry] = useState(false);
 
     useEffect(() => {
-      setIsCountry(['entering', 'entered'].includes(state));
       if (state === 'entering') {
         zoomToCountry(primay.current);
         // primay.current.style.transform = zoomedInTransform;
@@ -235,14 +241,19 @@ export default function(props) {
       }
     }, [state]);
 
+    useEffect(() => {
+      setShowGrid(!country);
+      setShowIslands(!!country);
+    }, [country]);
+
+    console.log('///');
     return (
       <React.Fragment>
         <CSSTransition
-          in={isCountry}
-          timeout={10}
-          unmountOnExit
-          appear
+          in={showIslands}
+          timeout={animationTime / 2}
           classNames="fade"
+          mountOnEnter
         >
           <MapIslands
             className={styles.islands}
@@ -250,6 +261,15 @@ export default function(props) {
             highlightColor={geographyActiveFill}
             defaultColor={geographyFill}
           />
+        </CSSTransition>
+
+        <CSSTransition
+          in={showGrid}
+          timeout={animationTime / 2}
+          classNames="fade"
+          mountOnEnter
+        >
+          <EmptyTiles rows={rows} columns={columns} />
         </CSSTransition>
         <svg
           className={styles[state]}
@@ -262,15 +282,6 @@ export default function(props) {
           viewBox="0 0 1201 1201"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <CSSTransition
-            in={!isCountry}
-            timeout={10}
-            unmountOnExit
-            appear
-            classNames="fade"
-          >
-            <EmptyTiles rows={rows} columns={columns} />
-          </CSSTransition>
           {children}
         </svg>
       </React.Fragment>
