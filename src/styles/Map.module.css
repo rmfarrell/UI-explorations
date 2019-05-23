@@ -85,21 +85,3 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
-/*
-
-.islands.hidden {
-  pointer-events: none;
-  opacity: 0;
-} */
-
-/* .entering,
-.entered {
-  transition: transform 0.7s 0.2s ease-in;
-}
-
-.exiting,
-.exited {
-  transform: translateY(-50%);
-  transition: transform 0.7s 0.2s ease-out;
-} */

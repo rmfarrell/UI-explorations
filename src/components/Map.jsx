@@ -7,9 +7,6 @@ import { data as europe } from '../lib/europe_map';
 
 import MapIslands from './MapIslands.jsx';
 import { CSSTransition } from 'react-transition-group';
-import { rgba } from 'style-value-types';
-
-const tempDesaturate = 'rgba(20,10,0,0.5)';
 
 // Temporarily expose animation vars on window
 window.speed = null;
@@ -29,17 +26,12 @@ export default function(props) {
     label,
     children,
     geographyStroke = 'rgba(255,255,255,0.2)',
-    // geographyFill = 'rgba(20,10,0,0.5)',
-    // geographyActiveFill = '#ff003b',
-    // tileFill = 'rgba(0,0,0,0.25)',
-    // euTileFill = '#ff003b',
+    geographyFill = 'rgba(20,10,0,0.5)',
+    geographyActiveFill = '#ff003b',
+    tileFill = 'rgba(0,0,0,0.25)',
+    euTileFill = '#ff003b',
     rows = 10,
     columns = 10,
-
-    geographyFill = tempDesaturate,
-    geographyActiveFill = tempDesaturate,
-    tileFill = tempDesaturate,
-    euTileFill = tempDesaturate,
     emptyTileFill = 'rgba(255, 255, 255, 0.3)',
     animationTime = window.speed || 500
   } = props;
