@@ -10,6 +10,7 @@ import { isEU, classNames, animate, easing } from '../../lib/helpers';
 
 // -- Components
 import Islands from './Islands.jsx';
+import EmptyTiles from './EmptyTiles.jsx';
 import Tile from './Tile.jsx';
 
 // Temporarily expose animation vars on window
@@ -43,33 +44,6 @@ export default function(props) {
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
   }
-
-  const EmptyTiles = React.memo(props => {
-    const { rows, columns } = props;
-    let tiles = [];
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < columns; col++) {
-        tiles.push({
-          fill: emptyTileFill,
-          d: dFromTileData([row, col]),
-          tile: [row, col]
-        });
-      }
-    }
-
-    return (
-      <svg
-        version="1.2"
-        viewBox="0 0 1201 1201"
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles.secondarySvg}
-      >
-        {tiles.map((props, i) => (
-          <Tile {...props} key={i} />
-        ))}
-      </svg>
-    );
-  });
 
   function zoomToCountry(svg) {
     if (!window) return;
@@ -220,7 +194,6 @@ export default function(props) {
       setShowIslands(!!country);
     }, [country]);
 
-    console.log('///');
     return (
       <React.Fragment>
         <CSSTransition
@@ -241,9 +214,14 @@ export default function(props) {
           in={showGrid}
           timeout={animationTime * 2}
           classNames="fade"
-          // mountOnEnter
         >
-          <EmptyTiles rows={rows} columns={columns} />
+          <EmptyTiles
+            rows={rows}
+            columns={columns}
+            className={styles.secondarySvg}
+            emptyTileFill={emptyTileFill}
+            getD={dFromTileData}
+          />
         </CSSTransition>
         <svg
           className={styles[state]}
@@ -263,7 +241,7 @@ export default function(props) {
   }
 }
 
-function dFromTileData(tile) {
+export function dFromTileData(tile) {
   const gap = 11;
   const multiplier = 109;
   const topOffset = 6;

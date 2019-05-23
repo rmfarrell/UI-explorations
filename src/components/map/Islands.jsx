@@ -12,6 +12,7 @@ export default React.memo(function(props, ref) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1201 1201"
       className={className}
+      id="islands"
     >
       <path
         fill={applyFill('TUR')}
