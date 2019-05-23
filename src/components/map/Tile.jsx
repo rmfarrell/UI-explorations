@@ -23,8 +23,8 @@ export default function Tile(props) {
         <path d={d} id={id} fill={fill} />;
         {showLabels && (
           <text
-            x={`${x * 10 + 1}%`}
-            y={`${y * 10 + 6}%`}
+            x={`${x * 10 + 1.6}%`}
+            y={`${y * 10 + 6.2}%`}
             fontSize={fontSize}
             fill={textFill}
           >

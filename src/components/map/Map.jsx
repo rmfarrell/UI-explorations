@@ -31,7 +31,8 @@ export default function(props) {
     rows = 10,
     columns = 10,
     emptyTileFill = 'rgba(255, 255, 255, 0.3)',
-    animationTime = 700
+    animationTime = 700,
+    viewBox = '0 0 1200 1200'
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
@@ -223,7 +224,7 @@ export default function(props) {
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           version="1.2"
-          viewBox="0 0 1201 1201"
+          viewBox={viewBox}
           xmlns="http://www.w3.org/2000/svg"
         >
           {children}
@@ -235,8 +236,8 @@ export default function(props) {
 
 export function dFromTileData(tile) {
   const gap = 11;
-  const multiplier = 109;
-  const topOffset = 6;
+  const multiplier = 110;
+  const topOffset = 1;
   const [c1, c2] = tile,
     x = c2 * multiplier + gap * c2,
     y = c1 * multiplier + gap * c1 + topOffset,
