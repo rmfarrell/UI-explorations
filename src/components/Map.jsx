@@ -13,6 +13,9 @@ const tempDesaturate = 'rgba(20,10,0,0.5)';
 // Temporarily expose animation vars on window
 window.speed = null;
 window.easing = null;
+const getEasingFunc = () => {
+  return window.easing ? easing[window.easing] : easing.easeOutQuart;
+};
 
 export default function(props) {
   let start;
@@ -55,7 +58,7 @@ export default function(props) {
       const geo = target.getAttribute('d');
       const interpolator = interpolate(geo, d);
 
-      animate(animationTime, window.easing || easing.easeOutQuart, val => {
+      animate(animationTime, getEasingFunc(), val => {
         target.setAttribute('d', interpolator(val));
       });
     });
@@ -72,7 +75,7 @@ export default function(props) {
       const aSquare = dFromTileData(tile);
       if (!aSquare) return;
       const interpolator = interpolate(geo, aSquare);
-      animate(animationTime, window.easing || easing.easeOutQuart, val => {
+      animate(animationTime, getEasingFunc(), val => {
         target.setAttribute('d', interpolator(val));
       });
     });
