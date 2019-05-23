@@ -249,11 +249,6 @@ export const data = {
     name: 'Russia',
     tile: [3, 7]
   },
-  AZE: {
-    d: null,
-    name: 'Azerbaijan',
-    tile: [6, 9]
-  },
   MLT: {
     d: 'M654.8,1185.51,653,1189l-3.35-2.74-2.07-1.06-1.1-2,2.16-2,4.72,1.1Z',
     name: 'Malta',
@@ -266,5 +261,27 @@ export const data = {
   AND: {
     d: 'M314.79,973.7v3.79h-7.71l-.31-6,4.14-.22Z',
     name: 'Andorra'
+  },
+  SMR: {
+    name: 'San Marino',
+    d: 'M574.48,927.42l.7-.12v.94l-.76.62-.63-.66Z',
+    tile: [6, 3]
+  },
+
+  // No geography
+  ARM: {
+    name: 'Armenia',
+    d: '',
+    tile: [7, 9]
+  },
+  AZE: {
+    d: '',
+    name: 'Azerbaijan',
+    tile: [6, 9]
+  },
+  GEO: {
+    d: '',
+    name: 'Georgia',
+    tile: [5, 8]
   }
 };

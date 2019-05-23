@@ -33,11 +33,16 @@ export default function(props) {
   function zoomToCountry(svg) {
     if (!window) return;
 
-    Object.keys(europe).forEach((k, i) => {
+    Object.keys(europe).forEach(k => {
+      const { d } = europe[k];
       const target = svg.querySelector(`#${k}`);
-      if (!europe[k].d || !target) return;
-      const d = target.getAttribute('d');
-      const interpolator = interpolate(d, europe[k].d);
+      if (!d) {
+        target.setAttribute('d', '');
+        return;
+      }
+      if (!target) return;
+      const geo = target.getAttribute('d');
+      const interpolator = interpolate(geo, d);
 
       animate(animationTime, easing.easeOutQuart, val => {
         target.setAttribute('d', interpolator(val));
@@ -47,37 +52,21 @@ export default function(props) {
 
   function zoomToTiles(svg) {
     Object.keys(europe).forEach(k => {
-      if (!europe[k].d) return;
+      const { d, tile } = europe[k];
+      if (!d) return;
       const target = svg.querySelector(`#${k}`);
       if (!target) return;
-      const d = target.getAttribute('d');
-      // const combinedVectors = splitPathString(d);
-      const aSquare = dFromTileData(k);
+      const geo = target.getAttribute('d');
+      const aSquare = dFromTileData(tile);
       if (!aSquare) return;
-      const interpolator = interpolate(d, aSquare);
+      const interpolator = interpolate(geo, aSquare);
       animate(animationTime, easing.easeOutQuart, val => {
         target.setAttribute('d', interpolator(val));
       });
     });
   }
 
-  function draw(time, interpolator, target) {
-    start = start || time;
-    const progress = time - start,
-      interpolatorProgress = progress / animationTime;
-    target.setAttribute('d', interpolator(interpolatorProgress));
-    if (progress < animationTime) {
-      requestAnimationFrame(t => draw(t, interpolator, target));
-    }
-  }
-
-  function dFromTileData(id) {
-    if (!id) throw new Error(`Expected id as string received ${id}`);
-    const { tile } = europe[id];
-    if (!tile) {
-      console.warn(`${id} has no tile data`);
-      return '';
-    }
+  function dFromTileData(tile = [0, 0]) {
     const gap = 11;
     const multiplier = 109;
     const topOffset = 50;
@@ -109,7 +98,7 @@ export default function(props) {
       <Tile
         fill={fill}
         clickHandler={_isEu ? tileClickHandler.bind(this, id) : () => {}}
-        d={dFromTileData(id)}
+        d={dFromTileData(tile)}
         id={id}
         key={id}
         tile={tile}
@@ -225,7 +214,7 @@ export default function(props) {
       <React.Fragment>
         <CSSTransition
           in={isCountry}
-          timeout={300}
+          timeout={100}
           unmountOnExit
           appear
           classNames="fade"
