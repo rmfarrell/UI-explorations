@@ -15,7 +15,7 @@ export default withRouter(function(props) {
   return (
     <header className={classNames(styles.root)}>
       <h1 className="constrain">
-        <Link to="/">Transatlantic Periscope</Link>
+        <Link to="/">{i18n('title')}</Link>
       </h1>
       <Tray setIsTrayOpen={setIsTrayOpen} isTrayOpen={isTrayOpen} />
     </header>

@@ -60,19 +60,19 @@ export const maxCount = memoize((counts = {}) => {
   return Object.values(counts).reduce((item, acc) => (item > acc ? item : acc));
 });
 
-export function i18n(...args) {
+export function i18n(...addressParts) {
   // TODO get language here
-  return _i18n('en')(...args);
+  return _i18n('en')(...addressParts);
 }
 
 function _i18n(lang) {
-  return (...addressParts) => {
+  return (...args) => {
     try {
-      const loc = addressParts.reduce((acc, part) => acc[part], i18Snippets);
+      const loc = args.reduce((acc, part) => acc[part], i18Snippets);
       return loc[lang];
     } catch (e) {
       console.warn(
-        `Could not find path ${addressParts.reduce(
+        `Could not find path ${args.reduce(
           (acc, item) => `${acc}.${item}`,
           '[root]'
         )}.${lang} in /i18n.js`
