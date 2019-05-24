@@ -23,13 +23,15 @@ export default function(props) {
       <div
         className={classNames(styles.tray, isTrayOpen ? styles.trayOpen : '')}
       >
-        <button
-          onClick={toggleTray}
-          className={classNames(styles.closeButton, styles.toggle)}
-        >
-          {isTrayOpen ? 'x' : '='}
+        <button onClick={toggleTray} className={styles.toggle}>
+          <span>Menu</span>
+          <div className={styles.hamburger}>
+            <i />
+            <i />
+            <i />
+          </div>
         </button>
-        <PagesMenu />
+        <PagesMenu activeClassName={styles.active} />
       </div>
     );
     function toggleTray() {

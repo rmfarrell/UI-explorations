@@ -8,7 +8,7 @@
 }
 .root > p {
   display: block;
-  font: 1.5em var(--oswald);
+  font: 1.7em var(--oswald);
   text-transform: uppercase;
   margin: 0 0.75em 0 0;
 }

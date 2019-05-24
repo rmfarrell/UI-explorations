@@ -159,7 +159,7 @@ function Main(props) {
       <SectionsMenu />
       {fetched ? children : loading()}
       <footer>
-        <PagesMenu />
+        <PagesMenu activeClassName={styles.active} />
       </footer>
     </div>
   );
