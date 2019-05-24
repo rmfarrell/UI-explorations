@@ -1,22 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Map.module.css';
 import { Transition } from 'react-transition-group';
-import { toPathString, interpolate } from 'flubber';
-import { CSSTransition } from 'react-transition-group';
+import { toPathString } from 'flubber';
 
 // -- Libs
 import { data as europe } from '../../lib/europe_map';
-import { isEU, classNames, animate, easing } from '../../lib/helpers';
+import { isEU, classNames } from '../../lib/helpers';
 
 // -- Components
-import Islands from './Islands.jsx';
-import EmptyTiles from './EmptyTiles.jsx';
+import Svg from './Svg.jsx';
 import Tile from './Tile.jsx';
 
 export default function(props) {
   let start;
   const {
-    size = 1,
     renderTile,
     mapFills,
     tileClickHandler = () => {},
@@ -32,48 +29,12 @@ export default function(props) {
     columns = 10,
     emptyTileFill = 'rgba(255, 255, 255, 0.3)',
     animationTime = 700,
-    viewBox = '0 0 1200 1200'
+    viewBox = '0 0 1200 1200',
+    zoomable = false
   } = props;
 
   if (renderTile && typeof renderTile !== 'function') {
     throw new Error('renderTile must be function which retuns a MapTile');
-  }
-
-  function zoomToCountry(svg) {
-    if (!window) return;
-
-    Object.keys(europe).forEach(k => {
-      const { d } = europe[k];
-      const target = svg.querySelector(`#${k}`);
-      if (!d) {
-        target.setAttribute('d', '');
-        return;
-      }
-      if (!target) return;
-      const geo = target.getAttribute('d');
-      const interpolator = interpolate(geo, d);
-
-      animate(animationTime, easing.easeOutQuint, val => {
-        target.setAttribute('d', interpolator(val));
-      });
-    });
-  }
-
-  function zoomToTiles(svg) {
-    Object.keys(europe).forEach(k => {
-      const { d, tile } = europe[k];
-      if (!d) return;
-      const target = svg.querySelector(`#${k}`);
-      if (!target) return;
-      const geo = target.getAttribute('d');
-      if (!tile) return;
-      const aSquare = dFromTileData(tile);
-      if (!aSquare) return;
-      const interpolator = interpolate(geo, aSquare);
-      animate(animationTime, easing.easeOutQuint, val => {
-        target.setAttribute('d', interpolator(val));
-      });
-    });
   }
 
   function tileCoordToSvg(id) {
@@ -97,6 +58,7 @@ export default function(props) {
         key={id}
         tile={tile}
         showLabels={!country}
+        label={label}
       />
     );
   }
@@ -108,13 +70,7 @@ export default function(props) {
   // 37 45 56
 
   return (
-    <div
-      className={classNames(
-        styles.root,
-        styles[`size-${size}`],
-        country && styles.focused
-      )}
-    >
+    <div className={classNames(styles.root, country && styles.focused)}>
       {children}
       <Transition in={!!country} timeout={animationTime}>
         {state => {
@@ -137,7 +93,7 @@ export default function(props) {
 
   function zoomedOut(state = '') {
     return (
-      <Svg state={state} country={country}>
+      <Svg state={state} country={country} {...props} getD={dFromTileData}>
         {Object.keys(europe).map(k => {
           return tileCoordToSvg(k);
         })}
@@ -148,7 +104,7 @@ export default function(props) {
   function zoomedIn(state = '') {
     // TODO: for now always zoom in on italy
     return (
-      <Svg state={state} country={country}>
+      <Svg state={state} country={country} {...props} getD={dFromTileData}>
         {Object.keys(europe).map(k => {
           const fill = k === 'ITA' ? geographyActiveFill : geographyFill;
           return <Geography id={k} fill={fill} d={europe[k].d} key={k} />;
@@ -156,85 +112,9 @@ export default function(props) {
       </Svg>
     );
   }
-
-  function Svg(props) {
-    const { children, state = '', country = '' } = props;
-
-    // -- State
-    const [showGrid, setShowGrid] = useState(false);
-    const [showIslands, setShowIslands] = useState(false);
-    // For now, it always zooms on italy
-    const { scale, translate } = europe['ITA'].zoom;
-    const primay = useRef(null);
-    const strokeWidth = country ? 0.5 : 0;
-    const zoomedInTransform = `translate(${translate
-      .map(val => `${val}%`)
-      .join(', ')}) scale(${scale})`;
-    const transform = zoomedInTransform;
-
-    useEffect(() => {
-      if (state === 'entering') {
-        zoomToCountry(primay.current);
-        primay.current.style.transform = zoomedInTransform;
-      }
-      if (state === 'exiting') {
-        zoomToTiles(primay.current);
-        primay.current.style.transform = '';
-      }
-    }, [state]);
-
-    useEffect(() => {
-      setShowGrid(!country);
-      setShowIslands(!!country);
-    }, [country]);
-
-    return (
-      <React.Fragment>
-        <svg
-          className={styles[state]}
-          ref={primay}
-          style={['exiting', 'entered'].includes(state) ? { transform } : {}}
-          stroke={geographyStroke}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          version="1.2"
-          viewBox={viewBox}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <CSSTransition
-            in={showIslands}
-            timeout={animationTime * 2}
-            classNames="fade"
-          >
-            <Islands
-              className={classNames(styles.secondarySvg, styles.islands)}
-              highlight={country ? 'ITA' : null}
-              highlightColor={geographyActiveFill}
-              defaultColor={geographyFill}
-            />
-          </CSSTransition>
-
-          <CSSTransition
-            in={showGrid}
-            timeout={animationTime * 2}
-            classNames="fade"
-          >
-            <EmptyTiles
-              rows={rows}
-              columns={columns}
-              className={styles.secondarySvg}
-              emptyTileFill={emptyTileFill}
-              getD={dFromTileData}
-            />
-          </CSSTransition>
-          {children}
-        </svg>
-      </React.Fragment>
-    );
-  }
 }
 
-export function dFromTileData(tile) {
+function dFromTileData(tile) {
   const gap = 11;
   const multiplier = 110;
   const topOffset = 1;
