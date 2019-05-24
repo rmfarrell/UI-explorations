@@ -1,0 +1,217 @@
+.root {
+  --menu-width: 20rem;
+  --topbar-height: 6rem;
+  --x-translate: 12px;
+  --x-translate-neg: -12px;
+  position: fixed;
+  z-index: 100;
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: var(--topbar-height);
+}
+
+.root h1 {
+  font: bold 2em / var(--topbar-height) var(--merriweather);
+}
+
+.root h1 a {
+  color: inherit;
+}
+
+.tray {
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: start;
+  position: absolute;
+  transition: transform 0.3s;
+  transform: translateX(var(--menu-width));
+}
+
+.tray nav {
+  width: var(--menu-width);
+  font: 1.4em/1.5em var(--opensans);
+  background-color: var(--col-text);
+  top: 0;
+  right: 0;
+  z-index: 100;
+  height: 100vh;
+}
+.tray ul {
+  margin: 3.5em 0 0;
+  padding: 0;
+}
+.tray a {
+  color: white;
+  display: block;
+  padding: 0.75em 1em 0.6em;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.tray a.active {
+  color: var(--col-orange);
+}
+
+.tray a:hover {
+  text-decoration: underline;
+}
+
+.tray li:first-child a {
+  border-top: 0;
+}
+
+.trayOpen {
+  transform: translateX(0);
+}
+
+.dimmer {
+  height: 100vh;
+  width: calc(100vw - var(--menu-width));
+  position: absolute;
+  right: var(--menu-width);
+  visibility: hidden;
+}
+
+.trayOpen .dimmer {
+  visibility: visible;
+}
+
+/* Hamburger Menu */
+
+button.toggle {
+  background: transparent;
+  color: var(--col-text);
+  height: var(--topbar-height);
+  display: flex;
+  font: 1.6em var(--oswald);
+  text-transform: uppercase;
+  margin-right: 0.75em;
+  transition: transform 0.5s;
+  z-index: 110;
+}
+button.toggle:hover {
+  text-decoration: none;
+}
+
+button.toggle span {
+  transition: opacity 0.3s, visibility 0s 0.3s;
+}
+
+.hamburger {
+  margin-left: 0.5em;
+
+  cursor: pointer;
+  width: 22px;
+  margin: auto;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0 0 0 0.75em;
+}
+
+.hamburger i {
+  background-color: var(--col-text);
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+}
+
+.hamburger i:nth-child(1) {
+  animation: outT 0.8s backwards;
+  animation-direction: reverse;
+}
+.hamburger i:nth-child(2) {
+  margin: 10px 0;
+  animation: outM 0.8s backwards;
+  animation-direction: reverse;
+}
+.hamburger i:nth-child(3) {
+  animation: outBtm 0.8s backwards;
+  animation-direction: reverse;
+}
+
+.trayOpen button.toggle {
+  transform: translateX(3em);
+}
+
+.trayOpen button.toggle span {
+  opacity: 0;
+}
+.trayOpen i {
+  background: white;
+}
+.trayOpen i:nth-child(1) {
+  animation: inT 0.8s forwards;
+}
+
+.trayOpen i:nth-child(2) {
+  animation: inM 0.8s forwards;
+}
+
+.trayOpen i:nth-child(3) {
+  animation: inBtm 0.8s forwards;
+}
+
+@keyframes inM {
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+@keyframes outM {
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+@keyframes inT {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(var(--x-translate)) rotate(0deg);
+  }
+  100% {
+    transform: translateY(var(--x-translate)) rotate(135deg);
+  }
+}
+@keyframes outT {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(var(--x-translate)) rotate(0deg);
+  }
+  100% {
+    transform: translateY(var(--x-translate)) rotate(135deg);
+  }
+}
+@keyframes inBtm {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(var(--x-translate-neg)) rotate(0deg);
+  }
+  100% {
+    transform: translateY(var(--x-translate-neg)) rotate(135deg);
+  }
+}
+@keyframes outBtm {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(var(--x-translate-neg)) rotate(0deg);
+  }
+  100% {
+    transform: translateY(var(--x-translate-neg)) rotate(135deg);
+  }
+}
