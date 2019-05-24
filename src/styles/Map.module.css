@@ -78,7 +78,7 @@
   overflow: hidden;
 }
 
-.root svg {
+.root > svg {
   width: 100%;
   position: absolute;
   left: 0;
@@ -89,4 +89,13 @@
 .secondarySvg {
   opacity: 0;
   pointer-events: none;
+}
+
+.exiting {
+  transition: transform 0.5s ease-out;
+}
+
+.entering,
+.entered {
+  transition: transform 0.7s 0.3s linear;
 }

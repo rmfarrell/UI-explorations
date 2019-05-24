@@ -175,11 +175,11 @@ export default function(props) {
     useEffect(() => {
       if (state === 'entering') {
         zoomToCountry(primay.current);
-        // primay.current.style.transform = zoomedInTransform;
+        primay.current.style.transform = zoomedInTransform;
       }
       if (state === 'exiting') {
         zoomToTiles(primay.current);
-        // primay.current.style.transform = '';
+        primay.current.style.transform = '';
       }
     }, [state]);
 
@@ -190,36 +190,10 @@ export default function(props) {
 
     return (
       <React.Fragment>
-        <CSSTransition
-          in={showIslands}
-          timeout={animationTime * 2}
-          classNames="fade"
-        >
-          <Islands
-            className={classNames(styles.secondarySvg, styles.islands)}
-            highlight={country ? 'ITA' : null}
-            highlightColor={geographyActiveFill}
-            defaultColor={geographyFill}
-          />
-        </CSSTransition>
-
-        <CSSTransition
-          in={showGrid}
-          timeout={animationTime * 2}
-          classNames="fade"
-        >
-          <EmptyTiles
-            rows={rows}
-            columns={columns}
-            className={styles.secondarySvg}
-            emptyTileFill={emptyTileFill}
-            getD={dFromTileData}
-          />
-        </CSSTransition>
         <svg
           className={styles[state]}
           ref={primay}
-          // style={['exiting', 'entered'].includes(state) ? { transform } : {}}
+          style={['exiting', 'entered'].includes(state) ? { transform } : {}}
           stroke={geographyStroke}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
@@ -227,6 +201,32 @@ export default function(props) {
           viewBox={viewBox}
           xmlns="http://www.w3.org/2000/svg"
         >
+          <CSSTransition
+            in={showIslands}
+            timeout={animationTime * 2}
+            classNames="fade"
+          >
+            <Islands
+              className={classNames(styles.secondarySvg, styles.islands)}
+              highlight={country ? 'ITA' : null}
+              highlightColor={geographyActiveFill}
+              defaultColor={geographyFill}
+            />
+          </CSSTransition>
+
+          <CSSTransition
+            in={showGrid}
+            timeout={animationTime * 2}
+            classNames="fade"
+          >
+            <EmptyTiles
+              rows={rows}
+              columns={columns}
+              className={styles.secondarySvg}
+              emptyTileFill={emptyTileFill}
+              getD={dFromTileData}
+            />
+          </CSSTransition>
           {children}
         </svg>
       </React.Fragment>

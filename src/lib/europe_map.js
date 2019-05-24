@@ -113,8 +113,8 @@ export const data = {
     name: 'Italy',
     tile: [5, 3],
     zoom: {
-      scale: 4,
-      translate: [-30, -90]
+      scale: 2.5,
+      translate: [0, -135]
     }
   },
   LTU: {
