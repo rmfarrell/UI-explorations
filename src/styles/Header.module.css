@@ -1,19 +1,18 @@
 .root {
   --menu-width: 20rem;
-  --topbar-height: 5rem;
+  --topbar-height: 6rem;
   --x-translate: 12px;
   --x-translate-neg: -12px;
   position: fixed;
   z-index: 100;
-  background-color: var(--col-light-grey);
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   width: 100%;
-  border-bottom: 1px solid var(--col-text);
   height: var(--topbar-height);
 }
 
 .root h1 {
-  font: 2.6em / var(--topbar-height) var(--oswald);
-  text-transform: uppercase;
+  font: bold 2em / var(--topbar-height) var(--merriweather);
 }
 
 .root h1 a {
