@@ -20,12 +20,7 @@ export default function(props) {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to={'/'}
-            exact
-            onlyActiveOnIndex
-            activeClassName={styles.active}
-          >
+          <NavLink to={'/'} exact activeClassName={styles.active}>
             <ExploreIcon />
           </NavLink>
         </li>
