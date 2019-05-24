@@ -99,3 +99,7 @@
 .entered {
   transition: transform 0.8s 0.3s cubic-bezier(0.39, 0.2, 0.37, 1.08);
 }
+
+.root path {
+  transition: fill 0.7s;
+}

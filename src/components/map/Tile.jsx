@@ -20,7 +20,7 @@ export default function Tile(props) {
   function g() {
     return (
       <g>
-        <path d={d} id={id} fill={fill} />;
+        <path d={d} id={id} style={{ fill }} />;
         {showLabels && (
           <text
             x={`${x * 10 + 1.6}%`}

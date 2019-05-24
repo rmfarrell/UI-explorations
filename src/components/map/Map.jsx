@@ -59,7 +59,7 @@ export default function(props) {
 
   function Geography(props) {
     const { id = '', fill = '', d = '' } = props;
-    return <path d={d} id={id} fill={fill} />;
+    return <path d={d} id={id} style={{ fill }} />;
   }
   // 37 45 56
 
