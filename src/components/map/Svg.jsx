@@ -59,49 +59,47 @@ export default function Svg(props) {
   }, [country]);
 
   return (
-    <React.Fragment>
-      <svg
-        className={styles[state]}
-        ref={primay}
-        style={['exiting', 'entered'].includes(state) ? { transform } : {}}
-        stroke={geographyStroke}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        version="1.2"
-        viewBox={viewBox}
-        xmlns="http://www.w3.org/2000/svg"
+    <svg
+      className={styles[state]}
+      ref={primay}
+      style={['exiting', 'entered'].includes(state) ? { transform } : {}}
+      stroke={geographyStroke}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      version="1.2"
+      viewBox={viewBox}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <CSSTransition
+        in={showIslands}
+        timeout={animationTime * 2}
+        classNames="fade"
+        enter={showFade}
       >
-        <CSSTransition
-          in={showIslands}
-          timeout={animationTime * 2}
-          classNames="fade"
-          enter={showFade}
-        >
-          <Islands
-            className={classNames(styles.secondarySvg, styles.islands)}
-            highlight={country ? 'ITA' : null}
-            highlightColor={geographyActiveFill}
-            defaultColor={geographyFill}
-          />
-        </CSSTransition>
+        <Islands
+          className={classNames(styles.secondarySvg, styles.islands)}
+          highlight={country ? 'ITA' : null}
+          highlightColor={geographyActiveFill}
+          defaultColor={geographyFill}
+        />
+      </CSSTransition>
 
-        <CSSTransition
-          in={showGrid}
-          timeout={animationTime * 2}
-          classNames="fade"
-          enter={showFade}
-        >
-          <EmptyTiles
-            rows={rows}
-            columns={columns}
-            className={styles.secondarySvg}
-            emptyTileFill={emptyTileFill}
-            getD={getD}
-          />
-        </CSSTransition>
-        {children}
-      </svg>
-    </React.Fragment>
+      <CSSTransition
+        in={showGrid}
+        timeout={animationTime * 2}
+        classNames="fade"
+        enter={showFade}
+      >
+        <EmptyTiles
+          rows={rows}
+          columns={columns}
+          className={styles.secondarySvg}
+          emptyTileFill={emptyTileFill}
+          getD={getD}
+        />
+      </CSSTransition>
+      {children}
+    </svg>
   );
 
   function zoomToCountry(svg) {
