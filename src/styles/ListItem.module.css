@@ -1,3 +1,8 @@
+.root {
+  height: 100%;
+  background-color: white;
+}
+
 .root h3 {
   font: bold 1.5em var(--opensans);
 }
@@ -15,12 +20,17 @@
 .root > a:hover {
   background: var(--col-light-grey);
 }
-
 .root h4 {
   font: normal 1.3em var(--oswald);
   color: var(--col-orange);
-  display: flex;
-  justify-content: space-between;
+}
+
+.root h3 {
+  font: 600 1.3em var(--merriweather);
+}
+
+.root h4 > * {
+  flex: 1;
 }
 
 .root h4 a {
@@ -59,6 +69,10 @@
   margin: 0;
 }
 
+.root .imgContainer {
+  box-shadow: inset 0 0 25em rgba(0, 0, 0, 0.5);
+}
+
 .columnContainer,
 a.columnContainer {
   display: flex;
@@ -78,7 +92,19 @@ a.readMore {
 /* -- Size 0 -- */
 
 .size-0 > * {
-  padding-right: 12%;
+  /* height: 8em; */
+}
+
+.size-0 > * {
+  padding: 0.5em 15% 0.5em 1em;
+}
+
+.size-0 h3 {
+  font: 600 1.2em var(--opensans);
+}
+
+.size-0 h4 {
+  font: 500 1.3em var(--oswald);
 }
 
 .size-0 h4 a {
@@ -87,14 +113,22 @@ a.readMore {
 
 /* -- Social -- */
 .social {
-  padding: 1.2em;
+  /* padding: 1.2em; */
 }
 
 /* -- Size 1 -- */
 
+.size-1 > div {
+  padding: 0 0 2em;
+}
+
+.size-1 > div > * {
+  padding: 0 1em;
+}
+
 .size-1 .imgContainer {
   flex: 7;
-  margin: 0 2em 0 0;
+  margin: 0 0 1em 0;
 }
 .size-1 h3 {
   font-size: 1.75em;
@@ -118,43 +152,48 @@ a.readMore {
 
 .size-2 {
   background: white;
+  height: 100%;
 }
 
 .size-2 > * {
-  padding: 0 0 2em;
+  padding: 0 0 1em;
 }
 
 .size-2 h3,
 .size-2 h4,
-.size-2 h5,
 .size-2 p {
-  padding: 0 5%;
+  padding: 0 1.5rem;
 }
 
 .size-2 h3 {
   font-size: 2em;
 }
 .size-2 h5 {
-  line-height: 1.5em;
+  font: normal 1.25em var(--oswald);
 }
 .size-2 .imgContainer {
   margin: 0 0 2em;
+  position: relative;
 }
-
+.size-2 .imgOverlay {
+  background: rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  padding: 0.25em 1em;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.size-2 h3 {
+  font-size: 1.75em;
+}
 .size-2 h3 a {
   color: var(--col-black);
 }
 .size-2 h3 a:hover {
   color: var(--col-blue);
 }
-.size-2 h4 {
-  font-size: 1.4em;
-  color: var(--col-grey-text);
-  display: block;
-  text-transform: uppercase;
-  margin: 0 0 1em;
-}
-
 @media (min-width: 650px) {
   .size-2 {
     flex: 0 0 32%;

@@ -1,0 +1,46 @@
+.root {
+}
+
+.menu {
+}
+
+.mapContainer {
+  /* flex: 1 0 40em; */
+}
+
+.textContainer {
+  width: 100%;
+}
+
+.filtersRow {
+  margin: 0 0 2em;
+  max-width: 50em;
+}
+
+.filtersRow > div:not(.dropdown) {
+  display: inline-block;
+  margin-right: 2em;
+  white-space: nowrap;
+}
+
+.dropdown {
+  font-size: 1.5em;
+  display: inline-block;
+  align-content: center;
+}
+
+.root label {
+  font-size: 1.5em;
+  font-weight: bold;
+  display: inline-block;
+  align-content: center;
+}
+
+.wide {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wide h4 {
+  font: bold 2em var(--oswald);
+}

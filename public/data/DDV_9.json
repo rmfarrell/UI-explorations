@@ -1,0 +1,42 @@
+{
+  "custom_article": {
+    "title": "Sint Dolores Quas Rerum Voluptatibus Quam Et Accusantium Quisquam Ut Dolore Blanditiis Vel Aut Est",
+    "image": {
+      "url": "http://lorempixel.com/640/480",
+      "width": 400,
+      "height": 699,
+      "length": 806,
+      "type": "image/jpeg"
+    },
+    "curator": "ipsam voluptatem",
+    "short_description": "atque qui est itaque facere veritatis debitis ut quas error",
+    "content": "cumque est illo debitis sunt consectetur laboriosam atque temporibus quia praesentium dolorum aut provident pariatur velit molestiae inventore iste odio dolor expedita incidunt laudantium dolorem ipsa rerum quis nulla temporibus exercitationem corrupti sit est sunt qui ut culpa dolorum voluptatem non facere nesciunt cupiditate aspernatur consequatur est suscipit et quibusdam impedit et est perspiciatis id excepturi autem ex architecto consectetur consequatur corporis repellendus laboriosam aliquam et quia et quia aut excepturi quaerat dolor est dolor et non illum qui aut ab aspernatur et ipsum doloribus dolores laboriosam sequi fuga est et placeat iusto accusamus ipsum consequatur consequatur debitis sint earum velit mollitia id est dolorum maxime doloribus ea repellendus corrupti impedit nostrum in voluptatum nihil rem nulla voluptas qui sed ea possimus voluptatem minus reprehenderit culpa saepe repellendus molestias qui voluptas tempora itaque praesentium voluptatibus amet et dolorem consectetur est corporis iusto quisquam ipsa ex facilis nobis totam veniam sunt quo sunt accusamus quia vitae in dolor dolor cum quasi incidunt eius dolorem sunt ea soluta culpa sed aperiam et non doloribus ut ipsam nisi similique est non fuga consequuntur quaerat maiores labore accusantium amet quia unde eum blanditiis omnis cum quae hic necessitatibus ipsa numquam fugiat iure minus voluptatum eligendi architecto eos est enim dolorem aut voluptas est sit ipsam voluptates facere et quasi vitae exercitationem et numquam quidem harum magnam non repellendus et atque at est voluptas dignissimos laboriosam ut dolor est et quisquam quaerat amet et et aspernatur voluptatem earum et omnis et vel quo perspiciatis voluptate"
+  },
+  "articles": {
+    "collection": [
+      "SOC_25",
+      "SOC_10",
+      "RSS_10",
+      "SOC_29",
+      "RSS_18",
+      "RSS_30",
+      "RSS_3",
+      "SOC_5",
+      "EXR_7",
+      "EXR_11",
+      "DDV_5"
+    ],
+    "featured": ["RSS_28"]
+  },
+  "author": "Mrs. Felix Reynolds",
+  "creator": "Louie Deckow",
+  "relationships": {
+    "primary_country": "IRL",
+    "countries": ["FIN", "SVN"],
+    "primary_issue": "Trade",
+    "issues": ["Finance", "Security", "Diplomacy", "Immigration"],
+    "entities": [],
+    "deep_dives": []
+  },
+  "document_type": "Deep Dive"
+}

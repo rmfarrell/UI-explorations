@@ -1,0 +1,63 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 2.5%;
+}
+
+.root h1 {
+  flex: 1 100%;
+  font-size: 2.75em;
+  margin: 0 0 1em;
+}
+
+.columnAncillary,
+.columnRight {
+  flex: 1 100%;
+  margin: 0 0 4em;
+}
+
+.columnMain p {
+  font-size: 1.4em;
+  line-height: 1.5em;
+}
+
+.readMore {
+  font-weight: bold;
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
+.columnMain header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.columnMain header h3 {
+  font: 1.6em var(--oswald);
+  max-width: 16em;
+}
+
+.columnMain header h3 a {
+  color: var(--col-blue);
+}
+
+.columnMain header h3 {
+  font-size: 1.6em;
+}
+
+.dateline {
+  font-size: 1.25em;
+  margin: 0 0 2em;
+}
+
+@media (min-width: 600px) {
+  .columnAncillary {
+    flex: 0 0 35%;
+    padding-top: 6em;
+  }
+
+  .columnMain {
+    flex: 0 0 62%;
+  }
+}

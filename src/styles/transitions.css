@@ -1,0 +1,20 @@
+:root .fade-enter {
+  opacity: 0;
+}
+:root .fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+:root .fade-exit {
+  opacity: 1;
+}
+:root .fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+:root .fade-exit-done {
+  opacity: 0;
+}
+:root .fade-enter-done {
+  opacity: 1;
+}

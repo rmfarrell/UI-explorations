@@ -1,4 +1,4 @@
-.root {
+.shade {
   border: 1px solid;
   position: fixed;
   top: 0;
@@ -6,6 +6,7 @@
   background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
+  z-index: 80;
 }
 
 .modal {
@@ -14,30 +15,41 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 60em;
-  height: 70em;
+  max-width: 80em;
+  height: 75em;
   max-height: 90vh;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  z-index: 120;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
 }
 
 .body {
   overflow-y: auto;
-  height: 100%;
+  height: calc(100% - 10rem);
 }
 
 .top {
-  font-size: 4rem;
   display: flex;
-  justify-content: flex-end;
-  padding: 0.1em;
+  justify-content: space-between;
+  padding: 0.1em 2.5%;
+  align-items: center;
 }
 
 .closeBtn {
   transition: color 0.25s;
+  font-size: 4rem;
+  align-self: flex-end;
+  margin-left: auto;
 }
 
 .closeBtn:hover {
   text-decoration: none;
   color: var(--col-grey);
+}
+
+.top h2 {
+  font: bold 2.5em/1em var(--oswald);
+  text-transform: uppercase;
+  margin: 0;
 }

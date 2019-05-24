@@ -109,7 +109,7 @@ function type() {
 function image() {
   return {
     color: randomColor(),
-    ratio: randomInt(50, 50)
+    ratio: 56
   };
 }
 
@@ -155,5 +155,6 @@ export {
   SocialMediaItem,
   socialMediaItems,
   articles,
-  multiple
+  multiple,
+  randomInt
 };

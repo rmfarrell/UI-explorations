@@ -1,0 +1,101 @@
+.container {
+  overflow: hidden;
+  background-color: #ccc;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.map {
+  font-size: 0;
+  width: 100%;
+}
+
+.map div,
+.map a,
+.map button {
+  width: 10%;
+  display: inline-block;
+  padding: 0 0 10% 0;
+  position: relative;
+  font-size: 1.5rem;
+  vertical-align: top;
+  white-space: normal;
+  text-align: left;
+}
+
+.land {
+  background-color: #999;
+}
+
+.sea {
+  background-color: #ccc;
+}
+
+.map span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+}
+
+/* Focused state */
+.focused {
+}
+
+.focused > div {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 100%;
+}
+
+.focused h1 {
+  top: 0;
+  font: normal 3em var(--oswald);
+  text-transform: uppercase;
+}
+
+.back {
+  color: inherit;
+  display: block;
+  font-size: 1.25em;
+  margin: 1em auto 0;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.root {
+  background: var(--col-grey);
+  box-shadow: inset 0 0 12em rgba(0, 0, 0, 0.25);
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+.root > svg {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.secondarySvg {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.exiting {
+  transition: transform 0.5s cubic-bezier(0.39, 0.2, 0.37, 1.08);
+}
+
+.entering,
+.entered {
+  transition: transform 0.8s 0.3s cubic-bezier(0.39, 0.2, 0.37, 1.08);
+}

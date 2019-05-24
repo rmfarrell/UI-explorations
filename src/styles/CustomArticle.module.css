@@ -1,0 +1,31 @@
+/* TODO: somehow combine with cards */
+.root {
+  font-size: 1.1em;
+  background-color: white;
+  height: 100%;
+}
+
+.root h1 {
+  margin: 0.5em 0 0;
+  font: 600 1.6em var(--merriweather);
+}
+
+.root p,
+.root h1 {
+  padding: 0 2%;
+}
+
+.root p a,
+.root p a:visited {
+  color: var(--col-blue);
+  font-weight: 600;
+}
+
+.root h1 a,
+.root h1 a:visited {
+  color: inherit;
+}
+
+.root h1 a:hover {
+  color: var(--col-blue);
+}

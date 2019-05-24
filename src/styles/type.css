@@ -8,7 +8,7 @@ h4 {
 }
 
 h1 {
-  font-size: 5em;
+  font-size: 4.5em;
   margin: 0;
 }
 
@@ -24,7 +24,13 @@ p,
 blockquote,
 label,
 input,
+p input,
 h5 {
   font-size: 1.5em;
   line-height: 1.3em;
+}
+
+p input,
+p label {
+  font-size: 0.75em;
 }

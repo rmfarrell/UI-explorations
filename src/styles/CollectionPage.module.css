@@ -1,0 +1,28 @@
+.tile header h3 {
+  font: bold 1.5em var(--oswald);
+  text-transform: uppercase;
+}
+
+.root > header {
+  margin: 3em auto 0.5em;
+  padding-left: 4%;
+  padding-right: 2%;
+}
+
+.root > header a {
+  color: inherit;
+}
+
+.root > header a:hover {
+  color: var(--col-blue);
+}
+
+.zoomOutButton {
+  position: absolute;
+  right: 0;
+  color: white;
+  z-index: 10;
+  padding: 0.25em;
+  margin: 0.5em;
+  background-color: rgba(0, 0, 0, 0.4);
+}

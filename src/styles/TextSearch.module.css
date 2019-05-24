@@ -1,0 +1,80 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 1em auto;
+  padding-bottom: 1em;
+}
+
+.root > * {
+  margin-top: 1em;
+}
+
+.root form {
+  display: flex;
+  align-items: center;
+  min-width: 30em;
+}
+
+.root form input[type='input'] {
+  font-size: 1.75em;
+  line-height: 1.75em;
+}
+
+.active {
+  background: var(--col-text);
+  color: white;
+}
+
+.root button:hover {
+  text-decoration: none;
+}
+
+.root ul {
+  font-size: 1.3em;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.root ul:first-child {
+  font-size: 1.75em;
+}
+
+.root button,
+.root input[type='submit'],
+.root input[type='button'] {
+  padding: 0.8em 1em;
+  margin: 0 0.8em 0 0;
+  font-family: var(--oswald);
+  text-transform: uppercase;
+  color: var(--col-grey);
+  font-size: 1.5rem;
+  border: none;
+}
+
+.root input[type='text'] {
+  font-size: 2em;
+  line-height: 2em;
+  border: none;
+  border-bottom: 1px solid var(--col-text);
+  background-color: transparent;
+  width: 50%;
+  max-width: 60em;
+  min-width: 20em;
+}
+
+.root input[type='submit'],
+.root form button {
+  background-color: var(--col-text);
+  color: white;
+  margin-left: 0.5em;
+  font-size: 1.5rem;
+}
+
+.root h3 {
+  margin: 0.25em 0 0;
+  font-size: 1.5em;
+}

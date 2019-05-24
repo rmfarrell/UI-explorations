@@ -1,4 +1,6 @@
 @import './type.css';
+@import './grid.css';
+@import './transitions.css';
 @custom-media --viewport-medium (width <= 50rem);
 
 :root {
@@ -11,6 +13,7 @@
   --col-grey-text: #8c8f98;
   --col-orange: #fc8b00;
   --col-blue: #45aaf2;
+  --col-red: #ff003b;
 
   /* fonts */
   --oswald: 'Oswald', sans-serif;
@@ -43,8 +46,21 @@ a {
   width: 100%;
 }
 
+h4.placeholderEmpty {
+  font: bold 4em var(--oswald);
+  text-transform: uppercase;
+  opacity: 0.25;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+body.modal-is-open {
+  overflow: hidden;
+}
+
 /* Buttons */
-button {
+button,
+.button {
   border: 0;
   cursor: pointer;
 }
@@ -56,6 +72,12 @@ button:disabled:hover {
 }
 button:hover {
   text-decoration: underline;
+}
+
+.button {
+  display: inline-block;
+  background-color: var(--col-grey);
+  padding: 0.75em 0.5em;
 }
 
 /* Forms */
@@ -89,4 +111,68 @@ label {
 .modal-leave.modal-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
+}
+
+/* Drop down */
+.Dropdown-root {
+  background-color: var(--col-grey);
+  padding: 0.75em 0.75em;
+  min-width: 10em;
+}
+
+.Dropdown-menu {
+  position: absolute;
+  z-index: 100;
+  background: white;
+  cursor: pointer;
+}
+
+.Dropdown-control {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.Dropdown-arrow-wrapper {
+  margin: 0 0 0 0.5em;
+  height: 0.25em;
+  width: 0.25em;
+  border-right: 1px solid var(--col-text);
+  border-bottom: 1px solid var(--col-text);
+  transform: rotate(45deg);
+}
+
+.Dropdown-root.is-open .Dropdown-arrow-wrapper {
+  transform: rotate(-135deg);
+}
+
+.Dropdown-option {
+  padding: 0.2em 0.5em;
+  width: 10em;
+  box-sizing: border-box;
+  color: var(--col-black);
+
+  &:hover {
+    background-color: var(--col-text);
+    color: white;
+  }
+}
+
+.Dropdown-root.big {
+  background-color: transparent;
+
+  .Dropdown-control {
+    font: bold 4em var(--merriweather);
+  }
+  .Dropdown-arrow-wrapper {
+    border-right: 0.1em solid var(--col-text);
+    border-bottom: 0.1em solid var(--col-text);
+  }
+  .Dropdown-menu {
+    font: bold 1.5em var(--merriweather);
+    display: flex;
+    max-width: 40em;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }

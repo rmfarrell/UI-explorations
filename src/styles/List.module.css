@@ -1,25 +1,38 @@
-.imgContainer {
-  padding: 0;
-  margin: 0 0 1em;
-}
-
 .root {
-  margin-bottom: 10em;
+  margin-bottom: 2em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: white;
+  height: 100%;
 }
 
-ul.itemList {
+.root > div {
+  flex: 1;
+}
+
+.root > header {
+  padding: 1em 0 0 1em;
+}
+
+.itemList {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-
+.itemList.width2 li {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
 button.readmore {
   width: 100%;
   background-color: var(--col-grey);
   color: var(--col-text);
   font-size: 1.5em;
   padding: 1em 0;
+}
+.imgContainer {
+  padding: 0;
+  margin: 0 0 1em;
 }
