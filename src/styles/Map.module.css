@@ -92,10 +92,10 @@
 }
 
 .exiting {
-  transition: transform 0.5s ease-out;
+  transition: transform 0.5s cubic-bezier(0.39, 0.2, 0.37, 1.08);
 }
 
 .entering,
 .entered {
-  transition: transform 0.7s 0.3s linear;
+  transition: transform 0.8s 0.3s cubic-bezier(0.39, 0.2, 0.37, 1.08);
 }
