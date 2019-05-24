@@ -16,22 +16,14 @@ export default function Svg(props) {
     children,
     state = '',
     country = '',
-    size = 1,
-    renderTile,
-    mapFills,
-    tileClickHandler = () => {},
-    label,
     geographyStroke = 'rgba(255,255,255,0.2)',
     geographyFill = 'rgba(20,10,0,0.5)',
     geographyActiveFill = '#ff003b',
-    tileFill = 'rgba(0,0,0,0.25)',
-    euTileFill = '#ff003b',
     rows = 10,
     columns = 10,
     emptyTileFill = 'rgba(255, 255, 255, 0.3)',
     animationTime = 700,
     viewBox = '0 0 1200 1200',
-    zoomable = false,
     getD
   } = props;
 

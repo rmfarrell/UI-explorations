@@ -12,7 +12,6 @@ import Svg from './Svg.jsx';
 import Tile from './Tile.jsx';
 
 export default function(props) {
-  let start;
   const {
     renderTile,
     mapFills,
@@ -20,16 +19,11 @@ export default function(props) {
     country = '',
     label,
     children,
-    geographyStroke = 'rgba(255,255,255,0.2)',
     geographyFill = 'rgba(20,10,0,0.5)',
     geographyActiveFill = '#ff003b',
     tileFill = 'rgba(0,0,0,0.25)',
     euTileFill = '#ff003b',
-    rows = 10,
-    columns = 10,
-    emptyTileFill = 'rgba(255, 255, 255, 0.3)',
     animationTime = 700,
-    viewBox = '0 0 1200 1200',
     zoomable = false
   } = props;
 
