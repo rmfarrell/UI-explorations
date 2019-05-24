@@ -1,42 +1,91 @@
 .root {
   margin-top: 6em;
-  background: var(--col-text);
+  background: var(--col-dark-grey);
   color: var(--col-grey);
+  border-top: 1px solid var(--col-dark-grey);
+  color: white;
 }
 
-.root a {
-  color: inherit;
-  display: block;
-  transition: all 0.3s;
-  height: 100%;
-  box-sizing: border-box;
+a.active,
+a:hover {
+  text-decoration: underline;
 }
 
-.root a.active {
-  background: white;
-  color: var(--col-text);
-}
-
-.root ul {
+.pagesMenu {
   display: flex;
-  margin: 0 auto;
-  padding: 0 2%;
 }
 
-.root li > * {
-  padding: 0.75em 1em;
+.pagesMenu > div {
+  margin: 0 12% 2em 0;
 }
 
-.root li {
-  font-size: 1.5rem;
-  white-space: nowrap;
-  margin: 0;
+.pagesMenu ul {
+  min-width: 14em;
+}
+
+.pagesMenu h2 {
+  color: var(--col-blue);
+  font-size: 1.8em;
+  font-weight: 500;
+}
+
+.pagesMenu li {
+  margin: 0.75em 0;
+}
+
+.pagesMenu a {
+  color: var(--col-white);
+  font-size: 1.5em;
+}
+
+.questions {
+  background: var(--col-text);
+  text-align: center;
+  font-weight: 200;
+  font-size: 1.75em;
+  padding: 1.5em 5%;
+}
+
+.questions a {
+  color: var(--col-blue);
+  text-wrap: nowrap;
+}
+
+.columns {
   display: flex;
-  align-items: center;
+  margin: 4em auto 1em;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.root em {
-  font-family: monospace;
-  font-style: normal;
-  color: var(--col-orange);
+.root h3 {
+  font-weight: 400;
+  font-size: 1.6em;
+  margin: 0 0 0.75em;
+}
+
+.root form {
+  display: flex;
+}
+
+.root input[type='email'] {
+  background: transparent;
+  border: 1px solid var(--col-grey-text);
+  padding: 0 1em;
+  width: 14em;
+  color: var(--white);
+  line-height: 3em;
+}
+
+.root input[type='email']::placeholder {
+  color: var(--col-grey-text);
+}
+
+.root input[type='submit'] {
+  font: 500 1.8em/2.6em var(--oswald);
+  padding: 0 0.9em;
+  text-transform: uppercase;
+  background: var(--col-blue);
+  color: white;
+  border: none;
 }

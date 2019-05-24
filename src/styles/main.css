@@ -14,11 +14,16 @@
   --col-orange: #fc8b00;
   --col-blue: #45aaf2;
   --col-red: #ff003b;
+  --col-dark-grey: #202535;
+  --col-white: #d7d8db;
 
   /* fonts */
   --oswald: 'Oswald', sans-serif;
   --merriweather: 'Merriweather', serif;
   --opensans: 'Open Sans', sans-serif;
+
+  /* spacing */
+  --margin: 2%;
 
   color: var(--col-text);
   background: var(--col-light-grey);
@@ -91,7 +96,9 @@ label {
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
-  padding: 0 2%;
+  padding-right: var(--margin);
+  padding-left: var(--margin);
+  box-sizing: border-box;
 }
 
 /* Animations */

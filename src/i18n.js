@@ -68,6 +68,9 @@ export default {
     },
     terms: {
       en: 'Terms of Use'
+    },
+    subscribe: {
+      en: 'subscribe'
     }
   }
 };
