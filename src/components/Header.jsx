@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/Header.module.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { classNames } from '../lib/helpers';
 import PagesMenu from './PagesMenu';
 
-export default function(props) {
+export default withRouter(function(props) {
+  const { location } = props;
   const [isTrayOpen, setIsTrayOpen] = useState(false);
+
+  useEffect(() => {
+    setIsTrayOpen(false);
+  }, [location.pathname]);
+
   return (
     <header className={classNames(styles.root)}>
       <h1 className="constrain">
@@ -15,11 +21,10 @@ export default function(props) {
       <Tray setIsTrayOpen={setIsTrayOpen} isTrayOpen={isTrayOpen} />
     </header>
   );
-}
+});
 
 function Tray(props) {
   const { setIsTrayOpen, isTrayOpen = false } = props;
-
   return (
     <div className={classNames(styles.tray, isTrayOpen ? styles.trayOpen : '')}>
       <button onClick={toggleTray} className={styles.toggle}>
