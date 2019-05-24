@@ -119,13 +119,13 @@ export function dereferenceArticles(collection = {}, ids = []) {
   return dereferenceArticle(collection, ...ids);
 }
 
-export function animate(duration = 1000, easeFn, fn) {
+export function animate(duration = 1000, easeFn, fn, pause = 0) {
   if (!performance || !requestAnimationFrame) {
     throw new Error(
       'animate requires window.performance and window.requestAnimationFrame'
     );
   }
-  const start = performance.now();
+  let start;
   const total = duration;
   let elapsed;
 
@@ -140,5 +140,8 @@ export function animate(duration = 1000, easeFn, fn) {
     return Math.max(Math.min(elapsed / total, 1), 0);
   }
 
-  tick(start);
+  setTimeout(() => {
+    start = performance.now();
+    tick(start);
+  }, pause);
 }

@@ -116,9 +116,14 @@ export default function Svg(props) {
       const geo = target.getAttribute('d');
       const interpolator = interpolate(geo, d);
 
-      animate(animationTime, easing.easeOutQuint, val => {
-        target.setAttribute('d', interpolator(val));
-      });
+      animate(
+        animationTime,
+        easing.easeOutQuint,
+        val => {
+          target.setAttribute('d', interpolator(val));
+        },
+        100
+      );
     });
   }
 
@@ -133,9 +138,14 @@ export default function Svg(props) {
       const aSquare = getD(tile);
       if (!aSquare) return;
       const interpolator = interpolate(geo, aSquare);
-      animate(animationTime, easing.easeOutQuint, val => {
-        target.setAttribute('d', interpolator(val));
-      });
+      animate(
+        animationTime,
+        easing.easeOutQuint,
+        val => {
+          target.setAttribute('d', interpolator(val));
+        },
+        100
+      );
     });
   }
 }
