@@ -34,7 +34,7 @@ export default function(props) {
   return (
     <article className={styles.root}>
       <header className="constrain">
-        <h1>Deep Dives {country && `: ${COUNTRIES[match.params.country]}`}</h1>
+        <h1>Deep Dives{country && `: ${COUNTRIES[match.params.country]}`}</h1>
       </header>
       <div className="grid">
         <div className="grid--item__third">
