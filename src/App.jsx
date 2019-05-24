@@ -23,12 +23,15 @@ import {
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
-// -- Modules
+// -- Components
 import DeepDive from './pages/DeepDive.jsx';
 import DeepDivesAll from './pages/DeepDivesAll.jsx';
 import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
+import Header from './components/Header.jsx';
+import PagesMenu from './components/PagesMenu.jsx';
+import SectionsMenu from './components/SectionsMenu.jsx';
 
 const collectionPages = [
   '/relationship/:country',
@@ -152,93 +155,14 @@ function Main(props) {
 
   return (
     <div className={styles.root}>
-      <header>
-        <div className={classNames(styles.topbar)}>
-          <h1 className="constrain">
-            <Link to="/">Transatlantic Periscope</Link>
-          </h1>
-          {tray()}
-        </div>
-        {sectionsMenu()}
-      </header>
+      <Header />
+      <SectionsMenu />
       {fetched ? children : loading()}
-      <footer>{pagesMenu()}</footer>
+      <footer>
+        <PagesMenu />
+      </footer>
     </div>
   );
-
-  function tray() {
-    const [isTrayOpen, setIsTrayOpen] = useState(false);
-    return (
-      <div
-        className={classNames(styles.tray, isTrayOpen ? styles.trayOpen : '')}
-      >
-        <button
-          onClick={toggleTray}
-          className={classNames(styles.closeButton, styles.toggle)}
-        >
-          {isTrayOpen ? 'x' : '='}
-        </button>
-        {pagesMenu()}
-      </div>
-    );
-    function toggleTray() {
-      setIsTrayOpen(!isTrayOpen);
-    }
-  }
-
-  function sectionsMenu() {
-    return (
-      <nav className={classNames(styles.sectionsMenu, 'constrain')}>
-        <p>View</p>
-        <ul>
-          <li>
-            <NavLink to="/relationship" activeClassName={styles.active}>
-              <RelationshipIcon />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/deep-dives" activeClassName={styles.active}>
-              <DeepDiveIcon />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/explore" activeClassName={styles.active}>
-              <ExploreIcon />
-            </NavLink>
-          </li>
-          <li className={styles.helpLink}>
-            <NavLink to="/help" activeClassName={styles.active}>
-              ?
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-
-  function pagesMenu() {
-    return (
-      <nav>
-        <ul className="constrain">
-          <li>
-            <NavLink to="/static1" activeClassName={styles.active}>
-              Static page
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/static2" activeClassName={styles.active}>
-              Static page
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/static3" activeClassName={styles.active}>
-              Static page
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
 }
 
 export default AppRouter;

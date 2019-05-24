@@ -1,0 +1,65 @@
+.root {
+  --menu-width: 20rem;
+  --topbar-height: 4rem;
+  position: fixed;
+  z-index: 100;
+  background-color: var(--col-light-grey);
+  width: 100%;
+  border-bottom: 1px solid var(--col-text);
+  height: var(--topbar-height);
+}
+
+.root h1 {
+  font: 2.6em / var(--topbar-height) var(--oswald);
+  text-transform: uppercase;
+}
+
+.root h1 a {
+  color: inherit;
+}
+
+.tray {
+  /* border: 1px solid red; */
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: start;
+  position: absolute;
+  transition: transform 0.3s;
+  transform: translateX(var(--menu-width));
+}
+
+.toggle {
+  font-size: 2rem;
+  width: 2em;
+  background: var(--col-text);
+  color: white;
+  height: var(--topbar-height);
+}
+
+.tray nav {
+  width: var(--menu-width);
+  font: 1.4em/1.5em var(--opensans);
+  background-color: var(--col-text);
+  top: 0;
+  right: 0;
+  z-index: 100;
+  height: 100vh;
+}
+.tray ul {
+  padding: 0 0.5em;
+}
+.tray a {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  display: block;
+  padding: 0.75em 0 0.6em;
+}
+
+.tray li:first-child a {
+  border-top: 0;
+}
+
+.trayOpen {
+  transform: translateX(0);
+}

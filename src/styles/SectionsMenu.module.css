@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  margin-top: 8em;
+  align-items: center;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.root > p {
+  display: block;
+  font: 1.5em var(--oswald);
+  text-transform: uppercase;
+  margin: 0 0.75em 0 0;
+}
+
+.root ul {
+  display: flex;
+  width: 100%;
+}
+
+.root li {
+  margin-left: 0;
+}
+
+.root a {
+  display: block;
+  font: bold 2em var(--oswald);
+  padding: 0.2em 0.5em;
+  width: 1.75em;
+  text-align: center;
+  color: var(--col-text);
+  border: 1px solid var(--col-text);
+  transition: all 0.3s;
+}
+
+.root a path {
+  fill: var(--col-text);
+}
+
+.root a.active {
+  background: var(--col-text);
+  color: white;
+}
+
+.root a.active path {
+  fill: white;
+}
+
+.root .helpLink {
+  margin-left: auto;
+}
+.helpLink a {
+  padding: 0.2em;
+  width: 1.6em;
+  border-radius: 50%;
+}
