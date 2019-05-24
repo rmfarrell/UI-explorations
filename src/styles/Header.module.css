@@ -65,6 +65,18 @@
   transform: translateX(0);
 }
 
+.dimmer {
+  height: 100vh;
+  width: calc(100vw - var(--menu-width));
+  position: absolute;
+  right: var(--menu-width);
+  visibility: hidden;
+}
+
+.trayOpen .dimmer {
+  visibility: visible;
+}
+
 /* Hamburger Menu */
 
 button.toggle {
