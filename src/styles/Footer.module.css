@@ -6,8 +6,12 @@
   color: white;
 }
 
-a.active,
-a:hover {
+.root a {
+  color: white;
+}
+
+.root a.active,
+.root a:hover {
   text-decoration: underline;
 }
 
@@ -66,6 +70,7 @@ a:hover {
 
 .root form {
   display: flex;
+  margin-bottom: 3em;
 }
 
 .root input[type='email'] {
@@ -88,4 +93,29 @@ a:hover {
   background: var(--col-blue);
   color: white;
   border: none;
+}
+
+.ancillary {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.ancillary > * {
+}
+
+.ancillary p {
+  margin: 0;
+  color: var(--col-grey-text);
+}
+
+.ancillary a {
+  color: inherit;
+}
+
+.shareIcons i {
+  background: var(--col-grey-text);
+  margin: 0 0.5em 0 0;
+  color: var(--col-dark-grey);
+  padding: 0.1em;
 }

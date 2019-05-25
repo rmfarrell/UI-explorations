@@ -2,6 +2,7 @@ import React from 'react';
 import PagesMenu from './PagesMenu.jsx';
 import styles from '../styles/Footer.module.css';
 import { i18n, classNames } from '../lib/helpers';
+import { Link } from 'react-router-dom';
 
 export default function(props) {
   const { helpEmail = '', formAction } = props;
@@ -26,7 +27,28 @@ export default function(props) {
             />
             <input type="submit" value={i18n('footer', 'subscribe')} />
           </form>
-          <div className={styles.ancillary}>Social/Privacy/Terms</div>
+          <div className={styles.ancillary}>
+            <div>
+              <h3>{i18n('footer', 'share')}</h3>
+              <div className={styles.shareIcons}>
+                <a target="_blank">
+                  <i className={classNames('material-icons')}>favorite</i>
+                </a>
+                <a target="_blank">
+                  <i className={classNames('material-icons')}>favorite</i>
+                </a>
+                <a target="_blank">
+                  <i className={classNames('material-icons')}>favorite</i>
+                </a>
+              </div>
+            </div>
+            <p>
+              <Link to="/privacy-policy">
+                {i18n('footer', 'privacy_policy')}
+              </Link>{' '}
+              | <Link to="/terms">{i18n('footer', 'terms')}</Link>
+            </p>
+          </div>
         </div>
       </div>
       <div className={styles.columns}>copyright/BF</div>
