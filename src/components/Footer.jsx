@@ -52,8 +52,10 @@ export default function(props) {
         </div>
       </div>
 
-      <div className={styles.copyright}>
-        <span>&copy; {i18n('title')}</span>
+      <div className={classNames(styles.copyright)}>
+        <span>
+          &copy; {new Date().getFullYear()} {i18n('title')}
+        </span>
         <a>{i18n('foundation')} </a>
       </div>
     </footer>

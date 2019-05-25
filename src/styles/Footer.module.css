@@ -17,10 +17,13 @@
 
 .pagesMenu {
   display: flex;
+  flex: 1;
+  max-width: 52em;
+  justify-content: space-between;
+  margin-bottom: 2em;
 }
 
 .pagesMenu > div {
-  margin: 0 12% 2em 0;
 }
 
 .pagesMenu ul {
@@ -130,4 +133,11 @@
 
 .copyright a {
   color: inherit;
+}
+
+@media (max-width: 1160px) {
+  .copyright {
+    padding-left: var(--margin);
+    padding-right: var(--margin);
+  }
 }
