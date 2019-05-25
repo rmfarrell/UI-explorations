@@ -10,8 +10,8 @@ export default function(props) {
   return (
     <footer className={classNames(styles.root)}>
       <aside className={classNames(styles.questions)}>
-        {i18n('footer', 'questions')}
-        <a href={`mailto:${helpEmail}`}> {i18n('footer', 'let_us_know')}</a>
+        {`${i18n('footer', 'questions')} `}
+        <a href={`mailto:${helpEmail}`}>{i18n('footer', 'let_us_know')}</a>
       </aside>
       <div className={classNames(styles.columns, 'constrain')}>
         <PagesMenu
@@ -51,7 +51,11 @@ export default function(props) {
           </div>
         </div>
       </div>
-      <div className={styles.columns}>copyright/BF</div>
+
+      <div className={styles.copyright}>
+        <span>&copy; {i18n('title')}</span>
+        <a>{i18n('foundation')} </a>
+      </div>
     </footer>
   );
 

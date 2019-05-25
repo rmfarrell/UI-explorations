@@ -101,9 +101,6 @@
   justify-content: space-between;
 }
 
-.ancillary > * {
-}
-
 .ancillary p {
   margin: 0;
   color: var(--col-grey-text);
@@ -118,4 +115,19 @@
   margin: 0 0.5em 0 0;
   color: var(--col-dark-grey);
   padding: 0.1em;
+}
+
+.copyright {
+  display: flex;
+  color: var(--col-blue);
+  justify-content: space-between;
+  font-size: 1.3em;
+  border-top: 1px solid var(--col-grey-text);
+  padding: 1em 0;
+  max-width: calc(1200px - var(--margin) - var(--margin));
+  margin: 2em auto 0.5em;
+}
+
+.copyright a {
+  color: inherit;
 }

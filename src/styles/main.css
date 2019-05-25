@@ -23,7 +23,7 @@
   --opensans: 'Open Sans', sans-serif;
 
   /* spacing */
-  --margin: 2%;
+  --margin: 2.5%;
 
   color: var(--col-text);
   background: var(--col-light-grey);

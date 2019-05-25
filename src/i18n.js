@@ -3,6 +3,9 @@ export default {
   title: {
     en: 'Transatlantic Periscope'
   },
+  foundation: {
+    en: 'Bertelsmann Foundation'
+  },
   header: {
     menu: {
       en: 'menu'
