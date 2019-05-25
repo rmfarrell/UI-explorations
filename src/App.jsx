@@ -30,7 +30,7 @@ import Explore from './pages/Explore.jsx';
 import Relationship from './pages/Relationship.jsx';
 import Empty from './components/Empty.jsx';
 import Header from './components/Header.jsx';
-import PagesMenu from './components/PagesMenu.jsx';
+import Footer from './components/Footer.jsx';
 import SectionsMenu from './components/SectionsMenu.jsx';
 
 const collectionPages = [
@@ -158,9 +158,7 @@ function Main(props) {
       <Header />
       <SectionsMenu />
       {fetched ? children : loading()}
-      <footer>
-        <PagesMenu activeClassName={styles.active} />
-      </footer>
+      <Footer />
     </div>
   );
 }

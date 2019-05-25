@@ -1,5 +1,6 @@
 import { COUNTRIES } from './constants';
 import { memoize } from 'lodash';
+import i18Snippets from '../i18n';
 
 export const easing = {
   linear: function(t) {
@@ -58,6 +59,28 @@ export const easing = {
 export const maxCount = memoize((counts = {}) => {
   return Object.values(counts).reduce((item, acc) => (item > acc ? item : acc));
 });
+
+export function i18n(...addressParts) {
+  // TODO get language here
+  return _i18n('en')(...addressParts);
+}
+
+function _i18n(lang) {
+  return (...args) => {
+    try {
+      const loc = args.reduce((acc, part) => acc[part], i18Snippets);
+      return loc[lang];
+    } catch (e) {
+      console.warn(
+        `Could not find path ${args.reduce(
+          (acc, item) => `${acc}.${item}`,
+          '[root]'
+        )}.${lang} in /i18n.js`
+      );
+      return '';
+    }
+  };
+}
 
 export function formatDate(date = new Date()) {
   const dd = date.getDate(),
