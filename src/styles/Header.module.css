@@ -89,6 +89,8 @@ button.toggle {
   margin-right: 0.75em;
   transition: transform 0.5s;
   z-index: 110;
+  position: absolute;
+  left: -6em;
 }
 button.toggle:hover {
   text-decoration: none;
