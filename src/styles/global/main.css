@@ -1,6 +1,6 @@
-@import './type.css';
-@import './grid.css';
-@import './transitions.css';
+@import './_type.css';
+@import './_grid.css';
+@import './_transitions.css';
 @custom-media --viewport-medium (width <= 50rem);
 
 :root {
