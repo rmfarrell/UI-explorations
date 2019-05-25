@@ -35,7 +35,7 @@ function Tray(props) {
         </div>
       </button>
       <div className={styles.dimmer} onClick={toggleTray} />
-      <PagesMenu activeClassName={styles.active} />
+      <PagesMenu activeClassName={styles.active} className={styles.pagesMenu} />
     </div>
   );
 
