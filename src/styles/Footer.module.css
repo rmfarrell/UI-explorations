@@ -125,7 +125,7 @@
   border-top: 1px solid var(--col-grey-text);
   padding: 1em 0;
   max-width: calc(1200px - var(--margin) - var(--margin));
-  margin: 2em auto 0.5em;
+  margin: 3em auto 0.5em;
 }
 
 .copyright a {
