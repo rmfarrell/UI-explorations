@@ -61,8 +61,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 
 ### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Run `yarn deploy` to deploy to the S3 bucket specified `package.json`
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Run `yarn build-deploy` to run both the `build and deploy` processes.
