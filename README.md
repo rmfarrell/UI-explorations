@@ -61,6 +61,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 
 ### Deployment
 
+Install `s3-deploy` globally.
+
+Set up an S3 bucket and update the `deploy` script in `package.json` with the name of the S3 bucket. Check your AWS config to ensure you have permission to update bucket items.
+
 Run `yarn deploy` to deploy to the S3 bucket specified `package.json`
 
 Run `yarn build-deploy` to run both the `build and deploy` processes.
