@@ -51,7 +51,6 @@ async function _testApi() {
   const [error, json] = await fetchDetail('1503fb50669a11e9b998fb57436f5124', {
     // fields: ['created-at', 'meta']
   });
-  console.log(json);
 }
 
 function AppRouter() {
