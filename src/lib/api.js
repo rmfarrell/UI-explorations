@@ -6,20 +6,24 @@ const CREDS = {
     u: 'govlab',
     p: 'LudoaHolAdHa'
   },
-  ROOT = 'https://periscope.finity.app/api';
+  ROOT = 'https://periscope.finity.app/api',
+  // Using a proxy for now until CORS is implemented
+  PROXY = 'http://localhost:8080/';
 
 // -- List pages
 
 export async function listIssues() {
-  // https://periscope.finity.app/api/story-groups/?types=issue
-  return await _get('/story-groups/?types=issue');
+  return await list('issue');
 }
-
 export async function listCountries() {
-  // https://periscope.finity.app/api/story-groups/?types=country
+  return await list('country');
 }
 export async function listDeepDives() {
-  // https://periscope.finity.app/api/story-groups/?types=deepdive
+  return await list('deepdive');
+}
+
+export async function list(...types) {
+  return await _get(`/story-groups/?types=${types.join(',')}`);
 }
 
 async function _get(path) {
@@ -28,26 +32,20 @@ async function _get(path) {
     'base64'
   )}`;
 
-  [response, error] = await to(
-    fetch(`${ROOT}${path}`, {
-      credentials: 'include',
-      mode: 'no-cors',
+  [error, response] = await to(
+    fetch(`${PROXY}${ROOT}${path}`, {
+      // credentials: 'include',
+      // mode: 'cors',
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
+        origin: 'http://localhost:3000',
         Authorization
       }
     })
   );
 
-  console.log(Authorization);
-  console.log(response);
-
-  if (error) {
-    return [null, error];
+  if (error || !response.ok) {
+    return [null, error || new Error(`Returned response: ${response}`)];
   }
-
-  console.log(response);
 
   return await to(response.json());
 }

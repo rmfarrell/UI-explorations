@@ -22,7 +22,9 @@ import {
   fetchRelationships,
 
   // new
-  listIssues
+  listIssues,
+  listCountries,
+  listDeepDives
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -47,8 +49,8 @@ const collectionPages = [
 _testApi();
 
 async function _testApi() {
-  const j = await listIssues();
-  console.log(j);
+  const [error, json] = await listDeepDives();
+  console.log(json);
 }
 
 function AppRouter() {
