@@ -16,6 +16,7 @@
     "postcss-custom-media": "^7.0.7",
     "postcss-custom-selectors": "^5.1.2",
     "postcss-import": "^12.0.1",
+    "query-string": "^6.5.0",
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
     "react-calendar": "^2.18.1",

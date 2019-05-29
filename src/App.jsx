@@ -24,7 +24,8 @@ import {
   // new
   listIssues,
   listCountries,
-  listDeepDives
+  listDeepDives,
+  detail
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -49,7 +50,9 @@ const collectionPages = [
 _testApi();
 
 async function _testApi() {
-  const [error, json] = await listDeepDives();
+  const [error, json] = await detail('1503fb50669a11e9b998fb57436f5124', {
+    // fields: ['created-at', 'meta']
+  });
   console.log(json);
 }
 

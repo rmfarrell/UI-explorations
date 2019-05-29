@@ -1,6 +1,7 @@
 import to from 'await-to-js';
 import { COUNTRIES } from './constants';
 import 'unfetch/polyfill';
+import queryString from 'query-string';
 
 const CREDS = {
     u: 'govlab',
@@ -24,6 +25,23 @@ export async function listDeepDives() {
 
 export async function list(...types) {
   return await _get(`/story-groups/?types=${types.join(',')}`);
+}
+
+export async function detail(id, options = {}) {
+  if (!id) {
+    return [new Error('story-groupd id is required'), null];
+  }
+  const optError = _validateDetailOptions(options);
+  if (optError) {
+    return [optError, null];
+  }
+  const qs = queryString.stringify(options, { arrayFormat: 'comma' });
+  return await _get(`/story-group/${id}?${qs}`);
+}
+
+function _validateDetailOptions() {
+  let error = '';
+  return error;
 }
 
 async function _get(path) {
