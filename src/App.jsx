@@ -19,7 +19,10 @@ import {
   fetchRssItems,
   fetchSocialMedia,
   fetchExternalResources,
-  fetchRelationships
+  fetchRelationships,
+
+  // new
+  listIssues
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -40,6 +43,13 @@ const collectionPages = [
   '/relationship',
   '/deep-dives'
 ];
+
+_testApi();
+
+async function _testApi() {
+  const j = await listIssues();
+  console.log(j);
+}
 
 function AppRouter() {
   return (

@@ -1,4 +1,58 @@
+import to from 'await-to-js';
 import { COUNTRIES } from './constants';
+import 'unfetch/polyfill';
+
+const CREDS = {
+    u: 'govlab',
+    p: 'LudoaHolAdHa'
+  },
+  ROOT = 'https://periscope.finity.app/api';
+
+// -- List pages
+
+export async function listIssues() {
+  // https://periscope.finity.app/api/story-groups/?types=issue
+  return await _get('/story-groups/?types=issue');
+}
+
+export async function listCountries() {
+  // https://periscope.finity.app/api/story-groups/?types=country
+}
+export async function listDeepDives() {
+  // https://periscope.finity.app/api/story-groups/?types=deepdive
+}
+
+async function _get(path) {
+  let response, error, json;
+  const Authorization = `Basic ${Buffer.from(CREDS.u + ':' + CREDS.p).toString(
+    'base64'
+  )}`;
+
+  [response, error] = await to(
+    fetch(`${ROOT}${path}`, {
+      credentials: 'include',
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        Authorization
+      }
+    })
+  );
+
+  console.log(Authorization);
+  console.log(response);
+
+  if (error) {
+    return [null, error];
+  }
+
+  console.log(response);
+
+  return await to(response.json());
+}
+
+// -- Stubs
 
 export async function fetchDeepDives(count = 0) {
   return await fetchJson('DDV', count);
