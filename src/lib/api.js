@@ -13,21 +13,11 @@ const CREDS = {
 
 // -- List pages
 
-export async function listIssues() {
-  return await list('issue');
-}
-export async function listCountries() {
-  return await list('country');
-}
-export async function listDeepDives() {
-  return await list('deepdive');
-}
-
-export async function list(...types) {
+export async function fetchList(...types) {
   return await _get(`/story-groups/?types=${types.join(',')}`);
 }
 
-export async function detail(id, options = {}) {
+export async function fetchDetail(id, options = {}) {
   if (!id) {
     return [new Error('story-groupd id is required'), null];
   }

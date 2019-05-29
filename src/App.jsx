@@ -22,10 +22,8 @@ import {
   fetchRelationships,
 
   // new
-  listIssues,
-  listCountries,
-  listDeepDives,
-  detail
+  fetchList,
+  fetchDetail
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -50,7 +48,7 @@ const collectionPages = [
 _testApi();
 
 async function _testApi() {
-  const [error, json] = await detail('1503fb50669a11e9b998fb57436f5124', {
+  const [error, json] = await fetchDetail('1503fb50669a11e9b998fb57436f5124', {
     // fields: ['created-at', 'meta']
   });
   console.log(json);
