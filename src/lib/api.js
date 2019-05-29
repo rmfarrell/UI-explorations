@@ -13,25 +13,47 @@ const CREDS = {
 
 // -- List pages
 
+export async function fetchEntries(opts = {}) {
+  opts = Object.assign({ index: 'entries' }, opts);
+  const { error, query } = newOptions(opts);
+  if (error) {
+    return [error, null];
+  }
+  return await _get(`/entries/?${query}`);
+}
+
 export async function fetchList(...types) {
   return await _get(`/story-groups/?types=${types.join(',')}`);
 }
 
-export async function fetchDetail(id, options = {}) {
+export async function fetchDetail(id, opts = {}) {
   if (!id) {
     return [new Error('story-groupd id is required'), null];
   }
-  const optError = _validateDetailOptions(options);
-  if (optError) {
-    return [optError, null];
+  const { error, query } = newOptions(opts);
+  if (error) {
+    return [error, null];
   }
-  const qs = queryString.stringify(options, { arrayFormat: 'comma' });
-  return await _get(`/story-group/${id}?${qs}`);
+  return await _get(`/story-group/${id}?${query}`);
 }
 
-function _validateDetailOptions() {
-  let error = '';
-  return error;
+function newOptions(options = {}) {
+  let error, query;
+
+  // validate
+  error = _validateDetailOptions(options);
+  query = error
+    ? null
+    : queryString.stringify(options, { arrayFormat: 'comma' });
+  return {
+    error,
+    query
+  };
+
+  function _validateDetailOptions() {
+    let error;
+    return error;
+  }
 }
 
 async function _get(path) {

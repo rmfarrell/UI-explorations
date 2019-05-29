@@ -23,7 +23,8 @@ import {
 
   // new
   fetchList,
-  fetchDetail
+  fetchDetail,
+  fetchEntries
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -48,9 +49,15 @@ const collectionPages = [
 _testApi();
 
 async function _testApi() {
-  const [error, json] = await fetchDetail('1503fb50669a11e9b998fb57436f5124', {
+  const [error, json] = await fetchEntries({
     // fields: ['created-at', 'meta']
+    // index: 'entries',
+    'content-types': 'finity-data:post:tweet',
+    // fields: 'content-type',
+    limit: 8000,
+    fields: 'tags'
   });
+  console.log(json);
 }
 
 function AppRouter() {
