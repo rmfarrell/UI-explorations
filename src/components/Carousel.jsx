@@ -9,6 +9,10 @@ class Carousel extends Component {
       current: 0
     };
   }
+  componentDidUpdate() {
+    const { onChange = () => {} } = this.props;
+    onChange(this.state.current, this.props.children[this.state.current]);
+  }
   render() {
     return (
       <div className={[this.props.className, styles.root].join(' ')}>

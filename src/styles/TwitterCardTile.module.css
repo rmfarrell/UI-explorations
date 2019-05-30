@@ -1,0 +1,17 @@
+.root {
+  height: 100%;
+}
+
+.tweetContainer {
+  flex: 1 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tweetContainer * {
+  box-sizing: border-box;
+}
+
+.carousel {
+  height: 100%;
+}
