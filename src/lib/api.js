@@ -64,8 +64,6 @@ async function _get(path) {
 
   [error, response] = await to(
     fetch(`${PROXY}${ROOT}${path}`, {
-      // credentials: 'include',
-      // mode: 'cors',
       headers: {
         origin: 'http://localhost:3000',
         Authorization
@@ -74,7 +72,13 @@ async function _get(path) {
   );
 
   if (error || !response.ok) {
-    return [null, error || new Error(`Returned response: ${response}`)];
+    return [
+      null,
+      error ||
+        new Error(
+          `status: ${response.status}; status text: ${response.statusText}`
+        )
+    ];
   }
 
   return await to(response.json());

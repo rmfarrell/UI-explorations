@@ -4,6 +4,7 @@ import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
 import { dereferenceArticles, classNames } from '../lib/helpers';
+import { fetchEntries } from '../lib/api';
 
 // -- Modules
 import CountryDropdown from '../components/CountryDropdown.jsx';
@@ -17,14 +18,17 @@ import { Link } from 'react-router-dom';
 export default function(props) {
   let relationship;
   const { country = '', history = {}, match } = props,
-    { relationships, articles } = useStoreon('relationships', 'articles');
+    { relationships, articles } = useStoreon('relationships', 'articles'),
+    // -- State
+    [socialItems, setSocialItems] = useState([]),
+    [error, setError] = useState(null);
 
   relationship = country && relationships[`REL_${country.toUpperCase()}`];
   // TODO: temporary hack
   if (!country) {
     relationship = relationships['REL_GBR'];
   }
-  if (!relationship) return error(new Error(`no relationship found`));
+  if (!relationship) setError(new Error(`no relationship found`));
   const {
       relationship_status,
       articles: { featured, collection }
@@ -39,6 +43,27 @@ export default function(props) {
       {}
     ),
     [firstFeatured] = featuredData.splice(0, 1);
+
+  // delete social media mocks
+  delete collectionData['Social Media Item'];
+
+  // set social items
+  useEffect(() => {
+    if (socialItems.length) return;
+    (async function() {
+      const [error, entries] = await fetchEntries({
+        'content-types': 'finity-data:post:tweet',
+        limit: 10
+      });
+      error && setError(error);
+      setSocialItems(entries);
+    })();
+  }, [socialItems.length]);
+
+  // errors
+  useEffect(() => {
+    error && console.error(error);
+  }, [error]);
 
   return (
     <article className={styles.root}>
@@ -76,7 +101,11 @@ export default function(props) {
           </div>
         )}
       </div>
-      <ArticlesGrid featured={featuredData} collection={collectionData} />
+      <ArticlesGrid
+        featured={featuredData}
+        collection={collectionData}
+        socialItems={socialItems}
+      />
     </article>
   );
 

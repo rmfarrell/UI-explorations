@@ -1,1 +1,25 @@
-{"relationship_status":{"trade":2,"politics":8,"defence":4},"articles":{"collection":["RSS_44","RSS_52","EXR_10","RSS_6","EXR_14","SOC_3","SOC_22","EXR_8","DDV_16","RSS_7","SOC_4","SOC_27","RSS_40","RSS_48","EXR_13"],"featured":["RSS_37","DDV_9","SOC_34"]},"country":"FRA","curators":["quae voluptatem"]}
+{
+  "relationship_status": { "trade": 2, "politics": 8, "defence": 4 },
+  "articles": {
+    "collection": [
+      "RSS_44",
+      "RSS_52",
+      "EXR_10",
+      "RSS_6",
+      "EXR_14",
+      "SOC_3",
+      "SOC_22",
+      "EXR_8",
+      "DDV_16",
+      "RSS_7",
+      "SOC_4",
+      "SOC_27",
+      "RSS_40",
+      "RSS_48",
+      "EXR_13"
+    ],
+    "featured": ["RSS_37", "DDV_9", "SOC_34"]
+  },
+  "country": "FRA",
+  "curators": ["quae voluptatem"]
+}

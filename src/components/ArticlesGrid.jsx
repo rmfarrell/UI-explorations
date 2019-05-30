@@ -15,10 +15,13 @@ import ArticleModal from '../components/ArticleModal.jsx';
 import Empty from './Empty.jsx';
 import List from './List.jsx';
 import SingleItem from './SingleItem.jsx';
+import TwitterCardTile from './TwitterCardTile.jsx';
 
 export default function(props) {
-  const { featured = [], collection = {} } = props;
+  const { featured = [], collection = {}, socialItems = [] } = props;
   const tiles = featured
+
+      // tiles from featured
       .map(featured => {
         return Object.assign(featured, {
           cat: 'Featured',
@@ -27,12 +30,25 @@ export default function(props) {
           featured: true
         });
       })
+
+      // tiles from collection
       .concat(
         Object.keys(collection).map(cat => ({
           cat,
           content: collection[cat]
         }))
       )
+
+      // tiles from social media items
+      .concat(
+        socialItems.length && {
+          cat: 'Social',
+          width: 1,
+          canExpand: false,
+          content: socialItems
+        }
+      )
+      .filter(val => !!val)
       .map(addWidths),
     rows = makeGrid(tiles);
 
@@ -75,6 +91,8 @@ export default function(props) {
       { content } = data;
 
     switch (category) {
+      case 'Social':
+        return <TwitterCardTile tweets={content} />;
       case 'Relationship Status':
         return (
           <Empty className="emptyTile" style={{ background: 'white' }}>
@@ -109,13 +127,14 @@ export default function(props) {
 }
 
 function addWidths(item) {
+  const { canExpand = true } = item;
   item.width = item.width || 1;
-  item.canExpand = item.width < 2;
+  item.canExpand = canExpand && item.width < 2;
   return item;
 }
 
 function makeGrid(tiles = []) {
-  const grid = Grid(Row(3));
+  const grid = Grid(Row(4));
   grid.add(tiles);
   grid.separateFeatured();
   grid.balance();

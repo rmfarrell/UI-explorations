@@ -19,12 +19,7 @@ import {
   fetchRssItems,
   fetchSocialMedia,
   fetchExternalResources,
-  fetchRelationships,
-
-  // new
-  fetchList,
-  fetchDetail,
-  fetchEntries
+  fetchRelationships
 } from './lib/api';
 import { classNames } from './lib/helpers';
 
@@ -45,20 +40,6 @@ const collectionPages = [
   '/relationship',
   '/deep-dives'
 ];
-
-_testApi();
-
-async function _testApi() {
-  const [error, json] = await fetchEntries({
-    // fields: ['created-at', 'meta']
-    // index: 'entries',
-    'content-types': 'finity-data:post:tweet',
-    // fields: 'content-type',
-    limit: 8000,
-    fields: 'tags'
-  });
-  console.log(json);
-}
 
 function AppRouter() {
   return (
