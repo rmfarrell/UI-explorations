@@ -1,16 +1,5 @@
 import React from 'react';
-import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton
-} from 'react-twitter-embed';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 
 import Carousel from './Carousel.jsx';
 import styles from '../styles/TwitterCardTile.module.css';
