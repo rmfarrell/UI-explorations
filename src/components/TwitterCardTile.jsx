@@ -9,12 +9,6 @@ export default function(props) {
   console.log(tweets[1]);
   return (
     <div className={styles.root}>
-      {/* <TwitterTweetEmbed
-        tweetId={getTwitterFromUrl(tweets[0]['ext-url'])}
-        options={{ chrome: 'noborders' }}
-        data-chrome="noborders"
-        onLoaded={onLoaded}
-      /> */}
       <Carousel
         size={1}
         onChange={changeHandler}
