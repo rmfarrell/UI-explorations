@@ -14,38 +14,82 @@ import SingleItem from '../components/SingleItem.jsx';
 import ArticlesGrid from '../components/ArticlesGrid.jsx';
 import { Link } from 'react-router-dom';
 
-// TODO: Use hooks here
 export default function(props) {
-  let relationship;
+  const mock = Mock();
   const { country = '', history = {}, match } = props,
     { relationships, articles } = useStoreon('relationships', 'articles'),
     // -- State
     [socialItems, setSocialItems] = useState([]),
-    [error, setError] = useState(null);
+    [finityArticles, setFinityArticles] = useState([]),
+    [error, setError] = useState(null),
+    [collectionData, setCollectionData] = useState({}),
+    [featuredData, setFeaturedData] = useState([]),
+    [firstFeatured] = featuredData ? featuredData.splice(0, 1) : null;
 
-  relationship = country && relationships[`REL_${country.toUpperCase()}`];
-  // TODO: temporary hack
-  if (!country) {
-    relationship = relationships['REL_GBR'];
-  }
-  if (!relationship) setError(new Error(`no relationship found`));
-  const {
-      relationship_status,
-      articles: { featured, collection }
-    } = relationship,
-    featuredData = dereferenceArticles(
-      articles,
-      // Filter out socials from filter :(
-      featured.filter(country => !country.includes('SOC'))
-    ),
-    collectionData = dereferenceArticles(articles, collection).reduce(
-      reduceArticleCollection,
-      {}
-    ),
-    [firstFeatured] = featuredData.splice(0, 1);
+  // Temporary logic until document-types are sorted out on the backend
+  const relationship = country
+    ? relationships[`REL_${country.toUpperCase()}`]
+    : relationships['REL_GBR'];
 
-  // delete social media mocks
-  delete collectionData['Social Media Item'];
+  // console.log(relationship);
+
+  // if (!relationship) setError(new Error(`no relationship found`));
+  // const {
+  //     relationship_status,
+  //     articles: { featured, collection }
+  //   } = relationship,
+  //   featuredData = dereferenceArticles(
+  //     articles,
+  //     // Filter out socials from filter :(
+  //     featured.filter(country => !country.includes('SOC'))
+  //   ),
+  //   collectionData = dereferenceArticles(articles, collection).reduce(
+  //     reduceArticleCollection,
+  //     {}
+  //   ),
+  //   [firstFeatured] = featuredData.splice(0, 1);
+
+  // console.log(collectionData);
+
+  // // delete mocks for which we have live data
+  // delete collectionData['Social Media Item'];
+
+  // set articles
+  // Using a mocky way of getting articles and assigning to buckets, for now
+  useEffect(() => {
+    let error,
+      ExternalResouces = [],
+      Opinions = [],
+      PolicyDocs = [],
+      Articles = [],
+      counter = 0;
+    if (finityArticles.length) return;
+    (async function() {
+      const [err, articles] = await fetchEntries({
+        limit: mock.total,
+        offset: mock.offset,
+        'content-types': 'finity-data:article',
+        fields: [] //TODO
+      });
+      if (err) {
+        setError(err);
+        return;
+      }
+      articles.forEach(article => {
+        mock.add(article);
+      });
+      setCollectionData(mock.collection);
+    })();
+
+    async function _fetch(limit = 6, offset = 0) {
+      return await fetchEntries({
+        limit,
+        offset,
+        'content-types': 'finity-data:article',
+        fields: [] //TODO
+      });
+    }
+  }, [country]);
 
   // set social items
   useEffect(() => {
@@ -53,12 +97,13 @@ export default function(props) {
     (async function() {
       const [error, entries] = await fetchEntries({
         'content-types': 'finity-data:post:tweet',
-        limit: 10
+        limit: 10,
+        fields: ['ext-url']
       });
       error && setError(error);
       setSocialItems(entries);
     })();
-  }, [socialItems.length]);
+  }, [setSocialItems]);
 
   // errors
   useEffect(() => {
@@ -134,4 +179,46 @@ function reduceArticleCollection(acc, item) {
   const type = item.document_type || item.type;
   acc[type] = acc[type] ? acc[type].concat(item) : [item];
   return acc;
+}
+
+// TODO: Temporary logic to fill in tiles until the backend has
+// sorted out how document-types get assigned
+function Mock() {
+  const counts = {
+    Analysis: 12,
+    Opinion: 8,
+    Media: 9,
+    'Policy Documents': 2,
+    Articles: 20
+  };
+  const offset = Math.round(getRandomArbitrary(10, 900));
+  const collection = Object.keys(counts).reduce((acc, item) => {
+    acc[item] = [];
+    return acc;
+  }, {});
+  const map = Object.keys(counts).map(key => {
+    return [key, counts[key]];
+  });
+
+  function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  return {
+    get total() {
+      return Object.values(counts).reduce((acc, c) => (acc += c), 0);
+    },
+    counts,
+    offset,
+    add(article = {}, index) {
+      for (let x = 0; x < map.length; x++) {
+        const [key, max] = map[x];
+        if (collection[key].length < max) {
+          collection[key].push(article);
+          break;
+        }
+      }
+    },
+    collection
+  };
 }

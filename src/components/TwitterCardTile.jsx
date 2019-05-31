@@ -4,9 +4,8 @@ import { TwitterTweetEmbed } from 'react-twitter-embed';
 import Carousel from './Carousel.jsx';
 import styles from '../styles/TwitterCardTile.module.css';
 
-export default function(props) {
+export default React.memo(function(props) {
   const { tweets } = props;
-  console.log(tweets[1]);
   return (
     <div className={styles.root}>
       <Carousel
@@ -17,9 +16,11 @@ export default function(props) {
       >
         {tweets.map(tweet => {
           return (
-            <div className={styles.tweetContainer}>
+            <div
+              className={styles.tweetContainer}
+              key={getTwitterFromUrl(tweet['ext-url'])}
+            >
               <TwitterTweetEmbed
-                key={getTwitterFromUrl(tweet['ext-url'])}
                 tweetId={getTwitterFromUrl(tweet['ext-url'])}
                 onLoaded={onLoaded}
                 options={{ cards: 'hidden' }}
@@ -32,17 +33,18 @@ export default function(props) {
   );
 
   function changeHandler(idx, el) {
-    console.log(el);
+    // TODO: lazy load tweet
   }
-}
+});
 
 function getTwitterFromUrl(url = '') {
   return url.split('https://twitter.com/statuses/')[1] || '';
 }
 
 function onLoaded(el) {
+  // console.log(window.__twttr.callbacks);
+  if (!el) return;
   el.style.margin = '0';
   el.style.width = '100%';
   el.style.minWidth = '0';
-  // el.querySelector('.EmbeddedTweet').style.border = 'none';
 }
