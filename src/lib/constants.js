@@ -60,6 +60,6 @@ export const ENTITIES = [
   'UNICEF'
 ];
 
-export const PROXY = '';
+export const PROXY = 'http://localhost:8080/';
 
 export const API_ROOT = 'https://periscope.finity.app/api';
