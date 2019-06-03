@@ -58,6 +58,10 @@ export const easing = {
   }
 };
 
+export async function wait(t = 1000) {
+  return await new Promise(r => setTimeout(r, t));
+}
+
 export async function getHead(url) {
   let contentLength, contentType;
   const [error, res] = await to(

@@ -3,7 +3,7 @@ import useStoreon from 'storeon/react';
 import styles from '../styles/CollectionPage.module.css';
 
 // -- Libs
-import { dereferenceArticles, classNames } from '../lib/helpers';
+import { dereferenceArticles, classNames, wait } from '../lib/helpers';
 import { fetchEntries } from '../lib/api';
 
 // -- Modules
@@ -34,6 +34,9 @@ export default function(props) {
   useEffect(() => {
     if (finityArticles.length) return;
     (async function() {
+      // wait for the map animation
+      // TODO: maybe grey out the single items?
+      await wait(900);
       const [err, articles] = await fetchEntries({
         limit: mock.total,
         offset: mock.offset,
@@ -44,20 +47,14 @@ export default function(props) {
         setError(err);
         return;
       }
+      if (!articles.length) {
+        return;
+      }
       articles.forEach(article => {
         mock.add(article);
       });
       setCollectionData(mock.collection);
     })();
-
-    async function _fetch(limit = 6, offset = 0) {
-      return await fetchEntries({
-        limit,
-        offset,
-        'content-types': 'finity-data:article',
-        fields: [] //TODO
-      });
-    }
   }, [country]);
 
   // set social items
