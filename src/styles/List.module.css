@@ -14,13 +14,15 @@
 .root > header {
   padding: 1em 0 0 1em;
 }
-
 .itemList {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.itemList.width2 li {
+.itemList.width-1 li:not(:first-child) {
+  border-top: 1px solid var(--col-light-grey);
+}
+.itemList.width-2 li {
   display: inline-block;
   width: 50%;
   vertical-align: top;

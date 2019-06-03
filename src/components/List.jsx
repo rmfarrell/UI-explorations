@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { summary, teaser } from '../mocks/generator';
+import React from 'react';
+import { classNames } from '../lib/helpers';
 import styles from '../styles/List.module.css';
 import Carousel from './Carousel';
 import SingleItem from './SingleItem';
@@ -27,7 +27,6 @@ export default function List({
   });
   slides.push(slide);
 
-  const ulClassName = [styles.itemList, styles[`width${groupSize}`]].join(' ');
   return (
     <aside className={[styles.root, className].join(' ')}>
       {children && <header>{children}</header>}
@@ -37,7 +36,13 @@ export default function List({
       >
         {slides.map((collection, idx) => {
           return (
-            <ul key={idx} className={ulClassName}>
+            <ul
+              key={idx}
+              className={classNames(
+                styles.itemList,
+                styles[`width-${groupSize}`]
+              )}
+            >
               {collection.map(item => {
                 return (
                   <li key={item.id}>

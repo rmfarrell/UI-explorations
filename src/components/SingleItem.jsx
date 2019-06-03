@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { path } from 'ramda';
 import styles from '../styles/ListItem.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
-import { formatDate, placeholderImage } from '../lib/helpers';
+import {
+  formatDate,
+  placeholderImage,
+  getHead,
+  classNames
+} from '../lib/helpers';
 import Link from './Link.jsx';
+import { PROXY } from '../lib/constants';
 
 // TODO this could be merged with Card probably
 export default React.memo(function SingleItem(props) {
@@ -11,22 +18,36 @@ export default React.memo(function SingleItem(props) {
     className = '',
     size = 0,
     children = [],
-    summaryLines = 4,
-    link = ''
+    summaryLines = 4
   } = props;
-  const modifier = data.type === 'Social Media Item' ? 'social' : 'article';
-  // console.log(link);
+  const {
+    title = '',
+    link = '#',
+    entities: [entity],
+    'ext-url': url,
+    'published-at': publishedAt,
+    id,
+    value = ''
+  } = data;
+  const imgUrl = path(['views', 'large', 'url'], entity);
+  const date = formatDate(new Date(publishedAt));
   return (
-    <div className={[styles.root, className, styles[`size-${size}`]].join(' ')}>
+    <div className={classNames(styles.root, className, styles[`size-${size}`])}>
       {children}
-      {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />}
-      {size === 0 && modifier === 'article' && (
-        <SmallTeaser link={link} {...data} summaryLines={summaryLines} />
+      {/* {size === 0 && modifier === 'social' && <SmallSocialTeaser {...data} />} */}
+      {size === 0 && (
+        <SmallTeaser
+          title={title}
+          imgUrl={imgUrl}
+          date={date}
+          id={id}
+          value={value}
+        />
       )}
-      {size === 1 && modifier === 'article' && (
+      {size === 1 && (
         <MediumTeaser link={link} {...data} summaryLines={summaryLines} />
       )}
-      {size === 2 && modifier === 'article' && (
+      {size === 2 && (
         <LargeTeaser link={link} {...data} summaryLines={summaryLines} />
       )}
     </div>
@@ -34,20 +55,32 @@ export default React.memo(function SingleItem(props) {
 });
 
 function SmallTeaser(props) {
-  const { date, title = '', link = '#' } = props;
+  const { title = '', date = '', id = '', value = '', imgUrl = '' } = props;
+  // TODO: if height and width are available figure out dimensions
+  // const [] = useState(null);
+  // useEffect(() => {
+  //   if (!imgUrl) return;
+  //   getImgData(imgUrl);
+  // }, [imgUrl]);
+
   return (
-    <Link to={link}>
-      <h4>{formatDate(date)}</h4>
-      <LinesEllipsis
-        text={title}
-        maxLine="3"
-        ellipsis="..."
-        trimRight
-        basedOn="words"
-        component="h3"
-      />
+    <Link to={`#${id}`}>
+      {imgUrl && (
+        <div className={styles.imgContainer}>
+          <img alt={title} src={imgUrl} className={styles} />
+        </div>
+      )}
+      {date && <h4>{date}</h4>}
+      {title && <h3>{title}</h3>}
+      {imgUrl ? '' : <p>{value}</p>}
     </Link>
   );
+
+  // TODO: Figure out if we need this or its a backend thing
+  async function getImgData(url) {
+    const result = await getHead(`${PROXY}${url}`);
+    console.log(result);
+  }
 }
 
 function MediumTeaser(props) {

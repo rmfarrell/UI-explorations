@@ -1,6 +1,8 @@
 import { COUNTRIES } from './constants';
 import { memoize } from 'lodash';
 import i18Snippets from '../i18n';
+import 'unfetch/polyfill';
+import to from 'await-to-js';
 
 export const easing = {
   linear: function(t) {
@@ -55,6 +57,28 @@ export const easing = {
     return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
   }
 };
+
+export async function getHead(url) {
+  let contentLength, contentType;
+  const [error, res] = await to(
+    fetch(url, {
+      method: 'HEAD'
+    })
+  );
+  if (error || !res.ok) {
+    return {
+      error: error || new Error(res.statusText),
+      contentLength,
+      contentType
+    };
+  }
+
+  return {
+    error,
+    contentLength,
+    contentType
+  };
+}
 
 export const maxCount = memoize((counts = {}) => {
   return Object.values(counts).reduce((item, acc) => (item > acc ? item : acc));

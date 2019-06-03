@@ -7,6 +7,7 @@ import {
   formatDate,
   classNames
 } from '../lib/helpers';
+import { fetchEntries } from '../lib/api';
 import styles from '../styles/ArticleModal.module.css';
 
 export default function() {
@@ -29,17 +30,24 @@ export default function() {
     ''
   );
 
-  function hashChangeHandler(e) {
+  async function hashChangeHandler(e) {
     let modal = {},
-      article;
+      entry,
+      error;
     const {
       location: { hash = '' }
     } = window;
 
     if (hash) {
-      article = getArticle(hash.split('#')[1]);
-      modal.headline = headline(article.document_type || article.type);
-      modal.content = content(article);
+      [error, [entry]] = await fetchEntries({
+        aql: `:id=${hash.split('#')[1]}`
+      });
+      if (error || !entry) {
+        console.error(error);
+        return;
+      }
+      modal.headline = headline('Headline TK');
+      modal.content = content(entry);
     }
     setModal(modal);
   }
@@ -52,7 +60,7 @@ export default function() {
     const {
       title = '',
       summary = '',
-      date = '',
+      'published-at': date = '',
       source = '',
       author = ''
     } = article;
@@ -65,7 +73,7 @@ export default function() {
               <a>{source}</a> <br />
               {author}
             </h3>
-            <h3>{formatDate(date)} </h3>
+            <h3>{formatDate(new Date(date))} </h3>
           </header>
           <div style={placeholderImage()} />
           <p>{summary}</p>

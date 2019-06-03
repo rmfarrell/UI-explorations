@@ -31,38 +31,7 @@ export default function(props) {
     ? relationships[`REL_${country.toUpperCase()}`]
     : relationships['REL_GBR'];
 
-  // console.log(relationship);
-
-  // if (!relationship) setError(new Error(`no relationship found`));
-  // const {
-  //     relationship_status,
-  //     articles: { featured, collection }
-  //   } = relationship,
-  //   featuredData = dereferenceArticles(
-  //     articles,
-  //     // Filter out socials from filter :(
-  //     featured.filter(country => !country.includes('SOC'))
-  //   ),
-  //   collectionData = dereferenceArticles(articles, collection).reduce(
-  //     reduceArticleCollection,
-  //     {}
-  //   ),
-  //   [firstFeatured] = featuredData.splice(0, 1);
-
-  // console.log(collectionData);
-
-  // // delete mocks for which we have live data
-  // delete collectionData['Social Media Item'];
-
-  // set articles
-  // Using a mocky way of getting articles and assigning to buckets, for now
   useEffect(() => {
-    let error,
-      ExternalResouces = [],
-      Opinions = [],
-      PolicyDocs = [],
-      Articles = [],
-      counter = 0;
     if (finityArticles.length) return;
     (async function() {
       const [err, articles] = await fetchEntries({

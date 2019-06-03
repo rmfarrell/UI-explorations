@@ -2,14 +2,12 @@ import to from 'await-to-js';
 import { COUNTRIES } from './constants';
 import 'unfetch/polyfill';
 import queryString from 'query-string';
+import { API_ROOT as ROOT, PROXY } from '../lib/constants';
 
 const CREDS = {
-    u: 'govlab',
-    p: 'LudoaHolAdHa'
-  },
-  ROOT = 'https://periscope.finity.app/api',
-  // Using a proxy for now until CORS is implemented
-  PROXY = 'http://localhost:8080/';
+  u: 'govlab',
+  p: 'LudoaHolAdHa'
+};
 
 // -- List pages
 

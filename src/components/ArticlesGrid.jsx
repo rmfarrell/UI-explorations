@@ -33,10 +33,15 @@ export default function(props) {
 
       // tiles from collection
       .concat(
-        Object.keys(collection).map(cat => ({
-          cat,
-          content: collection[cat]
-        }))
+        Object.keys(collection).map(cat => {
+          const content = collection[cat];
+          return {
+            cat,
+            content,
+            width: 1,
+            canExpand: content.length > 3
+          };
+        })
       )
 
       // tiles from social media items
@@ -83,7 +88,7 @@ export default function(props) {
     </React.Fragment>
   );
   /**
-   * Factory funciton for rendering Tiles
+   * Factory function for rendering Tiles
    *
    */
   function Tile(props) {
@@ -104,7 +109,7 @@ export default function(props) {
       default:
         const perpage = row > 0 ? 4 : 3;
         return content.length > 1 ? (
-          <List items={content} groupSize={width} perpage={perpage}>
+          <List items={content} groupSize={width} perpage={2}>
             <h3>{pluralize(category)}</h3>
           </List>
         ) : (
